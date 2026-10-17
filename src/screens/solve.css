@@ -3,6 +3,22 @@
 }
 .solve-head {
   padding-top: calc(22px + var(--safe-top));
+  padding-bottom: 54px;
+}
+/* cream body sliding up over the teal header, as Home's blocks do */
+.solve-body {
+  position: relative;
+  margin-top: -32px;
+  padding-top: 10px;
+  min-height: calc(100% - 200px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px 32px 0 0;
+  background: var(--paper);
+  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.08);
+}
+.solve-body > .ask {
+  flex: 1;
 }
 .segmented.small button {
   height: 36px;
@@ -13,7 +29,6 @@
 .ask {
   display: flex;
   flex-direction: column;
-  min-height: calc(100% - 200px);
 }
 .ask-empty {
   display: flex;

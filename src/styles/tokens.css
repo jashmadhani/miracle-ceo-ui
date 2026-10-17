@@ -1,25 +1,30 @@
 /*
- * Design tokens — palette A "Lagoon and coral" (approved).
+ * Design tokens — the Home palette, used across the whole app:
+ *   coral #ec6f7d · cream #fdfbe9 · amber #f4b23f · teal #3e8a80
+ * plus night-plum ink and white cards. Each tab opens with one colour block
+ * (Home coral, Ask Mira teal, Grow amber, Journey coral) over a cream page.
+ *
+ * Earlier palette A "Lagoon and coral" notes, still true for the roles:
  * See references/PALETTE-PROPOSAL.txt for the reasoning and rules:
- *   Lagoon teal  = primary action        (one job: "tap to move forward")
+ *   Teal         = primary action        (one job: "tap to move forward")
  *   Sunset coral = the one featured thing per screen
  *   Marigold     = earned / reward only
- *   Lavender     = Mira only
+ *   Teal + amber = Mira (no lavender any more)
  *   Night plum   = text and dark surfaces
- *   Oat          = base, with white cards
+ *   Cream        = base, with white cards
  */
 :root {
   /* 6 · base */
-  --paper: #fbf7f1;
+  --paper: #fdfbe9;
   --card: #ffffff;
-  --sand: #f1ebe2;
-  --sand-2: #e6dfd4;
+  --sand: #f4efdb;
+  --sand-2: #e8e1c8;
   --line: rgba(42, 35, 64, 0.08);
 
-  /* 1 · lagoon teal — primary action */
-  --teal: #0b7a74;
-  --teal-2: #08605b;
-  --primary-soft: #e2f2f0;
+  /* 1 · teal (a deeper shade of Home's teal) — primary action */
+  --teal: #33796f;
+  --teal-2: #285f57;
+  --primary-soft: #d4ece7;
 
   /* 2 · coral — featured (pink-coral, as in the designer's Home) */
   --accent: #ec6f7d;
@@ -31,10 +36,10 @@
   --reward-deep: #9a6400;
   --reward-soft: #fff3d9;
 
-  /* 4 · dream lavender — Mira */
-  --mira: #6a5ae0;
-  --mira-light: #c9c1f7;
-  --mira-soft: #eeebff;
+  /* 4 · Mira — teal, from Home (her mic is amber) */
+  --mira: #33796f;
+  --mira-light: #9cc9c0;
+  --mira-soft: #d4ece7;
 
   /* colour-block sections, taken from the designer's Home (reference 07b) */
   --sec-coral: #ec6f7d;
@@ -44,12 +49,10 @@
   --sec-teal: #3e8a80;
   --sec-teal-tile: #64aa9e;
 
-  /* page background: a soft lagoon wash so white cards stand out */
-  /* starts and ends on the same lagoon so Safari's status bar and toolbar,
-     which take the page colour, run straight into the app */
-  --page-bg: linear-gradient(180deg, #d9efeb 0%, #e8f5f2 24%, #f2f8f5 50%, #e4f2ee 68%, #d9efeb 80%, #d9efeb 100%);
-  --edge-top: #d9efeb;
-  --edge-bottom: #d9efeb;
+  /* page background: Home's cream, so colour blocks and white cards both read */
+  --page-bg: linear-gradient(180deg, #fdfbe9 0%, #fdfbe9 100%);
+  --edge-top: #fdfbe9;
+  --edge-bottom: #fdfbe9;
 
   /* 5 · night plum — ink */
   --ink: #2a2340;
@@ -87,13 +90,13 @@
   --r-lg: 24px;
   --r-md: 18px;
   --r-sm: 12px;
-  --shadow: 0 0 0 1px rgba(42, 35, 64, 0.05), 0 2px 4px rgba(42, 35, 64, 0.05), 0 10px 24px rgba(11, 122, 116, 0.1);
+  --shadow: 0 0 0 1px rgba(42, 35, 64, 0.05), 0 2px 4px rgba(42, 35, 64, 0.05), 0 10px 24px rgba(90, 70, 20, 0.08);
   --shadow-lift: 0 2px 4px rgba(42, 35, 64, 0.06), 0 16px 36px rgba(42, 35, 64, 0.12);
 
   /* soft fades built from the palette tints */
-  --fade-dawn: linear-gradient(160deg, #eeebff 0%, #fff3d9 55%, #ffe8e1 100%);
-  --fade-peach: linear-gradient(170deg, #fff3d9 0%, #ffe8e1 100%);
-  --fade-sky: linear-gradient(175deg, #e2f2f0 0%, var(--paper) 100%);
+  --fade-dawn: linear-gradient(160deg, #fde4e6 0%, #fdfbe9 55%, #fff3d9 100%);
+  --fade-peach: linear-gradient(170deg, #fff3d9 0%, #fde4e6 100%);
+  --fade-sky: linear-gradient(175deg, #d4ece7 0%, var(--paper) 100%);
 
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);

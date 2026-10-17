@@ -90,7 +90,7 @@ export function Forest() {
           </defs>
           <rect width={W} height={H} fill="url(#meadow)" />
           {/* distant hills at the far end */}
-          <path d={`M0 160 C80 110 160 130 220 150 C290 172 340 120 ${W} 130 L${W} 260 L0 260Z`} fill="#e4defb" opacity="0.7" />
+          <path d={`M0 160 C80 110 160 130 220 150 C290 172 340 120 ${W} 130 L${W} 260 L0 260Z`} fill="#e6f3cf" opacity="0.8" />
           {/* scattered bushes */}
           {[...Array(Math.floor(H / 120))].map((_, i) => {
             const x = i % 2 ? 30 + ((i * 37) % 60) : W - 40 - ((i * 53) % 60)
@@ -98,8 +98,8 @@ export function Forest() {
             return <path key={i} d={scallop(x, y, 18, 7, i + 3)} fill={i % 3 ? '#8fc93f' : '#62a32a'} />
           })}
           {/* pond */}
-          <ellipse cx={W - 90} cy={H - 120} rx="62" ry="22" fill="#8fd1c8" />
-          <ellipse cx={W - 98} cy={H - 124} rx="40" ry="10" fill="#d9efec" />
+          <ellipse cx={W - 90} cy={H - 120} rx="62" ry="22" fill="#9cc9c0" />
+          <ellipse cx={W - 98} cy={H - 124} rx="40" ry="10" fill="#d4ece7" />
           {/* path */}
           <path d={d} stroke="#ffe0a3" strokeWidth="34" fill="none" strokeLinecap="round" />
           <path d={d} stroke="#fff1d4" strokeWidth="22" fill="none" strokeLinecap="round" strokeDasharray="2 14" />

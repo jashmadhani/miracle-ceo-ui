@@ -19,14 +19,14 @@
   height: 340px;
   top: -120px;
   left: -100px;
-  background: #e8e3ef;
+  background: #fde4e6;
 }
 .mood-glow.b {
   width: 300px;
   height: 300px;
   top: 30%;
   right: -140px;
-  background: #f2e7d2;
+  background: #fff3d9;
   animation-delay: -4s;
 }
 .mood-glow.c {
@@ -34,7 +34,7 @@
   height: 360px;
   bottom: -160px;
   left: -60px;
-  background: #e3ece6;
+  background: #d4ece7;
   animation-delay: -8s;
 }
 @keyframes glow {

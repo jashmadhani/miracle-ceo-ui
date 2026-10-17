@@ -50,7 +50,7 @@ export function Home() {
     <>
       <div className="screen with-tabbar home">
         {/* colour-block sections, following the designer's Home (reference 07b) */}
-        <section className="hsec hsec-coral">
+        <section className="hsec hsec-top hsec-coral">
           <div className="home-head-row">
             <button className="home-me" onClick={() => nav('/journey')} aria-label="Your journey">
               {(s.parentName || 'Y')[0].toUpperCase()}
@@ -84,7 +84,7 @@ export function Home() {
           <KnowingRow />
         </section>
 
-        <section className="hsec hsec-teal">
+        <section className="hsec hsec-last hsec-teal">
           <div className="section-head" style={{ marginTop: 0 }}>
             <h2 style={{ color: '#fff' }}>Get to know {child.name}</h2>
           </div>

@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChildSwitcher, Sheet, TabBar } from '../components/Shell'
-import { TodayHero, useToday } from '../components/Cards'
+import { TodayBlock, useToday } from '../components/Cards'
+import { useEdge } from '../components/edge'
 import { Icon } from '../components/Icon'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
@@ -21,6 +22,7 @@ export function Grow() {
   const [insights, setInsights] = useState(false)
 
   const doneCount = Object.keys(s.done).length
+  useEdge('#f4b23f')
   const list = ACTIVITIES.filter((a) => (kind === 'all' || a.skill === kind) && (time === 'any' || a.minutes <= time))
 
   const choose = (sk: Skill) => {
@@ -48,24 +50,21 @@ export function Grow() {
   return (
     <>
       <div className="screen with-tabbar grow">
-        <header className="pad grow-head">
-          <h1 className="display" style={{ fontSize: 40 }}>
-            Let’s grow
-            <br />
-            together.
-          </h1>
-          <ChildSwitcher />
-        </header>
+        {/* colour blocks, as on Home: amber header, cream middle, teal close */}
+        <section className="hsec hsec-top hsec-amber">
+          <header className="grow-head">
+            <h1 className="display" style={{ fontSize: 40 }}>
+              Let’s grow
+              <br />
+              together.
+            </h1>
+            <ChildSwitcher tone="glass" />
+          </header>
+          <TodayBlock act={act} done={done} />
+        </section>
 
-        <div className="pad">
-          <p className="eyebrow" style={{ margin: '22px 0 10px 4px' }}>
-            Today’s moment
-          </p>
-          <TodayHero act={act} done={done} compact />
-        </div>
-
-        <div className="pad">
-          <div className="section-head">
+        <section className="hsec grow-body">
+          <div className="section-head" style={{ marginTop: 0 }}>
             <h2>What shall we work on?</h2>
           </div>
           <div className="skills">
@@ -90,9 +89,8 @@ export function Grow() {
           <p className="muted" style={{ fontSize: 13, textAlign: 'center', marginTop: 8 }}>
             Picking one swaps today’s moment.
           </p>
-        </div>
 
-        <div className="pad" style={{ marginTop: 20 }}>
+          <div style={{ marginTop: 20 }}>
           <button className="insight-tile" onClick={() => setInsights(true)}>
             <Ring value={Math.min(doneCount, INSIGHT_AFTER)} max={INSIGHT_AFTER} />
             <span style={{ flex: 1 }}>
@@ -105,9 +103,8 @@ export function Grow() {
             </span>
             <Icon name="chev" />
           </button>
-        </div>
+          </div>
 
-        <div className="pad">
           <div className="section-head">
             <h2>Something to try</h2>
           </div>
@@ -162,10 +159,10 @@ export function Grow() {
             ))}
             {list.length === 0 && <div className="empty">Nothing fits those filters yet.</div>}
           </div>
-        </div>
+        </section>
 
-        <div className="pad">
-          <div className="section-head">
+        <section className="hsec hsec-teal hsec-last">
+          <div className="section-head" style={{ marginTop: 0 }}>
             <h2>Pick what’s on your mind</h2>
           </div>
           <div className="bento">
@@ -180,13 +177,13 @@ export function Grow() {
               <button
                 key={t}
                 className="tile topic"
-                style={{ background: 'var(--card)', boxShadow: 'var(--shadow)', minHeight: 116 }}
+                style={{ background: '#d4ece7', minHeight: 116 }}
                 onClick={() => {
                   setKind(k as Skill)
                   document.querySelector('.filters')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                 }}
               >
-                <span className="pill" style={{ alignSelf: 'flex-start', background: SKILLS[k as Skill].bg, color: SKILLS[k as Skill].fg }}>
+                <span className="pill" style={{ alignSelf: 'flex-start', background: '#fff', color: SKILLS[k as Skill].fg }}>
                   {SKILLS[k as Skill].name}
                 </span>
                 <span className="tile-title" style={{ marginTop: 'auto' }}>
@@ -195,7 +192,7 @@ export function Grow() {
               </button>
             ))}
           </div>
-        </div>
+        </section>
       </div>
       <TabBar />
       {insights && (

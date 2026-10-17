@@ -19,7 +19,7 @@ stand-alone files, and not for use in a logo or trademark.
 | focus-fortress.svg | Kids playing with dolls |
 
 Each file was processed the same way: background layers dropped, the accent
-recoloured (coral `#ec6f7d` for feelings and family, teal `#0b7a74` for social,
+recoloured (coral `#ec6f7d` for feelings and family, teal `#3e8a80` for social,
 amber `#f2a531` for focus), greys warmed to the oat palette, the viewBox cropped
 to the art, and a small `<style>` added so characters breathe and speech bubbles
 float (switched off under `prefers-reduced-motion`). File names match activity

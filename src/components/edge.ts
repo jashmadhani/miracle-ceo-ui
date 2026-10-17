@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 /*
  * Safari (26+) colours the status-bar strip above the page with the page's
- * background colour. Screens whose top isn't the default lagoon call useEdge
+ * background colour. Screens whose top isn't the default cream call useEdge
  * with their own top colour so the app runs edge to edge instead of sitting in
  * a box. Safari takes the bottom tint from a fixed element at the bottom edge
  * (body::after in base.css). Overlays (mood check-in, voice diary) pass `overlay` so they win over

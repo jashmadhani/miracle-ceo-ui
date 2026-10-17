@@ -23,10 +23,11 @@ export function Solve() {
   const [params, setParams] = useSearchParams()
   const tab = (params.get('tab') as Tab) || 'ask'
   const idx = TABS.findIndex(([k]) => k === tab)
+  useEdge('#3e8a80')
   return (
     <>
       <div className="screen with-tabbar solve">
-        <header className="solve-head pad">
+        <header className="hsec hsec-top hsec-teal solve-head">
           <p className="eyebrow">
             <Icon name="lock" size={12} style={{ display: 'inline', verticalAlign: '-1px' }} /> Just between us
           </p>
@@ -42,14 +43,23 @@ export function Solve() {
             ))}
           </div>
         </header>
-        {tab === 'ask' && <Ask />}
-        {tab === 'share' && <Share />}
-        {tab === 'challenge' && <Challenges />}
+        <div className="solve-body">
+          {tab === 'ask' && <Ask />}
+          {tab === 'share' && <Share />}
+          {tab === 'challenge' && <Challenges />}
+        </div>
       </div>
       <TabBar />
     </>
   )
 }
+
+// Home's three accent tints, rotated so the plan grid reads like Home's blocks
+const CH_TINTS = [
+  ['var(--accent-soft)', 'var(--accent-deep)'],
+  ['var(--sec-amber-tile)', 'var(--reward-deep)'],
+  ['var(--primary-soft)', 'var(--teal)'],
+] as const
 
 /* ------------------------------------------------------------------ Ask */
 
@@ -357,7 +367,7 @@ function Share() {
 }
 
 function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
-  useEdge('#2a2340', true, '#5e50b8')
+  useEdge('#22303a', true, '#3e8a80')
   const [phase, setPhase] = useState<'ready' | 'listening' | 'thinking' | 'done'>('ready')
   const [secs, setSecs] = useState(0)
   useEffect(() => {
@@ -387,7 +397,7 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
               {phase === 'thinking' ? 'One moment.' : 'How was today, really?'}
             </h1>
             <div className="voice-wave">
-              <Waveform state={phase === 'listening' ? 'listening' : phase === 'thinking' ? 'thinking' : 'idle'} bars={36} height={110} color="#c9c1f7" />
+              <Waveform state={phase === 'listening' ? 'listening' : phase === 'thinking' ? 'thinking' : 'idle'} bars={36} height={110} color="#d4ece7" />
             </div>
             <p className="voice-time">0:{String(secs).padStart(2, '0')}</p>
             {phase === 'ready' && (
@@ -438,11 +448,12 @@ function Challenges() {
         Every parent faces these. Pick one — seven days, one small move a day.
       </p>
       <div className="bento">
-        {CHALLENGES.map((c) => {
+        {CHALLENGES.map((c, i) => {
           const active = s.challenge?.id === c.id
+          const ic = CH_TINTS[i % CH_TINTS.length]
           return (
             <button key={c.id} className={`tile ch-tile ${active ? 'active' : ''}`} style={{ background: c.tint }} onClick={() => { setOpen(c); setBuilding(!active) ; if (!active) setTimeout(() => setBuilding(false), 1600) }}>
-              <span className="ch-ic">
+              <span className="ch-ic" style={{ background: ic[0], color: ic[1] }}>
                 <Icon name={c.icon} size={22} />
               </span>
               {active && <span className="pill dark ch-day">Day {Math.min(7, (s.challenge?.moves ?? 0) + 1)} of 7</span>}

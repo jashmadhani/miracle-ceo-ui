@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ChildSwitcher, TabBar } from '../components/Shell'
+import { useEdge } from '../components/edge'
 import { Icon } from '../components/Icon'
 import { Tree } from '../art/Tree'
 import { Leaf } from '../art/ActivityArt'
@@ -26,13 +27,16 @@ export function Journey() {
     const leaves = s.log.filter((e) => new Date(e.at).toDateString() === d.toDateString()).reduce((a, e) => a + e.leaves, 0)
     return { d, leaves, today: d.toDateString() === now.toDateString(), future: d > now }
   })
+  useEdge('#ec6f7d')
   const todays = s.log.filter((e) => new Date(e.at).toDateString() === now.toDateString())
 
   return (
     <>
       <div className="screen with-tabbar journey">
-        <header className="pad journey-head">
-          <p className="eyebrow" style={{ color: 'var(--coral-2)' }}>
+        {/* colour blocks, as on Home: coral header with the numbers, cream below */}
+        <section className="hsec hsec-top hsec-coral">
+        <header className="journey-head">
+          <p className="eyebrow">
             Since {new Date(first).toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}
           </p>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12 }}>
@@ -44,11 +48,10 @@ export function Journey() {
             </button>
           </div>
           <div style={{ marginTop: 14 }}>
-            <ChildSwitcher />
+            <ChildSwitcher tone="glass" />
           </div>
         </header>
 
-        <div className="pad">
           <div className="stats">
             <div className="stat">
               <b>{days}</b>
@@ -63,6 +66,9 @@ export function Journey() {
               <span>moments done</span>
             </div>
           </div>
+        </section>
+
+        <section className="hsec journey-body">
 
           <button className="forest-card" onClick={() => nav('/journey/forest')}>
             <div className="forest-card-tree">
@@ -154,11 +160,11 @@ export function Journey() {
           <div className="card">
             {(
               [
-                ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--primary-soft)'],
-                ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--primary-soft)'],
+                ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--sec-amber-tile)'],
+                ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--accent-soft)'],
                 ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--primary-soft)'],
-                ['/journey/solutions', 'bookmark', 'Saved answers', `${s.saved.length} saved`, 'var(--primary-soft)'],
-                ['/journey/settings', 'settings', 'Settings', s.email || 'Account', 'var(--primary-soft)'],
+                ['/journey/solutions', 'bookmark', 'Saved answers', `${s.saved.length} saved`, 'var(--sec-amber-tile)'],
+                ['/journey/settings', 'settings', 'Settings', s.email || 'Account', 'var(--sand)'],
               ] as const
             ).map(([to, ic, t, sub, bg]) => (
               <button key={to} className="row" onClick={() => nav(to)}>
@@ -175,7 +181,7 @@ export function Journey() {
               </button>
             ))}
           </div>
-        </div>
+        </section>
       </div>
       <TabBar />
     </>

@@ -2,7 +2,14 @@
   background: var(--page-bg);
 }
 .journey-head {
-  padding-top: calc(24px + var(--safe-top));
+  padding-top: 8px;
+}
+.journey-body {
+  background: var(--sec-cream);
+  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.08);
+}
+.journey-body > .forest-card {
+  margin-top: 0;
 }
 .stats {
   display: grid;
@@ -287,7 +294,7 @@
 }
 
 .stat.featured {
-  background: var(--reward-soft);
+  background: var(--sec-amber-tile);
   box-shadow: none;
 }
 .stat.featured b {

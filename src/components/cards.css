@@ -310,10 +310,17 @@
   padding: 30px 20px 62px;
   border-radius: 36px 36px 0 0;
 }
-.hsec-coral {
+/* the first block on a screen runs up under the status bar */
+.hsec-top {
   margin-top: 0;
   border-radius: 0;
   padding-top: calc(16px + var(--safe-top));
+}
+/* the last block runs down past the tab bar */
+.hsec-last {
+  padding-bottom: calc(130px + var(--safe-bottom));
+}
+.hsec-coral {
   background: var(--sec-coral);
 }
 .hsec-coral .home-hello {
@@ -332,8 +339,41 @@
 }
 .hsec-teal {
   background: var(--sec-teal);
-  padding-bottom: calc(130px + var(--safe-bottom));
   box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.1);
+}
+/* type on the strong blocks */
+.hsec-coral .display,
+.hsec-teal .display,
+.hsec-teal .section-head h2 {
+  color: #fff;
+}
+.hsec-coral .eyebrow,
+.hsec-teal .eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+}
+.hsec-amber .eyebrow {
+  color: rgba(42, 35, 64, 0.62);
+}
+/* glass controls sitting on a colour block */
+.hsec-top .segmented {
+  background: rgba(255, 255, 255, 0.22);
+}
+.hsec-top .segmented button {
+  color: rgba(255, 255, 255, 0.85);
+}
+.hsec-top .segmented button.on {
+  color: var(--ink);
+}
+.hsec-top .icon-btn {
+  background: rgba(255, 255, 255, 0.92);
+}
+/* today's activity inside the amber block reads in ink */
+.hsec-amber .today-block-title,
+.hsec-amber .today-block-done {
+  color: var(--ink);
+}
+.hsec-amber .today-block-go {
+  color: var(--reward-deep);
 }
 .hsec-teal .home-quote {
   color: rgba(255, 255, 255, 0.75);

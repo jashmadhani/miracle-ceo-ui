@@ -58,7 +58,7 @@ svg {
   display: block;
 }
 
-/* The phone frame: full-bleed on a phone, centred column on anything wider. */
+/* The app frame: full-bleed on a phone; on a laptop it sits in a phone-sized frame (below). */
 .app {
   position: relative;
   width: 100%;
@@ -126,5 +126,49 @@ svg {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/*
+ * Laptop and desktop: keep it a mobile app. The app sits in a phone-sized
+ * frame (iPhone 17 Pro, 402x874, shorter on short windows) centred on a soft
+ * backdrop in the app's colours, instead of stretching into a web page.
+ */
+@media (min-width: 640px) and (min-height: 560px) {
+  :root:root {
+    /* stand-ins for the status bar and home indicator a phone would have */
+    --safe-top: 18px;
+    --safe-bottom: 10px;
+  }
+  body {
+    background:
+      radial-gradient(circle at 16% 20%, rgba(236, 111, 125, 0.2), transparent 40%),
+      radial-gradient(circle at 84% 16%, rgba(244, 178, 63, 0.22), transparent 38%),
+      radial-gradient(circle at 80% 82%, rgba(62, 138, 128, 0.2), transparent 42%),
+      #fbf6e4;
+  }
+  #root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .app {
+    flex: none;
+    width: 402px;
+    max-width: none;
+    height: min(874px, calc(100dvh - 48px));
+    margin: 0;
+    border-radius: 54px;
+    box-shadow:
+      0 0 0 10px #2a2340,
+      0 0 0 11px rgba(255, 255, 255, 0.25),
+      0 40px 90px rgba(42, 35, 64, 0.3);
+    /* anything position: fixed stays inside the frame */
+    transform: translateZ(0);
+  }
+  /* only there to tint Safari's toolbar on a phone */
+  .edge-dock {
+    display: none;
   }
 }

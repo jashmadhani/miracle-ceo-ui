@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChildSwitcher, TabBar } from '../components/Shell'
-import { KnowingBento, TodayHero, TreeCard, VideoList, useToday } from '../components/Cards'
+import { KnowingRow, TodayBlock, TreeCard, VideoList, useToday } from '../components/Cards'
 import { MoodCheckin } from './MoodCheckin'
 import { MoodFace } from '../art/MoodFace'
 import { today, useChild, useStore } from '../state/store'
@@ -47,58 +47,52 @@ export function Home() {
   return (
     <>
       <div className="screen with-tabbar home">
-        <header className="home-head">
+        {/* colour-block sections, following the designer's Home (reference 07b) */}
+        <section className="hsec hsec-coral">
           <div className="home-head-row">
             <button className="home-me" onClick={() => nav('/journey')} aria-label="Your journey">
               {(s.parentName || 'Y')[0].toUpperCase()}
             </button>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <p className="home-date">{date}</p>
-              <h1 className="display home-hello">
-                {greeting()}, {s.parentName || 'friend'}
-              </h1>
+              <h1 className="display home-hello">Hello, {s.parentName || 'friend'}</h1>
+              <p className="home-date">
+                {greeting()} · {date}
+              </p>
             </div>
-          </div>
-          <div className="home-head-row" style={{ marginTop: 14, justifyContent: 'space-between' }}>
-            <ChildSwitcher />
             {s.mood && s.moodDay === today() && (
               <button className="mood-mini" onClick={() => setCheckin(true)} aria-label="Change today’s mood">
-                <MoodFace mood={s.mood} size={36} />
+                <MoodFace mood={s.mood} size={34} />
               </button>
             )}
           </div>
-        </header>
+          <div style={{ marginTop: 14 }}>
+            <ChildSwitcher tone="glass" />
+          </div>
+          <TodayBlock act={act} done={done} />
+        </section>
 
-        <div className="pad home-today">
-          <p className="eyebrow" style={{ margin: '0 0 10px 4px', color: 'var(--ink-2)' }}>
-            Today with {child.name}
-          </p>
-          <TodayHero act={act} done={done} />
-        </div>
+        <section className="hsec hsec-cream">
+          <TreeCard bare />
+        </section>
 
-        <div className="pad" style={{ marginTop: 16 }}>
-          <TreeCard />
-        </div>
-
-        <div className="pad">
-          <div className="section-head">
+        <section className="hsec hsec-amber">
+          <div className="section-head" style={{ marginTop: 0 }}>
             <h2>Things worth knowing</h2>
           </div>
-          <KnowingBento />
-        </div>
+          <KnowingRow />
+        </section>
 
-        <div className="pad">
-          <div className="section-head">
-            <h2>Get to know {child.name}</h2>
+        <section className="hsec hsec-teal">
+          <div className="section-head" style={{ marginTop: 0 }}>
+            <h2 style={{ color: '#fff' }}>Get to know {child.name}</h2>
           </div>
           <VideoList />
-        </div>
-
-        <p className="home-quote">
-          “The days are long,
-          <br />
-          but the years are short.”
-        </p>
+          <p className="home-quote">
+            “The days are long,
+            <br />
+            but the years are short.”
+          </p>
+        </section>
       </div>
       <TabBar />
       {checkin && <MoodCheckin onDone={() => setCheckin(false)} />}

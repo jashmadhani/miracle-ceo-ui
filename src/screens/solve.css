@@ -1,6 +1,5 @@
 .solve {
-  background: var(--fade-sky);
-  background-attachment: local;
+  background: var(--page-bg);
 }
 .solve-head {
   padding-top: calc(22px + var(--safe-top));

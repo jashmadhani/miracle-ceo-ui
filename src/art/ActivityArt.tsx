@@ -43,17 +43,17 @@ export function ActivityArt({ skill, className }: { skill: Skill; className?: st
             <path d="M154 62 Q160 68 166 62" stroke={INK} strokeWidth="2.4" fill="none" strokeLinecap="round" />
           </g>
           <g className="float-b">
-            <path d="M246 46 C246 38 256 34 262 42 C268 34 278 38 278 46 C278 58 262 66 262 66 C262 66 246 58 246 46 Z" fill="#ff7a59" />
+            <path d="M246 46 C246 38 256 34 262 42 C268 34 278 38 278 46 C278 58 262 66 262 66 C262 66 246 58 246 46 Z" fill="#ffd1d8" />
           </g>
           <g className="float-c">
-            <path d="M52 64 C52 58 59 55 63 61 C67 55 74 58 74 64 C74 72 63 78 63 78 C63 78 52 72 52 64 Z" fill="#ffb29d" />
+            <path d="M52 64 C52 58 59 55 63 61 C67 55 74 58 74 64 C74 72 63 78 63 78 C63 78 52 72 52 64 Z" fill="#fff0f2" />
           </g>
         </>
       )}
       {skill === 'SQ' && (
         <>
           <ellipse cx="160" cy="210" rx="130" ry="12" fill={INK} opacity="0.07" />
-          <Kid x={100} y={130} top="#ff8a6b" hair="#3a2430" />
+          <Kid x={100} y={130} top="#0b7a74" hair="#3a2430" />
           <Kid x={220} y={130} top="#9c90ee" hair="#8a5a2e" flip />
           <g className="float-a">
             <path d="M52 40 h76 a14 14 0 0 1 14 14 v20 a14 14 0 0 1 -14 14 h-50 l-14 12 v-12 h-12 a14 14 0 0 1 -14 -14 v-20 a14 14 0 0 1 14 -14 Z" fill="#fffdf8" />
@@ -79,7 +79,7 @@ export function ActivityArt({ skill, className }: { skill: Skill; className?: st
           </g>
           {/* shapes */}
           <g className="float-b">
-            <rect x="40" y="56" width="30" height="30" rx="7" fill="#ff7a59" transform="rotate(12 55 71)" />
+            <rect x="40" y="56" width="30" height="30" rx="7" fill="#ffd1d8" transform="rotate(12 55 71)" />
           </g>
           <g className="float-c">
             <path d="M262 40 L284 76 L240 76 Z" fill="#ffc94f" />

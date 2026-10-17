@@ -60,7 +60,7 @@ svg {
   max-width: 440px;
   height: 100%;
   margin: 0 auto;
-  background: var(--paper);
+  background: var(--paper) var(--page-bg);
   overflow: hidden;
   isolation: isolate;
 }

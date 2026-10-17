@@ -5,6 +5,7 @@ import { Tree } from '../art/Tree'
 import { ActivityArt } from '../art/ActivityArt'
 import { MiraOrb } from '../art/MiraOrb'
 import { Icon } from '../components/Icon'
+import { PickGrid } from '../components/PickGrid'
 import { ONBOARDING } from '../data/content'
 import { useStore, type Gender, type Role } from '../state/store'
 import './onboarding.css'
@@ -159,13 +160,7 @@ export function Onboarding() {
     case 'grow':
       card = (
         <Q kicker="Your child" title={`Where would you like ${childName} to grow?`} hint="Pick as many as you like.">
-          <div className="chips">
-            {ONBOARDING.grow.map(([e, t]) => (
-              <button key={t} className={`chip ${s.grow.includes(t) ? 'on' : ''}`} onClick={() => toggle('grow', t)}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.grow} selected={s.grow} onToggle={(t) => toggle('grow', t)} />
           <Cta disabled={!s.grow.length} onClick={() => next('Those are beautiful things to grow.')} />
         </Q>
       )
@@ -173,13 +168,7 @@ export function Onboarding() {
     case 'hard':
       card = (
         <Q kicker="Right now" title="What’s been hard lately?" hint="Up to three. Nobody else sees this.">
-          <div className="chips">
-            {ONBOARDING.hard.map(([e, t]) => (
-              <button key={t} className={`chip ${s.hard.includes(t) ? 'on' : ''}`} onClick={() => toggle('hard', t, 3)} disabled={!s.hard.includes(t) && s.hard.length >= 3} style={!s.hard.includes(t) && s.hard.length >= 3 ? { opacity: 0.45 } : undefined}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.hard} selected={s.hard} onToggle={(t) => toggle('hard', t, 3)} max={3} />
           <Cta label={s.hard.length ? 'Continue' : 'Nothing right now'} onClick={() => next(s.hard.length ? 'That helps. We’ll start there.' : 'Lovely. We’ll keep it playful.')} />
         </Q>
       )
@@ -187,13 +176,7 @@ export function Onboarding() {
     case 'tried':
       card = (
         <Q kicker="Right now" title="What have you already tried?" hint="No judgement — we’ve all Googled at midnight.">
-          <div className="chips">
-            {ONBOARDING.tried.map(([e, t]) => (
-              <button key={t} className={`chip ${s.tried.includes(t) ? 'on' : ''}`} onClick={() => toggle('tried', t)}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.tried} selected={s.tried} onToggle={(t) => toggle('tried', t)} />
           <Cta label={s.tried.length ? 'Continue' : 'Skip'} onClick={() => next('Every question you’ve asked about them is love.')} />
         </Q>
       )
@@ -214,13 +197,7 @@ export function Onboarding() {
     case 'extra':
       card = (
         <Q kicker="Your child" title={`Anything else we should know about ${childName}?`} hint="Optional.">
-          <div className="chips">
-            {ONBOARDING.extra.map(([e, t]) => (
-              <button key={t} className={`chip ${s.extra.includes(t) ? 'on' : ''}`} onClick={() => toggle('extra', t)}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.extra} selected={s.extra} onToggle={(t) => toggle('extra', t)} />
           <Cta label={s.extra.length ? 'Continue' : 'Nothing in particular'} onClick={() => next('Thank you. Mira will go gently.')} />
         </Q>
       )

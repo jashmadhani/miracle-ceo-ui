@@ -21,10 +21,10 @@
   --teal-2: #08605b;
   --primary-soft: #e2f2f0;
 
-  /* 2 · sunset coral — featured */
-  --accent: #ff7a59;
-  --accent-deep: #c4512f;
-  --accent-soft: #ffe8e1;
+  /* 2 · coral — featured (pink-coral, as in the designer's Home) */
+  --accent: #ec6f7d;
+  --accent-deep: #b8404f;
+  --accent-soft: #fde4e6;
 
   /* 3 · marigold — reward */
   --leaf: #ffb937;
@@ -35,6 +35,17 @@
   --mira: #6a5ae0;
   --mira-light: #c9c1f7;
   --mira-soft: #eeebff;
+
+  /* colour-block sections, taken from the designer's Home (reference 07b) */
+  --sec-coral: #ec6f7d;
+  --sec-cream: #fdfbe9;
+  --sec-amber: #f4b23f;
+  --sec-amber-tile: #fcd893;
+  --sec-teal: #3e8a80;
+  --sec-teal-tile: #64aa9e;
+
+  /* page background: a soft lagoon wash so white cards stand out */
+  --page-bg: linear-gradient(180deg, #d6eeea 0%, #e8f5f2 28%, #f3f8f4 60%, #fbf7f1 100%);
 
   /* 5 · night plum — ink */
   --ink: #2a2340;
@@ -72,7 +83,7 @@
   --r-lg: 24px;
   --r-md: 18px;
   --r-sm: 12px;
-  --shadow: 0 1px 2px rgba(42, 35, 64, 0.04), 0 6px 20px rgba(42, 35, 64, 0.06);
+  --shadow: 0 0 0 1px rgba(42, 35, 64, 0.05), 0 2px 4px rgba(42, 35, 64, 0.05), 0 10px 24px rgba(11, 122, 116, 0.1);
   --shadow-lift: 0 2px 4px rgba(42, 35, 64, 0.06), 0 16px 36px rgba(42, 35, 64, 0.12);
 
   /* soft fades built from the palette tints */

@@ -666,3 +666,64 @@
 .switch.on::after {
   transform: translateX(20px);
 }
+
+/* ---------- emoji + word choice grid ---------- */
+.pick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.pick {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 8px 10px;
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: inset 0 0 0 1.5px rgba(42, 35, 64, 0.1);
+  text-align: left;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+}
+.pick:active {
+  transform: scale(0.97);
+}
+.pick[disabled] {
+  opacity: 0.45;
+}
+.pick-emoji {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+  line-height: 1;
+  background: var(--primary-soft);
+  flex: none;
+}
+.pick-label {
+  font-size: 14px;
+  font-weight: 620;
+  line-height: 1.2;
+}
+.pick.on {
+  background: var(--primary-soft);
+  box-shadow: inset 0 0 0 2px var(--teal);
+}
+.pick.on .pick-emoji {
+  background: var(--card);
+}
+.pick-check {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--teal);
+  color: #fff;
+}

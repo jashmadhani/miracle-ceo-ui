@@ -1,112 +1,115 @@
-/* Mira — Dream Lavender is hers alone. */
+/* Mira — a friendly lavender microphone. Lavender is hers alone. */
 .mira {
   position: relative;
   display: inline-grid;
   place-items: center;
   flex: none;
 }
-.mira-core {
-  position: absolute;
-  inset: 12%;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #eeebff 42%, #c9c1f7 100%);
-  box-shadow: 0 8px 24px rgba(106, 90, 224, 0.22), inset 0 -6px 14px rgba(106, 90, 224, 0.15);
-  animation: mira-breathe 5s ease-in-out infinite;
-  transition: background 0.5s, box-shadow 0.5s;
+.mira svg {
+  overflow: visible;
 }
-.mira-shine {
-  position: absolute;
-  left: 20%;
-  top: 16%;
-  width: 34%;
-  height: 24%;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.9);
-  filter: blur(2px);
+.mira-body {
+  transform-box: view-box;
+  transform-origin: 60px 104px;
+  animation: mira-bob 3.2s ease-in-out infinite;
 }
-.mira-ring {
-  position: absolute;
-  inset: 12%;
-  border-radius: 50%;
-  border: 1.5px solid rgba(106, 90, 224, 0.3);
+.mira-waves path,
+.mira-dots circle {
   opacity: 0;
 }
-.mira-orbit {
-  position: absolute;
-  inset: 4%;
-  opacity: 0;
-  transition: opacity 0.4s;
-}
-.mira-orbit i {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 12%;
-  height: 12%;
-  margin-left: -6%;
-  border-radius: 50%;
-  background: var(--mira);
-  box-shadow: 0 0 10px rgba(106, 90, 224, 0.7);
+.mira-eyes {
+  transition: transform 0.3s var(--ease-out);
 }
 
-@keyframes mira-breathe {
+@keyframes mira-bob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
   50% {
-    transform: scale(1.035);
+    transform: translateY(-3px) rotate(-2deg);
   }
 }
-@keyframes mira-ripple {
+
+/* attentive: looks up, perks up */
+.mira-attentive .mira-body {
+  animation: mira-perk 0.5s var(--ease-spring) both, mira-bob 3.2s ease-in-out 0.5s infinite;
+}
+.mira-attentive .mira-eyes {
+  transform: translateY(-2px);
+}
+@keyframes mira-perk {
   0% {
-    transform: scale(1);
-    opacity: 0.6;
+    transform: scale(0.92);
+  }
+  60% {
+    transform: scale(1.06) translateY(-4px);
+  }
+}
+
+/* listening: sound waves pulse out, little nod */
+.mira-listening .mira-body {
+  animation: mira-nod 0.9s ease-in-out infinite;
+}
+.mira-listening .mira-waves path {
+  animation: mira-wave 1.2s ease-out infinite;
+}
+.mira-listening .mira-waves .w2 {
+  animation-delay: 0.3s;
+}
+.mira-listening .mira-mouth-o {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mira-talk 0.45s ease-in-out infinite alternate;
+}
+@keyframes mira-nod {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+@keyframes mira-wave {
+  0% {
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
   }
   100% {
-    transform: scale(1.75);
     opacity: 0;
   }
 }
-
-/* attentive / listening / thinking: the pearl deepens into her lavender */
-.mira-attentive .mira-core,
-.mira-listening .mira-core,
-.mira-thinking .mira-core {
-  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #c9c1f7 38%, #6a5ae0 100%);
-  box-shadow: 0 10px 30px rgba(106, 90, 224, 0.4), inset 0 -6px 14px rgba(42, 35, 64, 0.2);
-}
-.mira-attentive .r1 {
-  opacity: 1;
-  transform: scale(1.18);
-  transition: transform 0.4s var(--ease-spring), opacity 0.3s;
-  border-color: rgba(106, 90, 224, 0.45);
-}
-
-.mira-listening .mira-core {
-  animation: mira-breathe 1.2s ease-in-out infinite;
-}
-.mira-listening .mira-ring {
-  border-color: rgba(106, 90, 224, 0.6);
-  animation: mira-ripple 2.1s ease-out infinite;
-}
-.mira-listening .r2 {
-  animation-delay: 0.7s;
-}
-.mira-listening .r3 {
-  animation-delay: 1.4s;
-}
-
-.mira-thinking .mira-orbit {
-  opacity: 1;
-  animation: spin 2.4s linear infinite;
-}
-.mira-thinking .r1 {
-  opacity: 1;
-  transform: scale(1.18);
-  border-style: dashed;
-  border-color: rgba(106, 90, 224, 0.45);
-}
-
-@keyframes spin {
+@keyframes mira-talk {
   to {
-    transform: rotate(1turn);
+    transform: scaleY(0.55);
+  }
+}
+
+/* thinking: three dots bounce above, eyes look up */
+.mira-thinking .mira-eyes {
+  transform: translate(2px, -3px);
+}
+.mira-thinking .mira-dots circle {
+  opacity: 1;
+  transform-box: fill-box;
+  animation: mira-dot 1s ease-in-out infinite;
+}
+.mira-thinking .mira-dots circle:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.mira-thinking .mira-dots circle:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes mira-dot {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6px);
   }
 }
 
@@ -114,8 +117,8 @@
 .mira-presence {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 14px 4px 4px;
+  gap: 6px;
+  padding: 3px 14px 3px 4px;
   border-radius: 999px;
   background: var(--card);
   box-shadow: var(--shadow);

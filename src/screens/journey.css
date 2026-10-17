@@ -1,5 +1,5 @@
 .journey {
-  background: var(--paper);
+  background: var(--page-bg);
 }
 .journey-head {
   padding-top: calc(24px + var(--safe-top));

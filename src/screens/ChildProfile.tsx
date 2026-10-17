@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BackBar, TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
+import { PickGrid } from '../components/PickGrid'
 import { Family } from '../art/Family'
 import { ONBOARDING } from '../data/content'
 import { useChild, useStore, type Gender } from '../state/store'
@@ -158,35 +159,17 @@ export function ChildEdit() {
 
         <section className="edit-sec">
           <h2 className="edit-h">Hard right now</h2>
-          <div className="chips">
-            {ONBOARDING.hard.map(([e, t]) => (
-              <button key={t} className={`chip ${hard.includes(t) ? 'on' : ''}`} onClick={() => setHard(flip(hard, t))}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.hard} selected={hard} onToggle={(t) => setHard(flip(hard, t))} />
         </section>
 
         <section className="edit-sec">
           <h2 className="edit-h">Where you’d like them to grow</h2>
-          <div className="chips">
-            {ONBOARDING.grow.map(([e, t]) => (
-              <button key={t} className={`chip ${grow.includes(t) ? 'on' : ''}`} onClick={() => setGrow(flip(grow, t))}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.grow} selected={grow} onToggle={(t) => setGrow(flip(grow, t))} />
         </section>
 
         <section className="edit-sec">
           <h2 className="edit-h">What you’ve already tried</h2>
-          <div className="chips">
-            {ONBOARDING.tried.map(([e, t]) => (
-              <button key={t} className={`chip ${tried.includes(t) ? 'on' : ''}`} onClick={() => setTried(flip(tried, t))}>
-                {e} {t}
-              </button>
-            ))}
-          </div>
+          <PickGrid items={ONBOARDING.tried} selected={tried} onToggle={(t) => setTried(flip(tried, t))} />
         </section>
       </div>
       <div className="save-bar">

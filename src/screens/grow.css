@@ -1,5 +1,5 @@
 .grow {
-  background: var(--paper);
+  background: var(--page-bg);
 }
 .grow-head {
   padding-top: calc(26px + var(--safe-top));

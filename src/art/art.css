@@ -215,3 +215,17 @@
 .zz {
   animation: floaty 2.6s ease-in-out infinite;
 }
+.leaf-flutter {
+  animation: flutter 3.6s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@keyframes flutter {
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}

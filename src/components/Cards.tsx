@@ -47,7 +47,39 @@ export function TodayHero({ act, done, compact }: { act: Activity; done: boolean
   )
 }
 
-export function TreeCard() {
+/** Today's activity inside Home's coral block: big art, big title, one round action. */
+export function TodayBlock({ act, done }: { act: Activity; done: boolean }) {
+  const nav = useNavigate()
+  const sk = SKILLS[act.skill]
+  return (
+    <button className="today-block" onClick={() => nav(`/activity/${act.id}`)} aria-label={`${act.title}, ${act.minutes} minutes. ${done ? 'Done today' : 'Start together'}`}>
+      <p className="today-block-eyebrow">Today’s activity</p>
+      <div className="today-block-art">
+        <ActivityArt skill={act.skill} />
+      </div>
+      <div className="today-block-row">
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h3 className="display today-block-title">{act.title}</h3>
+          <div className="today-block-pills">
+            <span className="pill">
+              <Icon name="clock" size={14} /> {act.minutes} min
+            </span>
+            <span className="pill">
+              <Leaf size={14} /> +3
+            </span>
+            <span className="pill">
+              <Icon name={sk.icon} size={14} /> {act.skill} {sk.name.toLowerCase()}
+            </span>
+          </div>
+        </div>
+        <span className={`today-block-go ${done ? 'done' : ''}`}>{done ? <Icon name="check" size={28} stroke={2.6} /> : <Icon name="arrow" size={28} stroke={2.4} />}</span>
+      </div>
+      {done && <p className="today-block-done">Done today — lovely work.</p>}
+    </button>
+  )
+}
+
+export function TreeCard({ bare }: { bare?: boolean }) {
   const { s, set } = useStore()
   const child = useChild()
   const [full, setFull] = useState(false)
@@ -63,7 +95,7 @@ export function TreeCard() {
   }, [s.leaves, s.seenLeaves, set])
   return (
     <>
-      <div className="tree-card">
+      <div className={`tree-card ${bare ? 'bare' : ''}`}>
         <div className="tree-card-head">
           <div>
             <h2 className="display" style={{ fontSize: 24 }}>
@@ -73,7 +105,7 @@ export function TreeCard() {
               growing with you
             </p>
           </div>
-          <button className="icon-btn" onClick={() => setFull(true)} aria-label="Open tree full screen">
+          <button className={`icon-btn ${bare ? 'flat' : ''}`} onClick={() => setFull(true)} aria-label="Open tree full screen">
             <Icon name="expand" size={20} />
           </button>
         </div>
@@ -158,6 +190,57 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
       </div>
     </div>
     </Overlay>
+  )
+}
+
+function ReadSheet({ r, onClose }: { r: (typeof READS)[number]; onClose: () => void }) {
+  return (
+    <Sheet onClose={onClose} label={r.title}>
+      <div className="read-hero" style={{ background: 'var(--sec-amber-tile)' }}>
+        {r.art === 'book' ? <SpotBook className="read-spot" /> : <SpotHeadphones className="read-spot" />}
+      </div>
+      <p className="eyebrow" style={{ marginTop: 18 }}>
+        {r.kind} · {r.minutes} min
+      </p>
+      <h2 className="display" style={{ fontSize: 30, margin: '6px 0 12px' }}>
+        {r.title}
+      </h2>
+      <p style={{ fontSize: 17, lineHeight: 1.55 }} className="muted">
+        A short, practical {r.kind === 'Read' ? 'read' : 'listen'} written for this age. Full content will load from the library once the backend is connected.
+      </p>
+      <button className="btn block" style={{ marginTop: 22 }} onClick={onClose}>
+        {r.kind === 'Read' ? 'Start reading' : 'Play'}
+      </button>
+    </Sheet>
+  )
+}
+
+/** Home's amber block: a row of read / listen tiles, then where you left off. */
+export function KnowingRow() {
+  const [open, setOpen] = useState<(typeof READS)[number] | null>(null)
+  const last = READS[1]
+  return (
+    <>
+      <div className="know-row">
+        {READS.map((r) => (
+          <button key={r.id} className="know-tile" onClick={() => setOpen(r)}>
+            <span className="pill">
+              <Icon name={r.kind === 'Read' ? 'book' : 'play'} size={14} /> {r.kind}
+            </span>
+            <span className="know-title">{r.title}</span>
+            <span className="know-meta">{r.minutes} min</span>
+            <Icon name="arrow" size={20} className="know-arrow" />
+          </button>
+        ))}
+      </div>
+      <div className="know-continue">
+        <span>{last.title}</span>
+        <button className="btn ghost small" onClick={() => setOpen(last)}>
+          Continue
+        </button>
+      </div>
+      {open && <ReadSheet r={open} onClose={() => setOpen(null)} />}
+    </>
   )
 }
 

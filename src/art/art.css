@@ -229,3 +229,16 @@
     transform: rotate(6deg);
   }
 }
+
+/* Storyset illustrations (see Illustration.tsx) */
+.illus {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
+}

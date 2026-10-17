@@ -23,7 +23,7 @@ export function TodayHero({ act, done, compact }: { act: Activity; done: boolean
   return (
     <button className={`today-hero sk-${act.skill} ${compact ? 'compact' : ''}`} onClick={() => nav(`/activity/${act.id}`)} aria-label={`${act.title}, ${act.minutes} minutes. ${done ? 'Done today' : 'Start together'}`}>
       <div className="today-art">
-        <ActivityArt skill={act.skill} />
+        <ActivityArt skill={act.skill} id={act.id} />
       </div>
       <div className="today-copy">
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
@@ -55,7 +55,7 @@ export function TodayBlock({ act, done }: { act: Activity; done: boolean }) {
     <button className="today-block" onClick={() => nav(`/activity/${act.id}`)} aria-label={`${act.title}, ${act.minutes} minutes. ${done ? 'Done today' : 'Start together'}`}>
       <p className="today-block-eyebrow">Today’s activity</p>
       <div className="today-block-art">
-        <ActivityArt skill={act.skill} />
+        <ActivityArt skill={act.skill} id={act.id} />
       </div>
       <div className="today-block-row">
         <div style={{ flex: 1, minWidth: 0 }}>

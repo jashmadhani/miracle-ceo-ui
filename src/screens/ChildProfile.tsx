@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { BackBar, TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
 import { PickGrid } from '../components/PickGrid'
-import { Family } from '../art/Family'
+import { Illustration } from '../art/Illustration'
 import { ONBOARDING } from '../data/content'
 import { useChild, useStore, type Gender } from '../state/store'
 import './profile.css'
@@ -18,7 +18,7 @@ export function ChildProfile() {
         <BackBar to="/journey" label="Journey" />
         <div className="pad">
           <div className="profile-hero">
-            <Family parent={s.role} pose="hug" className="profile-art" />
+            <Illustration name={s.role === 'dad' ? 'dad-hug' : 'mum-hug'} className="profile-art" />
             <div>
               <h1 className="display" style={{ fontSize: 34 }}>
                 {child.name}

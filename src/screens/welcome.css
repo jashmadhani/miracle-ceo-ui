@@ -37,9 +37,10 @@
   z-index: 2;
 }
 .welcome-family {
-  width: 62%;
-  max-width: 270px;
-  margin: 0 auto -76px;
+  width: 88%;
+  max-width: 360px;
+  height: 236px;
+  margin: 0 auto -64px;
   position: relative;
   z-index: 1;
   animation: rise 0.8s var(--ease-out) both;
@@ -90,7 +91,7 @@
 
 @media (max-height: 760px) {
   .welcome-family {
-    width: 60%;
+    height: 196px;
   }
   .welcome-title {
     margin-top: 16px;

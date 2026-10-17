@@ -61,7 +61,7 @@ export function ActivityPlayer() {
       </div>
 
       <div className={`act-art ${phase === 'intro' ? 'big' : ''}`}>
-        <ActivityArt skill={act.skill} />
+        <ActivityArt skill={act.skill} id={act.id} />
       </div>
 
       <div className="act-card" ref={body} key={`${phase}-${n}`}>

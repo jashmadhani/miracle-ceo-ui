@@ -18,7 +18,11 @@
 }
 .today-art {
   height: 210px;
-  padding: 16px 8px 0;
+  margin: 12px 12px 0;
+  padding: 14px 10px 10px;
+  border-radius: 22px;
+  background: var(--sec-cream);
+  overflow: hidden;
 }
 .today-art svg {
   width: 100%;
@@ -348,8 +352,12 @@
   color: rgba(42, 35, 64, 0.75);
 }
 .today-block-art {
-  height: 200px;
-  margin: 4px -8px 0;
+  height: 196px;
+  margin: 6px 0 14px;
+  padding: 14px 12px 10px;
+  border-radius: 22px;
+  background: var(--sec-cream);
+  overflow: hidden;
 }
 .today-block-art svg {
   width: 100%;

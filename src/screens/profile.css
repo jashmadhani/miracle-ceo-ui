@@ -79,3 +79,8 @@
   border-radius: var(--r-lg);
   background: var(--blush);
 }
+
+.profile-art.illus {
+  object-fit: contain;
+  object-position: 50% 100%;
+}

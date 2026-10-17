@@ -91,7 +91,7 @@ export function Library() {
         {ACTIVITIES.map((a) => (
           <button key={a.id} className={`act-item sk-${a.skill}`} onClick={() => nav(`/activity/${a.id}`)}>
             <span className="act-thumb">
-              <ActivityArt skill={a.skill} />
+              <ActivityArt skill={a.skill} id={a.id} />
             </span>
             <span className="act-item-copy">
               <span className="eyebrow" style={{ color: SKILLS[a.skill].fg }}>

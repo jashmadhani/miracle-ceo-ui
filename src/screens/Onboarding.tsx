@@ -100,7 +100,7 @@ export function Onboarding() {
       card = (
         <Q kicker="How it works" title="Five minutes. One small moment, every day.">
           <div className="promise-art">
-            <ActivityArt skill="EQ" />
+            <ActivityArt skill="EQ" id="feeling-word" />
           </div>
           <Cta label="Sounds doable" onClick={() => next()} />
         </Q>

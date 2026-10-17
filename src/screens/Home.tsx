@@ -60,7 +60,7 @@ export function Home() {
             </div>
           </div>
           <div className="home-head-row" style={{ marginTop: 14, justifyContent: 'space-between' }}>
-            <ChildSwitcher tone="glass" />
+            <ChildSwitcher />
             {s.mood && s.moodDay === today() && (
               <button className="mood-mini" onClick={() => setCheckin(true)} aria-label="Change today’s mood">
                 <MoodFace mood={s.mood} size={36} />

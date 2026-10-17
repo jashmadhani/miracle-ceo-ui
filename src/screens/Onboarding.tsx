@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Scene, type SceneMood } from '../art/Scene'
 import { Tree } from '../art/Tree'
 import { ActivityArt } from '../art/ActivityArt'
+import { MiraOrb } from '../art/MiraOrb'
 import { Icon } from '../components/Icon'
 import { ONBOARDING } from '../data/content'
 import { useStore, type Gender, type Role } from '../state/store'
@@ -203,7 +204,7 @@ export function Onboarding() {
           <div className="mira-preview">
             <div className="bubble me">{s.hard[0] === 'Bedtime' || !s.hard.length ? 'Why does bedtime take so long?' : `Help — ${s.hard[0].toLowerCase()} is a daily fight.`}</div>
             <div className="bubble mira">
-              <span className="mira-dot" /> Here’s what’s really going on for {childName}, and one thing to try tonight.
+              <MiraOrb size={22} /> Here’s what’s really going on for {childName}, and one thing to try tonight.
             </div>
           </div>
           <Cta label="I’d like that" onClick={() => next()} />
@@ -268,7 +269,7 @@ export function Onboarding() {
       <div className="screen ob">
         <Scene mood="peach" />
         <div className="planted">
-          <p className="eyebrow rise" style={{ color: 'var(--teal)' }}>
+          <p className="eyebrow rise" style={{ color: 'var(--accent)' }}>
             Your tree is planted
           </p>
           <h1 className="display rise rise-1">
@@ -326,7 +327,7 @@ export function Onboarding() {
           <div className="ob-art">
             {bubble && (
               <div key={bubble} className="ob-bubble">
-                <span className="mira-dot" /> {bubble}
+                <MiraOrb size={22} state="attentive" /> {bubble}
               </div>
             )}
             <Tree growth={growth} className="ob-tree" />

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { Tree } from '../art/Tree'
 import { Scene } from '../art/Scene'
+import { MiraOrb } from '../art/MiraOrb'
 import { Icon } from '../components/Icon'
 import { ACTIVITIES, SKILLS } from '../data/content'
 import { LEAVES_PER_TREE, useChild, useStore } from '../state/store'
@@ -158,8 +159,8 @@ export function ActivityPlayer() {
         {phase === 'read' && (
           <div className="rise">
             <div className="mira-read">
-              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--lilac-2)' }}>
-                <span className="mira-dot" /> Mira’s read
+              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--teal)' }}>
+                <MiraOrb size={22} /> Mira’s read
               </p>
               <p className="say-line" style={{ fontWeight: 500 }}>
                 {act.read}
@@ -246,7 +247,7 @@ function Celebrate({ skill, leaves, name, onDone }: { skill: string; leaves: num
           Because you did it together — and told Mira how it went.
         </p>
         <div className="celebrate-tree">
-          <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} />
+          <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} newFrom={Math.max(0, leaves - 3)} />
         </div>
         <div className="celebrate-count rise rise-3">
           <span>

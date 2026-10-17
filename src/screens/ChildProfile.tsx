@@ -29,19 +29,19 @@ export function ChildProfile() {
           </div>
 
           <div className="bento" style={{ marginTop: 14 }}>
-            <div className="tile" style={{ background: 'var(--sky)', minHeight: 110 }}>
+            <div className="tile" style={{ background: 'var(--card)', boxShadow: 'var(--shadow)', minHeight: 110 }}>
               <span className="eyebrow">Guidance for</span>
               <span className="tile-title" style={{ marginTop: 'auto', fontSize: 24 }}>
                 Ages 5–8
               </span>
             </div>
-            <div className="tile" style={{ background: 'var(--butter)', minHeight: 110 }}>
+            <div className="tile" style={{ background: 'var(--card)', boxShadow: 'var(--shadow)', minHeight: 110 }}>
               <span className="eyebrow">Daily time</span>
               <span className="tile-title" style={{ marginTop: 'auto', fontSize: 24 }}>
                 {s.time ?? '5–10 min'}
               </span>
             </div>
-            <div className="tile wide" style={{ background: 'var(--blush)', minHeight: 0 }}>
+            <div className="tile wide" style={{ background: 'var(--sand)', minHeight: 0 }}>
               <span className="eyebrow">Growing</span>
               <div className="chips" style={{ marginTop: 10 }}>
                 {(s.grow.length ? s.grow : ['Not set']).map((g) => (
@@ -51,7 +51,7 @@ export function ChildProfile() {
                 ))}
               </div>
             </div>
-            <div className="tile wide" style={{ background: 'var(--lilac)', minHeight: 0 }}>
+            <div className="tile wide" style={{ background: 'var(--sand)', minHeight: 0 }}>
               <span className="eyebrow">Hard right now</span>
               <div className="chips" style={{ marginTop: 10 }}>
                 {(s.hard.length ? s.hard : ['Nothing right now']).map((g) => (

@@ -38,7 +38,7 @@ export function Chats() {
         <div className="card">
           {s.chats.map((c) => (
             <button key={c.at} className="row" onClick={() => nav('/solve')}>
-              <span className="r-icon" style={{ background: 'var(--lilac)' }}>
+              <span className="r-icon" style={{ background: 'var(--sand)' }}>
                 <Icon name="chat" size={18} />
               </span>
               <span style={{ minWidth: 0 }}>
@@ -66,7 +66,7 @@ export function Solutions() {
       ) : (
         <div className="bento">
           {s.saved.map((t) => (
-            <button key={t} className="tile wide" style={{ background: 'var(--mint)', minHeight: 120 }} onClick={() => nav('/solve')}>
+            <button key={t} className="tile wide" style={{ background: 'var(--card)', boxShadow: 'var(--shadow)', minHeight: 120 }} onClick={() => nav('/solve')}>
               <span className="pill" style={{ alignSelf: 'flex-start' }}>
                 <Icon name="bookmark" size={14} /> Saved
               </span>
@@ -117,7 +117,7 @@ export function Library() {
 function Empty({ icon, text, cta, onClick }: { icon: 'chat' | 'bookmark'; text: string; cta: string; onClick: () => void }) {
   return (
     <div className="list-empty card">
-      <span className="r-icon" style={{ width: 64, height: 64, borderRadius: 22, background: 'var(--lilac)', display: 'grid', placeItems: 'center' }}>
+      <span className="r-icon" style={{ width: 64, height: 64, borderRadius: 22, background: 'var(--sand)', display: 'grid', placeItems: 'center' }}>
         <Icon name={icon} size={28} />
       </span>
       <p className="muted" style={{ maxWidth: 260 }}>

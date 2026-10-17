@@ -1,5 +1,5 @@
 .journey {
-  background: linear-gradient(180deg, #e9e0f8 0%, var(--paper) 340px);
+  background: var(--paper);
 }
 .journey-head {
   padding-top: calc(24px + var(--safe-top));
@@ -11,6 +11,8 @@
   margin-top: 20px;
 }
 .stat {
+  background: var(--card);
+  box-shadow: var(--shadow);
   border-radius: var(--r-lg);
   padding: 16px 14px;
   display: flex;
@@ -97,7 +99,7 @@
   background: rgba(42, 34, 51, 0.06);
 }
 .week-day i.on {
-  background: var(--mint);
+  background: var(--accent-soft);
 }
 .week-day.today {
   background: var(--ink);
@@ -254,4 +256,12 @@
 }
 .forest-map .you-here {
   z-index: 3;
+}
+
+.stat.featured {
+  background: var(--accent-soft);
+  box-shadow: none;
+}
+.stat.featured b {
+  color: var(--accent);
 }

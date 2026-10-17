@@ -22,22 +22,6 @@
   align-items: center;
   padding-top: 22px;
 }
-.mira-orb {
-  width: 92px;
-  height: 92px;
-  border-radius: 50%;
-  margin-bottom: 16px;
-  position: relative;
-  background: conic-gradient(from 200deg, #e3d7f7, #f8c3b9, #fde3a8, #cfe3f8, #e3d7f7);
-  animation: spin 14s linear infinite;
-  box-shadow: 0 12px 34px rgba(164, 139, 220, 0.35);
-}
-.mira-orb span {
-  position: absolute;
-  inset: 12px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, 0.4) 60%, transparent 70%);
-}
 .suggest {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -61,18 +45,12 @@
 .suggest-tile svg {
   align-self: flex-end;
 }
-.suggest-tile.t0 {
-  background: var(--blush);
-}
-.suggest-tile.t1 {
-  background: var(--lilac);
-}
-.suggest-tile.t2 {
-  background: var(--butter);
-}
-.suggest-tile.t3 {
+.suggest-tile {
   background: var(--card);
   box-shadow: var(--shadow);
+}
+.suggest-tile svg {
+  color: var(--teal);
 }
 
 .thread {
@@ -211,13 +189,14 @@
   margin-bottom: 8px;
 }
 .ans-card.why {
-  background: var(--butter);
+  background: var(--card);
+  box-shadow: var(--shadow);
 }
 .ans-card.bonsai {
-  background: var(--blush);
+  background: var(--sand);
 }
 .ans-card.ceo {
-  background: var(--mint);
+  background: var(--primary-soft);
 }
 .ans-card ul {
   margin: 0;
@@ -324,16 +303,16 @@
   align-self: center;
   display: grid;
   place-items: center;
-  background: #fde3a8;
+  background: var(--on-dark);
   color: var(--ink);
-  box-shadow: 0 10px 34px rgba(253, 227, 168, 0.45);
+  box-shadow: 0 10px 34px rgba(255, 255, 255, 0.2);
   transition: transform 0.15s;
 }
 .mic-big:active {
   transform: scale(0.93);
 }
 .mic-big.stop {
-  background: var(--coral);
+  background: var(--accent);
   color: #fff;
 }
 .voice-result {
@@ -361,7 +340,7 @@
   border-radius: 14px;
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--sand);
 }
 .ch-day {
   position: absolute;
@@ -416,13 +395,13 @@
   border-radius: 12px;
   display: grid;
   place-items: center;
-  background: var(--lilac);
+  background: var(--sand);
   font-family: var(--display);
   font-weight: 700;
   flex: none;
 }
 .plan-step.done .plan-n {
-  background: var(--mint);
+  background: var(--primary-soft);
 }
 
 .composer::after {
@@ -433,4 +412,10 @@
   top: 100%;
   height: 140px;
   background: var(--paper);
+}
+
+.composer-presence {
+  position: absolute;
+  left: 20px;
+  top: -24px;
 }

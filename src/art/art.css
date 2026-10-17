@@ -44,14 +44,38 @@
     transform: translateY(-5px);
   }
 }
-.blossom {
-  animation: bloom 0.8s var(--ease-spring) both;
+.earned-leaf {
+  cursor: pointer;
+}
+.earned-leaf.new .leaf-body {
+  animation: leaf-in 0.9s var(--ease-spring) both;
+}
+.earned-leaf .leaf-halo {
+  animation: halo 2.4s ease-out infinite;
   transform-box: fill-box;
   transform-origin: center;
+  opacity: 0.9;
 }
-@keyframes bloom {
-  from {
-    transform: scale(0);
+.earned-leaf.sel .leaf-halo {
+  animation: halo 1.6s ease-out infinite;
+}
+@keyframes leaf-in {
+  0% {
+    transform: translateY(-60px) rotate(-120deg) scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+}
+@keyframes halo {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.95;
+  }
+  100% {
+    transform: scale(1.9);
+    opacity: 0;
   }
 }
 

@@ -4,12 +4,12 @@ import './art.css'
 export type Mood = 'great' | 'good' | 'okay' | 'tired' | 'low' | 'anxious'
 
 export const MOODS: { id: Mood; label: string; color: string; deep: string; seed: number; reply: string; sub: string }[] = [
-  { id: 'great', label: 'Great', color: '#fcd77a', deep: '#efb93d', seed: 3, reply: 'Love that.', sub: 'Let’s put that energy somewhere good today.' },
-  { id: 'good', label: 'Good', color: '#bfe5c6', deep: '#86c795', seed: 8, reply: 'Good is plenty.', sub: 'A small moment together will keep it going.' },
-  { id: 'okay', label: 'Okay', color: '#cfe3f8', deep: '#8fb5e2', seed: 14, reply: 'Okay is a fine place to start.', sub: 'Most days are okay days. They quietly add up.' },
-  { id: 'tired', label: 'Tired', color: '#e3d7f7', deep: '#b39de2', seed: 21, reply: 'Then we keep it tiny.', sub: 'Five minutes, nothing to prepare.' },
-  { id: 'low', label: 'Low', color: '#c7d0f0', deep: '#8d9bd6', seed: 27, reply: 'Thanks for being honest.', sub: 'Go gently. Mira is here if you want to talk.' },
-  { id: 'anxious', label: 'Worried', color: '#f8c3b9', deep: '#ec8f80', seed: 33, reply: 'That’s a lot to carry.', sub: 'One breath, then one small thing. That’s all.' },
+  { id: 'great', label: 'Great', color: '#f0d9a2', deep: '#d8b673', seed: 3, reply: 'Love that.', sub: 'Let’s put that energy somewhere good today.' },
+  { id: 'good', label: 'Good', color: '#d3e4d8', deep: '#93ae9f', seed: 8, reply: 'Good is plenty.', sub: 'A small moment together will keep it going.' },
+  { id: 'okay', label: 'Okay', color: '#dbe4ee', deep: '#8ea2ba', seed: 14, reply: 'Okay is a fine place to start.', sub: 'Most days are okay days. They quietly add up.' },
+  { id: 'tired', label: 'Tired', color: '#e5dfec', deep: '#9a90ae', seed: 21, reply: 'Then we keep it tiny.', sub: 'Five minutes, nothing to prepare.' },
+  { id: 'low', label: 'Low', color: '#d5d9e8', deep: '#8a90ad', seed: 27, reply: 'Thanks for being honest.', sub: 'Go gently. Mira is here if you want to talk.' },
+  { id: 'anxious', label: 'Worried', color: '#eccdc3', deep: '#c48b7e', seed: 33, reply: 'That’s a lot to carry.', sub: 'One breath, then one small thing. That’s all.' },
 ]
 
 export function MoodFace({ mood, size = 96, active }: { mood: Mood; size?: number; active?: boolean }) {

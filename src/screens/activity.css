@@ -4,13 +4,13 @@
   overflow: hidden;
 }
 .act.sk-EQ {
-  background: linear-gradient(180deg, #fde3d8 0%, #f8c3b9 45%, #fbe4dc 100%);
+  background: linear-gradient(180deg, #f8efe5 0%, #f0e2d5 45%, var(--paper) 100%);
 }
 .act.sk-SQ {
-  background: linear-gradient(180deg, #e3eefb 0%, #bcd6f5 45%, #e6effa 100%);
+  background: linear-gradient(180deg, #f8efe5 0%, #f0e2d5 45%, var(--paper) 100%);
 }
 .act.sk-IQ {
-  background: linear-gradient(180deg, #fff0c7 0%, #fbd98a 45%, #fdf0cf 100%);
+  background: linear-gradient(180deg, #f8efe5 0%, #f0e2d5 45%, var(--paper) 100%);
 }
 .act-top {
   display: flex;
@@ -27,7 +27,7 @@
   flex: 1;
   height: 5px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(43, 42, 51, 0.1);
   transition: background 0.3s;
 }
 .segments i.past {
@@ -108,7 +108,7 @@
   box-shadow: var(--shadow);
 }
 .say-card.practice {
-  background: var(--mint);
+  background: var(--primary-soft);
   box-shadow: none;
 }
 .say-line {
@@ -150,7 +150,7 @@
   margin-top: 10px;
   padding: 14px 16px;
   border-radius: 18px;
-  background: var(--butter);
+  background: var(--sand);
   font-size: 16px;
   line-height: 1.45;
 }

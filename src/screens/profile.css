@@ -1,5 +1,5 @@
 .profile {
-  background: linear-gradient(180deg, #fde9c4 0%, var(--paper) 300px);
+  background: var(--paper);
 }
 .profile-hero {
   display: flex;
@@ -46,7 +46,7 @@
   width: 100%;
   height: 8px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--lilac-2) var(--v), rgba(42, 34, 51, 0.1) var(--v));
+  background: linear-gradient(90deg, var(--teal) var(--v), rgba(42, 34, 51, 0.1) var(--v));
   outline: none;
 }
 .trait input[type='range']::-webkit-slider-thumb {
@@ -77,5 +77,5 @@
 .danger {
   padding: 18px;
   border-radius: var(--r-lg);
-  background: #fbe4df;
+  background: var(--blush);
 }

@@ -1,7 +1,5 @@
 .home-head {
-  padding: calc(18px + var(--safe-top)) 20px 64px;
-  background: linear-gradient(170deg, #f9b6a8 0%, #fbd3c5 55%, #fde3b0 100%);
-  border-radius: 0 0 40px 40px;
+  padding: calc(18px + var(--safe-top)) 20px 8px;
 }
 .home-head-row {
   display: flex;
@@ -36,10 +34,11 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(255, 255, 255, 0.55);
+  background: var(--card);
+  box-shadow: var(--shadow);
 }
 .home-today {
-  margin-top: -44px;
+  margin-top: 18px;
   position: relative;
 }
 .home-quote {

@@ -22,6 +22,8 @@ export type State = {
   extra: string[]
   time: string | null
   leaves: number
+  /** leaves already shown on the tree; anything above this animates in as new */
+  seenLeaves: number
   log: LogEvent[]
   done: Record<string, number>
   todayId: string
@@ -48,6 +50,7 @@ const INITIAL: State = {
   extra: [],
   time: null,
   leaves: 0,
+  seenLeaves: 0,
   log: [],
   done: {},
   todayId: ACTIVITIES[0].id,
@@ -153,3 +156,8 @@ export function ageOf(dob: string) {
 }
 
 export const LEAVES_PER_TREE = 50
+
+/** One entry per earned leaf, in order — so a tapped leaf can say which moment grew it. */
+export function leafEvents(log: LogEvent[]) {
+  return log.flatMap((e) => Array.from({ length: e.leaves }, () => e))
+}

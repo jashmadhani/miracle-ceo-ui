@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ActivityArt, Leaf, SpotBook, SpotHeadphones } from '../art/ActivityArt'
 import { Tree } from '../art/Tree'
@@ -6,7 +6,7 @@ import { Scene } from '../art/Scene'
 import { Icon } from './Icon'
 import { Overlay, Sheet } from './Shell'
 import { ACTIVITIES, READS, SKILLS, VIDEOS, type Activity } from '../data/content'
-import { LEAVES_PER_TREE, today, useChild, useStore } from '../state/store'
+import { LEAVES_PER_TREE, leafEvents, today, useChild, useStore } from '../state/store'
 import './cards.css'
 
 export function useToday(): { act: Activity; done: boolean } {
@@ -48,10 +48,19 @@ export function TodayHero({ act, done, compact }: { act: Activity; done: boolean
 }
 
 export function TreeCard() {
-  const { s } = useStore()
+  const { s, set } = useStore()
   const child = useChild()
   const [full, setFull] = useState(false)
   const inTree = s.leaves % LEAVES_PER_TREE
+  const offset = s.leaves - inTree
+  // leaves earned since the tree was last shown drop in with a glow, then count as seen
+  const [newFrom] = useState(() => Math.max(0, s.seenLeaves - offset))
+  const fresh = Math.max(0, inTree - newFrom)
+  useEffect(() => {
+    if (s.seenLeaves === s.leaves) return
+    const t = setTimeout(() => set({ seenLeaves: s.leaves }), 2500)
+    return () => clearTimeout(t)
+  }, [s.leaves, s.seenLeaves, set])
   return (
     <>
       <div className="tree-card">
@@ -69,14 +78,19 @@ export function TreeCard() {
           </button>
         </div>
         <button className="tree-card-art" onClick={() => setFull(true)} aria-label="Open tree">
-          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
+          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} newFrom={newFrom < inTree ? newFrom : undefined} />
+          {fresh > 0 && (
+            <span className="new-leaves">
+              <Leaf size={14} color="var(--leaf)" /> +{fresh} new
+            </span>
+          )}
         </button>
         <div className="tree-card-foot">
-          <Leaf size={18} />
+          <Leaf size={18} color="var(--leaf)" />
           <b>{inTree}</b>
           <span className="muted">of {LEAVES_PER_TREE} leaves</span>
           <div className="progress" style={{ flex: 1, marginLeft: 8 }}>
-            <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--mint-2)' }} />
+            <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--leaf)' }} />
           </div>
         </div>
       </div>
@@ -89,6 +103,9 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
   const { s } = useStore()
   const child = useChild()
   const inTree = s.leaves % LEAVES_PER_TREE
+  const events = leafEvents(s.log).slice(s.leaves - inTree)
+  const [sel, setSel] = useState<number | null>(null)
+  const picked = sel != null ? events[sel] : null
   const recent = [...s.log].reverse().slice(0, 4)
   return (
     <Overlay>
@@ -98,9 +115,30 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
         <Icon name="close" />
       </button>
       <div className="tree-full-art">
-        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
+        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} selected={sel} onLeaf={(i) => setSel(i === sel ? null : i)} />
       </div>
       <div className="tree-full-panel">
+        {picked ? (
+          <div className="leaf-pick" key={sel}>
+            <span className="leaf-pick-ic">
+              <Leaf size={22} color="var(--leaf)" />
+            </span>
+            <span style={{ flex: 1 }}>
+              <span className="eyebrow">Leaf {sel! + 1} · {new Date(picked.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</span>
+              <b style={{ display: 'block', fontSize: 18, marginTop: 2 }}>{picked.label}</b>
+              <span className="muted" style={{ fontSize: 14 }}>
+                {picked.kind === 'activity' ? 'Something real you did together.' : picked.kind === 'mood' ? 'You checked in with yourself.' : 'You showed up.'}
+              </span>
+            </span>
+            <button className="icon-btn flat" onClick={() => setSel(null)} aria-label="Close leaf">
+              <Icon name="close" size={18} />
+            </button>
+          </div>
+        ) : (
+          <p className="muted" style={{ fontSize: 14, marginBottom: 10 }}>
+            Tap a golden leaf to see the moment that grew it.
+          </p>
+        )}
         <p className="eyebrow">The Pine · growing now</p>
         <h2 className="display" style={{ fontSize: 30, margin: '4px 0 2px' }}>
           {inTree} of {LEAVES_PER_TREE} leaves
@@ -110,7 +148,7 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
           {recent.map((e) => (
             <div key={e.at} className="leaf-log-row">
               <span className="leaf-log-ic">
-                <Leaf size={16} />
+                <Leaf size={16} color="var(--leaf)" />
               </span>
               <span style={{ flex: 1 }}>{e.label}</span>
               <b style={{ color: 'var(--teal)' }}>+{e.leaves}</b>

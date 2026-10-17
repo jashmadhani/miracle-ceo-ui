@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Overlay, Sheet, TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
 import { Waveform } from '../art/Waveform'
+import { MiraOrb, MiraPresence, type MiraState } from '../art/MiraOrb'
 import { Scene } from '../art/Scene'
 import { Tree } from '../art/Tree'
 import { Leaf } from '../art/ActivityArt'
@@ -59,6 +60,8 @@ function Ask() {
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [text, setText] = useState('')
   const [voice, setVoice] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const mira: MiraState = voice ? 'listening' : msgs.some((m) => m.state === 'thinking') ? 'thinking' : focused || text ? 'attentive' : 'idle'
   const last = useRef<HTMLDivElement>(null)
 
   const send = (q: string) => {
@@ -79,8 +82,8 @@ function Ask() {
     <div className="pad ask">
       {msgs.length === 0 ? (
         <div className="ask-empty">
-          <div className="mira-orb" aria-hidden>
-            <span />
+          <div style={{ marginBottom: 14 }}>
+            <MiraOrb state={mira} size={104} />
           </div>
           <h2 className="display" style={{ fontSize: 24, textAlign: 'center' }}>
             Tell Mira what’s weighing on you
@@ -104,8 +107,8 @@ function Ask() {
               <div className="bubble me">{m.q}</div>
               {m.state === 'thinking' ? (
                 <div className="thinking">
-                  <span className="mira-dot" />
-                  <div style={{ width: 110, color: 'var(--lilac-2)' }}>
+                  <MiraOrb state="thinking" size={30} />
+                  <div style={{ width: 110, color: 'var(--accent)' }}>
                     <Waveform state="thinking" bars={14} height={24} />
                   </div>
                   <span className="muted" style={{ fontSize: 14 }}>
@@ -121,6 +124,9 @@ function Ask() {
       )}
 
       <div className={`composer ${voice ? 'voice' : ''}`}>
+        <div className="composer-presence">
+          <MiraPresence state={mira} />
+        </div>
         {voice ? (
           <VoiceBar
             onCancel={() => setVoice(false)}
@@ -137,6 +143,8 @@ function Ask() {
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && send(text)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
               aria-label="Your question"
             />
             {text ? (
@@ -298,7 +306,7 @@ function Share() {
           <div className="night-line" aria-hidden>
             <Waveform state="idle" bars={22} height={20} color="rgba(255,250,242,.8)" />
           </div>
-          <p className="eyebrow" style={{ color: '#fde3a8' }}>
+          <p className="eyebrow" style={{ color: '#e9dcc4' }}>
             Before you sleep
           </p>
           <h2 className="display" style={{ fontSize: 32, color: 'var(--on-dark)' }}>
@@ -370,14 +378,14 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
       <div className="voice-inner">
         {phase !== 'done' ? (
           <>
-            <p className="eyebrow" style={{ color: '#fde3a8' }}>
+            <p className="eyebrow" style={{ color: '#e9dcc4' }}>
               {phase === 'ready' ? 'Tap and talk' : phase === 'listening' ? 'Mira is listening' : 'Finding the good…'}
             </p>
             <h1 className="display" style={{ fontSize: 34, color: 'var(--on-dark)', marginTop: 8 }}>
               {phase === 'thinking' ? 'One moment.' : 'How was today, really?'}
             </h1>
             <div className="voice-wave">
-              <Waveform state={phase === 'listening' ? 'listening' : phase === 'thinking' ? 'thinking' : 'idle'} bars={36} height={110} color="#fde3a8" />
+              <Waveform state={phase === 'listening' ? 'listening' : phase === 'thinking' ? 'thinking' : 'idle'} bars={36} height={110} color="#efe6d4" />
             </div>
             <p className="voice-time">0:{String(secs).padStart(2, '0')}</p>
             {phase === 'ready' && (
@@ -395,8 +403,8 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
         ) : (
           <div className="rise" style={{ marginTop: 'auto' }}>
             <div className="voice-result">
-              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--lilac-2)' }}>
-                <span className="mira-dot" /> The good Mira heard
+              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--teal)' }}>
+                <MiraOrb size={22} /> The good Mira heard
               </p>
               <ul>
                 <li>You stayed calm when bedtime ran late — that was patience under pressure.</li>

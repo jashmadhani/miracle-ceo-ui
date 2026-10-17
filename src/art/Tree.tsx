@@ -20,34 +20,41 @@ const CLUMPS: [number, number, number][] = [
   [200, 255, 44],
 ]
 
-const SHADE = '#3f7a14'
-const MID = '#6aab17'
-const LIGHT = '#98cd1b'
-const SHINE = '#c4e620'
+const SHADE = '#4f7a2e'
+const MID = '#719d3c'
+const LIGHT = '#97bd57'
+const SHINE = '#bcd77a'
+const LEAF = '#e2a44a'
 
 type Props = {
   /** 0 = seed, 1 = fully grown */
   growth?: number
-  /** blossoms dotted over the canopy, one per leaf earned */
+  /** earned leaves shown on the canopy, one golden leaf each */
   blossoms?: number
+  /** leaves from this index on are new — they pop in with a glow */
+  newFrom?: number
+  /** a highlighted leaf (tapped) */
+  selected?: number | null
+  onLeaf?: (i: number) => void
   sway?: boolean
   ground?: boolean
   className?: string
   title?: string
 }
 
-export function Tree({ growth = 1, blossoms = 0, sway = true, ground = true, className, title }: Props) {
+export function Tree({ growth = 1, blossoms = 0, newFrom, selected = null, onLeaf, sway = true, ground = true, className, title }: Props) {
   const g = Math.max(0, Math.min(1, growth))
 
   // Young trees keep the full round canopy, just smaller — dropping clumps made it look lumpy.
   const canopy = useMemo(() => CLUMPS.map((c, i) => ({ c, i })), [])
 
+  // golden-angle spiral: leaves spread evenly and fill outward as more are earned
   const dots = useMemo(() => {
     const rand = rng(7)
-    return Array.from({ length: Math.min(50, blossoms) }, () => {
-      const a = rand() * Math.PI * 2
-      const r = Math.sqrt(rand())
-      return { x: 200 + Math.cos(a) * r * 120, y: 170 + Math.sin(a) * r * 80, k: rand() }
+    return Array.from({ length: Math.min(50, blossoms) }, (_, i) => {
+      const a = i * 2.39996 + 0.6
+      const r = 0.18 + 0.82 * Math.sqrt((i + 0.5) / 50)
+      return { x: 200 + Math.cos(a) * r * 128, y: 168 + Math.sin(a) * r * 88, rot: rand() * 360 }
     })
   }, [blossoms])
 
@@ -58,7 +65,7 @@ export function Tree({ growth = 1, blossoms = 0, sway = true, ground = true, cla
 
   return (
     <svg viewBox="0 0 400 440" className={className} role="img" aria-label={title ?? 'A growing tree'}>
-      {ground && <ellipse cx="200" cy="420" rx={150 * trunkScale} ry="14" fill="#b9de3a" opacity="0.55" />}
+      {ground && <ellipse cx="200" cy="420" rx={150 * trunkScale} ry="14" fill="#cbd8a6" opacity="0.6" />}
 
       <g style={{ transformOrigin: '200px 424px', transform: `scale(${trunkScale})` }}>
         {/* trunk and branches */}
@@ -87,13 +94,31 @@ export function Tree({ growth = 1, blossoms = 0, sway = true, ground = true, cla
           {canopy.map(({ c: [x, y, r], i }) => (
             <path key={`h${i}`} d={scallop(x - r * 0.22, y - r * 0.26, r * 0.32, 7, i + 31)} fill={SHINE} />
           ))}
-          {dots.map((d, i) => (
-            <g key={`b${i}`} className="blossom" style={{ animationDelay: `${(d.k * 2).toFixed(2)}s` }}>
-              <circle cx={d.x} cy={d.y} r={5.5} fill="#ffb3c1" />
-              <circle cx={d.x} cy={d.y} r={2.2} fill="#fff1b8" />
-            </g>
-          ))}
         </g>
+        {/* earned leaves sit outside the canopy scale so they read clearly even on a young tree */}
+          {dots.map((d, i) => {
+          const isNew = newFrom != null && i >= newFrom
+          const isSel = selected === i
+          return (
+            <g
+              key={`b${i}`}
+              className={`earned-leaf ${isNew ? 'new' : ''} ${isSel ? 'sel' : ''}`}
+              transform={`translate(${(200 + (d.x - 200) * canopyScale).toFixed(1)} ${(300 + (d.y - 300) * canopyScale).toFixed(1)}) scale(1.6)`}
+              onClick={onLeaf ? () => onLeaf(i) : undefined}
+              role={onLeaf ? 'button' : undefined}
+              aria-label={onLeaf ? `Leaf ${i + 1}` : undefined}
+            >
+              {onLeaf && <circle r="18" fill="transparent" />}
+              {(isNew || isSel) && <circle className="leaf-halo" r="16" fill="#fff6dc" />}
+              <g className="leaf-body" style={isNew ? { animationDelay: `${0.25 * (i - (newFrom ?? 0))}s` } : undefined}>
+                <g transform={`rotate(${d.rot.toFixed(0)}) scale(${isSel ? 1.6 : 1})`}>
+                  <path d="M0 -11 C7 -6 7 5 0 11 C-7 5 -7 -6 0 -11Z" fill={LEAF} stroke="#fffaf0" strokeWidth="2.2" />
+                  <path d="M0 -8 L0 8" stroke="#fffaf0" strokeWidth="1.4" strokeLinecap="round" opacity="0.8" />
+                </g>
+              </g>
+            </g>
+          )
+        })}
       </g>
     </svg>
   )
@@ -104,7 +129,7 @@ function Sprout({ g, className, ground, title }: { g: number; className?: string
   const t = g / 0.12
   return (
     <svg viewBox="0 0 400 440" className={className} role="img" aria-label={title ?? 'A seed'}>
-      {ground && <ellipse cx="200" cy="420" rx="70" ry="10" fill="#b9de3a" opacity="0.55" />}
+      {ground && <ellipse cx="200" cy="420" rx="70" ry="10" fill="#cbd8a6" opacity="0.6" />}
       {t < 0.25 ? (
         <g className="seed-bob">
           <ellipse cx="200" cy="404" rx="16" ry="20" fill="#8a5222" />

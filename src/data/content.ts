@@ -4,9 +4,9 @@
 export type Skill = 'EQ' | 'SQ' | 'IQ'
 
 export const SKILLS: Record<Skill, { name: string; long: string; bg: string; fg: string; icon: 'heart' | 'users' | 'bulb' }> = {
-  EQ: { name: 'Emotional', long: 'Feelings & calm', bg: 'var(--eq-bg)', fg: 'var(--coral-2)', icon: 'heart' },
-  SQ: { name: 'Social', long: 'Friends & sharing', bg: 'var(--sq-bg)', fg: '#4f7fc0', icon: 'users' },
-  IQ: { name: 'Intelligence', long: 'Curiosity & focus', bg: 'var(--iq-bg)', fg: '#b4831a', icon: 'bulb' },
+  EQ: { name: 'Emotional', long: 'Feelings & calm', bg: 'var(--sand)', fg: 'var(--eq)', icon: 'heart' },
+  SQ: { name: 'Social', long: 'Friends & sharing', bg: 'var(--sand)', fg: 'var(--sq)', icon: 'users' },
+  IQ: { name: 'Intelligence', long: 'Curiosity & focus', bg: 'var(--sand)', fg: 'var(--iq)', icon: 'bulb' },
 }
 
 export type Step = { say: string; line?: string }
@@ -147,28 +147,28 @@ export const ACTIVITIES: Activity[] = [
 ]
 
 export const READS = [
-  { id: 'r1', kind: 'Read', title: 'Big feelings at six', minutes: 4, tint: 'var(--blush)', art: 'book' as const },
-  { id: 'r2', kind: 'Listen', title: 'Calm before you correct', minutes: 8, tint: 'var(--sky)', art: 'headphones' as const },
-  { id: 'r3', kind: 'Read', title: 'Why “because I said so” stops working', minutes: 5, tint: 'var(--lilac)', art: 'book' as const },
-  { id: 'r4', kind: 'Listen', title: 'Bedtime without the battle', minutes: 12, tint: 'var(--butter)', art: 'headphones' as const },
+  { id: 'r1', kind: 'Read', title: 'Big feelings at six', minutes: 4, tint: 'var(--accent-soft)', art: 'book' as const },
+  { id: 'r2', kind: 'Listen', title: 'Calm before you correct', minutes: 8, tint: 'var(--card)', art: 'headphones' as const },
+  { id: 'r3', kind: 'Read', title: 'Why “because I said so” stops working', minutes: 5, tint: 'var(--card)', art: 'book' as const },
+  { id: 'r4', kind: 'Listen', title: 'Bedtime without the battle', minutes: 12, tint: 'var(--sand)', art: 'headphones' as const },
 ]
 
 export const VIDEOS = [
-  { id: 'v1', title: 'Two nervous systems in the room', topic: 'Staying calm', minutes: 2, tint: '#fbd8d1', body: 'When your child melts down, your own frustration often rises too — especially with others watching. A short watch on calming yourself first, so your child has somewhere steady to return to.' },
-  { id: 'v2', title: 'The labels we don’t notice', topic: 'Words we use', minutes: 1, tint: '#d3e5f8', body: 'The quick words we use about our children quietly become the words they use about themselves.' },
-  { id: 'v3', title: 'Sibling fights are rarely about the toy', topic: 'Siblings', minutes: 1, tint: '#fce3a0', body: 'Most sibling fights are about fairness and attention. What to say instead of “share!”.' },
-  { id: 'v4', title: 'Why children hide the truth', topic: 'Honesty', minutes: 1, tint: '#e6dcf8', body: 'Lying usually means a child is afraid of the reaction, not that they don’t know right from wrong.' },
+  { id: 'v1', title: 'Two nervous systems in the room', topic: 'Staying calm', minutes: 2, tint: 'var(--sand)', body: 'When your child melts down, your own frustration often rises too — especially with others watching. A short watch on calming yourself first, so your child has somewhere steady to return to.' },
+  { id: 'v2', title: 'The labels we don’t notice', topic: 'Words we use', minutes: 1, tint: 'var(--sand)', body: 'The quick words we use about our children quietly become the words they use about themselves.' },
+  { id: 'v3', title: 'Sibling fights are rarely about the toy', topic: 'Siblings', minutes: 1, tint: 'var(--sand)', body: 'Most sibling fights are about fairness and attention. What to say instead of “share!”.' },
+  { id: 'v4', title: 'Why children hide the truth', topic: 'Honesty', minutes: 1, tint: 'var(--sand)', body: 'Lying usually means a child is afraid of the reaction, not that they don’t know right from wrong.' },
 ]
 
 export const CHALLENGES = [
-  { id: 'screen', title: 'Screen time battles', icon: 'clock' as const, tint: 'var(--blush)' },
-  { id: 'dinner', title: 'Dinner table wars', icon: 'heart' as const, tint: 'var(--mint)' },
-  { id: 'bedtime', title: 'Bedtime stalling', icon: 'sparkle' as const, tint: 'var(--lilac)' },
-  { id: 'tantrum', title: 'Tantrums in public', icon: 'bulb' as const, tint: 'var(--butter)' },
-  { id: 'siblings', title: 'Sibling fights', icon: 'shuffle' as const, tint: 'var(--sky)' },
-  { id: 'homework', title: 'Homework resistance', icon: 'book' as const, tint: 'var(--blush)' },
-  { id: 'readers', title: 'Budding readers', icon: 'bookmark' as const, tint: 'var(--butter)' },
-  { id: 'backtalk', title: 'Back-talk', icon: 'chat' as const, tint: 'var(--lilac)' },
+  { id: 'screen', title: 'Screen time battles', icon: 'clock' as const, tint: 'var(--card)' },
+  { id: 'dinner', title: 'Dinner table wars', icon: 'heart' as const, tint: 'var(--card)' },
+  { id: 'bedtime', title: 'Bedtime stalling', icon: 'sparkle' as const, tint: 'var(--card)' },
+  { id: 'tantrum', title: 'Tantrums in public', icon: 'bulb' as const, tint: 'var(--card)' },
+  { id: 'siblings', title: 'Sibling fights', icon: 'shuffle' as const, tint: 'var(--card)' },
+  { id: 'homework', title: 'Homework resistance', icon: 'book' as const, tint: 'var(--card)' },
+  { id: 'readers', title: 'Budding readers', icon: 'bookmark' as const, tint: 'var(--card)' },
+  { id: 'backtalk', title: 'Back-talk', icon: 'chat' as const, tint: 'var(--card)' },
 ]
 
 export const BEDTIME_PLAN = [

@@ -67,7 +67,7 @@ export function Settings() {
           </p>
           <div className="card">
             <button className="row" onClick={() => setNotif((v) => !v)} role="switch" aria-checked={notif}>
-              <span className="r-icon" style={{ background: 'var(--butter)' }}>
+              <span className="r-icon" style={{ background: 'var(--sand)' }}>
                 <Icon name="clock" size={20} />
               </span>
               <span>
@@ -79,7 +79,7 @@ export function Settings() {
               <span className={`switch ${notif ? 'on' : ''}`} />
             </button>
             <div className="row">
-              <span className="r-icon" style={{ background: 'var(--lilac)' }}>
+              <span className="r-icon" style={{ background: 'var(--sand)' }}>
                 <Icon name="lock" size={20} />
               </span>
               <span>

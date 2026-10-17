@@ -4,11 +4,11 @@ import './art.css'
 export type SceneMood = 'dawn' | 'day' | 'peach' | 'dusk' | 'night'
 
 const SKIES: Record<SceneMood, [string, string, string]> = {
-  dawn: ['#e6dcf8', '#fde9b8', '#fbd8d1'],
-  day: ['#cfe3f8', '#eaf2fb', '#fff1cc'],
-  peach: ['#fde3a8', '#fde9c4', '#fbd8d1'],
-  dusk: ['#c8b8ef', '#f6c1c7', '#fde3a8'],
-  night: ['#2f2c5a', '#4b4580', '#8e79c2'],
+  dawn: ['#ece8f1', '#f6efe3', '#f4ebe5'],
+  day: ['#e6ecf2', '#f2f4f5', '#f5efe2'],
+  peach: ['#f5ecdc', '#f7f1e6', '#f3e8e2'],
+  dusk: ['#e4dfec', '#efe3e2', '#f4ecdc'],
+  night: ['#2e2f43', '#43455e', '#68677f'],
 }
 
 type Props = {
@@ -39,7 +39,7 @@ export function Scene({ mood = 'dawn', hills = true, sun = true, stars, children
             <stop offset="1" stopColor={c} />
           </linearGradient>
           <radialGradient id={`${id}-glow`}>
-            <stop offset="0" stopColor={night ? '#fff6d6' : '#fff4c2'} stopOpacity="0.95" />
+            <stop offset="0" stopColor={night ? '#fff6d6' : '#fbf1d8'} stopOpacity="0.8" />
             <stop offset="1" stopColor={night ? '#fff6d6' : '#fff4c2'} stopOpacity="0" />
           </radialGradient>
         </defs>
@@ -70,7 +70,7 @@ export function Scene({ mood = 'dawn', hills = true, sun = true, stars, children
                 <circle cx="300" cy="360" r="44" fill="#fff3c9" mask={`url(#${id}-moon)`} />
               </>
             ) : (
-              <circle cx="300" cy="360" r="44" fill="#ffd86b" />
+              <circle cx="300" cy="360" r="44" fill="#ecd08f" />
             )}
           </g>
         )}
@@ -84,16 +84,16 @@ export function Scene({ mood = 'dawn', hills = true, sun = true, stars, children
 
         {hills && (
           <>
-            <path d="M-20 560 C60 500 140 520 210 540 C280 560 340 500 420 520 L420 844 L-20 844 Z" fill={night ? '#5a4f8f' : '#e9ddf6'} />
-            <path d="M-20 620 C40 590 110 580 190 600 C270 620 330 580 420 590 L420 844 L-20 844 Z" fill={night ? '#6e5fa3' : '#f9d2cd'} />
-            <path d="M-20 690 C80 660 170 670 230 680 C300 692 360 670 420 676 L420 844 L-20 844 Z" fill={night ? '#7f6db3' : '#fbe1a3'} />
+            <path d="M-20 560 C60 500 140 520 210 540 C280 560 340 500 420 520 L420 844 L-20 844 Z" fill={night ? '#4a4b64' : '#e8e4ec'} />
+            <path d="M-20 620 C40 590 110 580 190 600 C270 620 330 580 420 590 L420 844 L-20 844 Z" fill={night ? '#545574' : '#efe3de'} />
+            <path d="M-20 690 C80 660 170 670 230 680 C300 692 360 670 420 676 L420 844 L-20 844 Z" fill={night ? '#5f5e80' : '#f1e8d6'} />
             {!night &&
               [
-                [40, 700, '#ef7f72'],
-                [70, 712, '#7fa9de'],
-                [330, 690, '#ef7f72'],
-                [360, 704, '#a48bdc'],
-                [300, 712, '#7fa9de'],
+                [40, 700, '#d59a88'],
+                [70, 712, '#8ea2ba'],
+                [330, 690, '#d59a88'],
+                [360, 704, '#a89cbf'],
+                [300, 712, '#8ea2ba'],
               ].map(([x, y, col], i) => (
                 <g key={i} className="flower-sway" style={{ transformOrigin: `${x}px ${Number(y) + 22}px`, animationDelay: `${i * 0.3}s` }}>
                   <path d={`M${x} ${Number(y) + 22} L${x} ${y}`} stroke="#5f9b6f" strokeWidth="2.5" />
@@ -129,14 +129,14 @@ export function Foliage({ side = 'left', className }: { side?: 'left' | 'right';
       style={side === 'right' ? { transform: 'scaleX(-1)' } : undefined}
     >
       <g className="leaf-sway" style={{ transformOrigin: '20px 260px' }}>
-        <path d="M20 260 C10 190 40 120 110 90 C110 160 80 220 20 260 Z" fill="#2f8f86" />
-        <path d="M20 260 C50 200 80 150 110 90" stroke="#1f6f69" strokeWidth="3" fill="none" />
+        <path d="M20 260 C10 190 40 120 110 90 C110 160 80 220 20 260 Z" fill="#86a398" />
+        <path d="M20 260 C50 200 80 150 110 90" stroke="#6a877c" strokeWidth="3" fill="none" />
       </g>
       <g className="leaf-sway slow" style={{ transformOrigin: '0px 260px' }}>
-        <path d="M0 260 C-10 210 10 170 60 150 C60 200 40 240 0 260 Z" fill="#7cc4a6" />
+        <path d="M0 260 C-10 210 10 170 60 150 C60 200 40 240 0 260 Z" fill="#bccfc3" />
       </g>
       <g className="leaf-sway" style={{ transformOrigin: '40px 260px', animationDelay: '0.8s' }}>
-        <path d="M40 260 C70 220 120 200 180 210 C150 250 100 270 40 260 Z" fill="#f2a493" />
+        <path d="M40 260 C70 220 120 200 180 210 C150 250 100 270 40 260 Z" fill="#e6c6b6" />
       </g>
     </svg>
   )

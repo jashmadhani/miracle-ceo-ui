@@ -2,7 +2,7 @@
   position: absolute;
   inset: 0;
   z-index: 50;
-  background: #fff8ec;
+  background: var(--paper);
   overflow: hidden;
   animation: fade-in 0.4s ease both;
 }
@@ -11,7 +11,7 @@
   position: absolute;
   border-radius: 50%;
   filter: blur(40px);
-  opacity: 0.8;
+  opacity: 0.55;
   animation: glow 12s ease-in-out infinite alternate;
 }
 .mood-glow.a {
@@ -19,14 +19,14 @@
   height: 340px;
   top: -120px;
   left: -100px;
-  background: #e3d7f7;
+  background: #e8e3ef;
 }
 .mood-glow.b {
   width: 300px;
   height: 300px;
   top: 30%;
   right: -140px;
-  background: #fde3a8;
+  background: #f2e7d2;
   animation-delay: -4s;
 }
 .mood-glow.c {
@@ -34,7 +34,7 @@
   height: 360px;
   bottom: -160px;
   left: -60px;
-  background: #d9efdd;
+  background: #e3ece6;
   animation-delay: -8s;
 }
 @keyframes glow {

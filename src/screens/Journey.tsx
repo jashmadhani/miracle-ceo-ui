@@ -51,15 +51,15 @@ export function Journey() {
 
         <div className="pad">
           <div className="stats">
-            <div className="stat" style={{ background: 'var(--sky)' }}>
+            <div className="stat">
               <b>{days}</b>
               <span>day{days === 1 ? '' : 's'} together</span>
             </div>
-            <div className="stat" style={{ background: 'var(--blush)' }}>
+            <div className="stat featured">
               <b>{s.leaves}</b>
               <span>leaves grown</span>
             </div>
-            <div className="stat" style={{ background: 'var(--butter)' }}>
+            <div className="stat">
               <b>{done}</b>
               <span>moments done</span>
             </div>
@@ -76,7 +76,7 @@ export function Journey() {
                 The Pine is growing
               </h2>
               <div className="progress" style={{ margin: '10px 0 6px', background: 'rgba(255,255,255,.6)' }}>
-                <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--mint-2)' }} />
+                <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--leaf)' }} />
               </div>
               <span className="muted" style={{ fontSize: 13 }}>
                 {inTree} / {LEAVES_PER_TREE} leaves
@@ -107,7 +107,7 @@ export function Journey() {
                       <i style={{ width: `${Math.max(3, n * 20)}%`, background: sk.fg }} />
                     </div>
                   </span>
-                  <span className="pill" style={{ background: sk.bg }}>
+                  <span className="pill" style={{ background: 'var(--sand)', color: 'var(--ink-2)' }}>
                     {n === 0 ? 'Not started' : n === 1 ? 'Just begun' : 'Growing'}
                   </span>
                 </div>
@@ -124,7 +124,7 @@ export function Journey() {
                 <div key={d.toISOString()} className={`week-day ${t ? 'today' : ''} ${future ? 'future' : ''}`}>
                   <span>{d.toLocaleDateString(undefined, { weekday: 'narrow' })}</span>
                   <b>{d.getDate()}</b>
-                  <i className={leaves ? 'on' : ''}>{leaves ? <Leaf size={12} color={t ? '#fce3a0' : '#6aab17'} /> : null}</i>
+                  <i className={leaves ? 'on' : ''}>{leaves ? <Leaf size={12} color={t ? '#f0d39a' : 'var(--leaf)'} /> : null}</i>
                 </div>
               ))}
             </div>
@@ -142,7 +142,7 @@ export function Journey() {
                     <small className="muted">{new Date(e.at).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}</small>
                     <b style={{ display: 'block', fontWeight: 620 }}>{e.label}</b>
                   </span>
-                  <span className="pill" style={{ background: 'var(--mint)' }}>
+                  <span className="pill" style={{ background: 'var(--accent-soft)' }}>
                     +{e.leaves}
                   </span>
                 </div>
@@ -156,11 +156,11 @@ export function Journey() {
           <div className="card">
             {(
               [
-                ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--mint)'],
-                ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--butter)'],
-                ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--lilac)'],
-                ['/journey/solutions', 'bookmark', 'Saved answers', `${s.saved.length} saved`, 'var(--blush)'],
-                ['/journey/settings', 'settings', 'Settings', s.email || 'Account', 'var(--sky)'],
+                ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--sand)'],
+                ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--sand)'],
+                ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--sand)'],
+                ['/journey/solutions', 'bookmark', 'Saved answers', `${s.saved.length} saved`, 'var(--sand)'],
+                ['/journey/settings', 'settings', 'Settings', s.email || 'Account', 'var(--sand)'],
               ] as const
             ).map(([to, ic, t, sub, bg]) => (
               <button key={to} className="row" onClick={() => nav(to)}>

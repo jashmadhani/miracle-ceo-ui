@@ -10,9 +10,14 @@ body,
   height: 100%;
 }
 
+/* Safari (26+) tints its status-bar strip with this colour; screens set it via useEdge(). */
+html {
+  background-color: var(--edge-top);
+  transition: background-color 0.3s;
+}
 body {
   margin: 0;
-  background: #ece7df;
+  background: transparent;
   color: var(--ink);
   font-family: var(--text);
   font-size: 16px;

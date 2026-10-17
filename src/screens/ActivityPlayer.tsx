@@ -1,3 +1,4 @@
+import { useEdge } from '../components/edge'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
@@ -18,6 +19,7 @@ export function ActivityPlayer() {
   const child = useChild()
   const act = ACTIVITIES.find((a) => a.id === id) ?? ACTIVITIES[0]
   const sk = SKILLS[act.skill]
+  useEdge({ EQ: '#f9c9ce', SQ: '#c6e6e1', IQ: '#fbdc9f' }[act.skill], false, '#fbf7f1')
   const [phase, setPhase] = useState<Phase>('intro')
   const [n, setN] = useState(0)
   const [tip, setTip] = useState<'magic' | 'support' | 'challenge' | null>(null)

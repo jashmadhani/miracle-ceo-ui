@@ -3,7 +3,7 @@ import './art.css'
 
 export type SceneMood = 'dawn' | 'day' | 'peach' | 'dusk' | 'night'
 
-const SKIES: Record<SceneMood, [string, string, string]> = {
+export const SKIES: Record<SceneMood, [string, string, string]> = {
   dawn: ['#e9e4ff', '#fff1d4', '#ffe3d9'],
   day: ['#d9efec', '#f2faf8', '#fff1d4'],
   peach: ['#ffefcc', '#fff6e6', '#ffe3d9'],

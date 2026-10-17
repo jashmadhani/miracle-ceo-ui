@@ -1,3 +1,4 @@
+import { useEdge } from '../components/edge'
 import { useState } from 'react'
 import { MoodFace, MOODS, type Mood } from '../art/MoodFace'
 import { useStore, today } from '../state/store'
@@ -9,6 +10,7 @@ export function MoodCheckin({ onDone }: { onDone: () => void }) {
   const [pick, setPick] = useState<Mood | null>(null)
   const [answered, setAnswered] = useState(false)
   const m = MOODS.find((x) => x.id === pick)
+  useEdge('#fbf7f1', true, '#fbf7f1')
 
   return (
     <div className="mood" role="dialog" aria-modal="true" aria-label="How are you feeling?">

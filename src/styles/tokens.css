@@ -45,7 +45,11 @@
   --sec-teal-tile: #64aa9e;
 
   /* page background: a soft lagoon wash so white cards stand out */
-  --page-bg: linear-gradient(180deg, #d6eeea 0%, #e8f5f2 28%, #f3f8f4 60%, #fbf7f1 100%);
+  /* starts and ends on the same lagoon so Safari's status bar and toolbar,
+     which take the page colour, run straight into the app */
+  --page-bg: linear-gradient(180deg, #d9efeb 0%, #e8f5f2 24%, #f2f8f5 50%, #e4f2ee 68%, #d9efeb 80%, #d9efeb 100%);
+  --edge-top: #d9efeb;
+  --edge-bottom: #d9efeb;
 
   /* 5 · night plum — ink */
   --ink: #2a2340;

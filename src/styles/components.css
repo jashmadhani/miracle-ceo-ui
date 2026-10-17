@@ -727,3 +727,19 @@
   background: var(--teal);
   color: #fff;
 }
+
+/*
+ * Safari (26+) tints the area under its toolbar from a visible fixed element at
+ * the bottom edge. This dock sits under the floating tab bar and fades the page
+ * into that colour (--edge-bottom, set per screen by useEdge).
+ */
+.edge-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10px;
+  z-index: 25;
+  pointer-events: none;
+  background-color: var(--edge-bottom);
+}

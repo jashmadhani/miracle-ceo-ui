@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Icon } from '../components/Icon'
+import { useEdge } from '../components/edge'
 import { Sheet } from '../components/Shell'
 import { Tree } from '../art/Tree'
 import { Leaf } from '../art/ActivityArt'
@@ -19,6 +20,7 @@ export function Forest() {
   const nav = useNavigate()
   const { s } = useStore()
   const child = useChild()
+  useEdge('#cfe8b6', false, '#cfe8b6')
   const [detail, setDetail] = useState(false)
   const scroller = useRef<HTMLDivElement>(null)
   const H = 360 + TREES.length * GAP

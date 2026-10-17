@@ -30,6 +30,7 @@
   color: var(--ink-2);
 }
 .forest-card {
+  /* one calm colour block, as in the designer's Home: teal, white type, a soft mound */
   position: relative;
   display: flex;
   width: 100%;
@@ -38,12 +39,35 @@
   border-radius: var(--r-xl);
   overflow: hidden;
   text-align: left;
+  background: var(--sec-teal);
+  color: var(--on-dark);
   box-shadow: var(--shadow-lift);
+}
+.forest-card::before {
+  content: '';
+  position: absolute;
+  right: -40px;
+  top: 30px;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+.forest-card::after {
+  content: '';
+  position: absolute;
+  right: -30px;
+  bottom: -70px;
+  width: 280px;
+  height: 120px;
+  border-radius: 50%;
+  background: var(--sec-teal-tile);
 }
 .forest-card-tree {
   position: absolute;
+  z-index: 1;
   right: -6px;
-  bottom: 8px;
+  bottom: 22px;
   width: 54%;
   height: 92%;
   display: flex;
@@ -54,16 +78,20 @@
 }
 .forest-card-copy {
   position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
-  margin: 14px;
-  padding: 16px;
-  max-width: 60%;
+  padding: 22px 20px;
+  max-width: 58%;
   align-self: flex-start;
-  border-radius: var(--r-lg);
-  background: rgba(255, 253, 248, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+}
+.forest-card-copy .eyebrow {
+  color: rgba(255, 250, 244, 0.75);
+}
+.forest-card-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 250, 244, 0.85);
 }
 .forest-card-copy .btn {
   white-space: nowrap;

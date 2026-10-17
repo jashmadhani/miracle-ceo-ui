@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Scene, Foliage, type SceneMood } from '../art/Scene'
+import { Scene, Foliage, SKIES, type SceneMood } from '../art/Scene'
+import { useEdge } from '../components/edge'
 import { Illustration, type IllustrationName } from '../art/Illustration'
 import { Brand } from '../components/Shell'
 import { Icon } from '../components/Icon'
@@ -26,6 +27,7 @@ export function SignIn() {
   }, [i])
 
   const slide = SLIDES[i]
+  useEdge(SKIES[slide.mood][0], false, '#fbf7f1')
   return (
     <div
       className="screen welcome"

@@ -1,3 +1,4 @@
+import { useEdge } from '../components/edge'
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChildSwitcher, TabBar } from '../components/Shell'
@@ -17,6 +18,7 @@ export function Home() {
   const { s, set, earn, toast } = useStore()
   const child = useChild()
   const { act, done } = useToday()
+  useEdge('#ec6f7d', false, '#fdfbe9')
   const [checkin, setCheckin] = useState(s.moodDay !== today())
   const [returned, setReturned] = useState(false)
 

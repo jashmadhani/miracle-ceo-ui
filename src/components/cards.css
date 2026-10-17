@@ -133,7 +133,7 @@
 }
 .tree-full-panel {
   position: relative;
-  margin: 0 10px calc(10px + var(--safe-bottom));
+  margin: 0 10px calc(18px + var(--safe-bottom));
   padding: 22px 20px;
   border-radius: var(--r-xl);
   background: rgba(255, 255, 255, 0.96);

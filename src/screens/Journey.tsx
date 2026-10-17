@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { ChildSwitcher, TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
-import { Scene } from '../art/Scene'
 import { Tree } from '../art/Tree'
 import { Leaf } from '../art/ActivityArt'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
@@ -66,7 +65,6 @@ export function Journey() {
           </div>
 
           <button className="forest-card" onClick={() => nav('/journey/forest')}>
-            <Scene mood="day" />
             <div className="forest-card-tree">
               <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
             </div>
@@ -75,13 +73,13 @@ export function Journey() {
               <h2 className="display" style={{ fontSize: 26 }}>
                 The Pine is growing
               </h2>
-              <div className="progress" style={{ margin: '10px 0 6px', background: 'rgba(255,255,255,.6)' }}>
+              <div className="progress" style={{ margin: '12px 0 6px', background: 'rgba(255,255,255,.22)' }}>
                 <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--leaf)' }} />
               </div>
-              <span className="muted" style={{ fontSize: 13 }}>
+              <span className="forest-card-count">
                 {inTree} / {LEAVES_PER_TREE} leaves
               </span>
-              <span className="btn small" style={{ marginTop: 14, alignSelf: 'flex-start' }}>
+              <span className="btn small light" style={{ marginTop: 16, alignSelf: 'flex-start' }}>
                 <Icon name="map" size={18} /> Walk your forest
               </span>
             </div>

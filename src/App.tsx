@@ -47,6 +47,7 @@ export function App() {
         <Route path="/journey/library" element={<Gate><Library /></Gate>} />
         <Route path="*" element={<Navigate to={start} replace />} />
       </Routes>
+      <div className="edge-dock" aria-hidden />
       <Toast />
     </div>
   )

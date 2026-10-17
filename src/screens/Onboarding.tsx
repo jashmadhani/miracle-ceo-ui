@@ -1,6 +1,7 @@
 import { useRef, useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Scene, type SceneMood } from '../art/Scene'
+import { Scene, SKIES, type SceneMood } from '../art/Scene'
+import { useEdge } from '../components/edge'
 import { Tree } from '../art/Tree'
 import { ActivityArt } from '../art/ActivityArt'
 import { MiraOrb } from '../art/MiraOrb'
@@ -51,6 +52,7 @@ export function Onboarding() {
   const [tips, setTips] = useState(false)
 
   const step = FLOW[i]
+  useEdge(SKIES[step === 'planted' ? 'peach' : (MOOD[step] ?? 'dawn')][0])
   const progress = i / (FLOW.length - 1)
   const growth = step === 'seed' ? 0.1 : Math.min(1, 0.12 + progress * 0.3)
   const childName = s.child.name || 'your child'

@@ -1,3 +1,4 @@
+import { useEdge } from '../components/edge'
 import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Overlay, Sheet, TabBar } from '../components/Shell'
@@ -356,6 +357,7 @@ function Share() {
 }
 
 function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
+  useEdge('#2a2340', true, '#5e50b8')
   const [phase, setPhase] = useState<'ready' | 'listening' | 'thinking' | 'done'>('ready')
   const [secs, setSecs] = useState(0)
   useEffect(() => {

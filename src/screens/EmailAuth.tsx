@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { Scene } from '../art/Scene'
+import { Scene, SKIES } from '../art/Scene'
+import { useEdge } from '../components/edge'
 import { Tree } from '../art/Tree'
 import { Brand } from '../components/Shell'
 import { Icon } from '../components/Icon'
@@ -12,6 +13,7 @@ export function EmailAuth() {
   const [params, setParams] = useSearchParams()
   const { s, set } = useStore()
   const mode = params.get('mode') === 'login' ? 'login' : 'signup'
+  useEdge(SKIES.dawn[0])
   const [email, setEmail] = useState('')
   const [pw, setPw] = useState('')
   const [show, setShow] = useState(false)

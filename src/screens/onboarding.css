@@ -1,0 +1,371 @@
+.ob {
+  overflow: hidden;
+}
+.ob-top {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: calc(12px + var(--safe-top)) 20px 0;
+}
+.ob-top .progress {
+  background: rgba(255, 255, 255, 0.55);
+}
+.ob-count {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* the tree lives in the top of the screen and grows with every answer */
+.ob-art {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(56px + var(--safe-top));
+  height: 38%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 1;
+}
+.ob-tree {
+  height: 100%;
+  width: auto;
+  max-width: 88%;
+  transition: opacity 0.6s;
+}
+.ob-art.seed {
+  top: auto;
+  bottom: 6%;
+  height: 22%;
+}
+.ob-art.unplanted .ob-tree {
+  opacity: 0;
+}
+.ob-bubble {
+  position: absolute;
+  top: 4px;
+  left: 20px;
+  max-width: 64%;
+  z-index: 2;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 12px 14px;
+  border-radius: 20px 20px 20px 6px;
+  background: rgba(255, 253, 248, 0.92);
+  box-shadow: var(--shadow);
+  font-size: 14px;
+  font-weight: 560;
+  animation: bubble 0.6s var(--ease-spring) both;
+}
+@keyframes bubble {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.92);
+  }
+}
+.mira-dot {
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  border-radius: 50%;
+  flex: none;
+  background: conic-gradient(from 200deg, #a48bdc, #ef7f72, #f7cb62, #7fa9de, #a48bdc);
+  animation: spin 6s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* the floating question card over the art */
+.ob-card {
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  right: 10px;
+  bottom: calc(10px + var(--safe-bottom));
+  max-height: calc(64% - var(--safe-top));
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 249, 238, 0.97);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lift);
+  animation: card-in 0.5s var(--ease-out) both;
+  overflow: hidden;
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+.ob-card.clear {
+  background: none;
+  box-shadow: none;
+  top: calc(64px + var(--safe-top));
+  max-height: none;
+}
+.q {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 24px 20px 0;
+}
+.q-title {
+  font-size: 28px;
+  margin: 6px 0 16px;
+}
+.q-body {
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-width: none;
+}
+.q-body::-webkit-scrollbar {
+  display: none;
+}
+.q-cta {
+  position: sticky;
+  bottom: 0;
+  padding: 16px 0 18px;
+  background: linear-gradient(to bottom, rgba(255, 249, 238, 0), rgba(255, 249, 238, 0.97) 30%);
+}
+.check-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  text-align: left;
+  font-size: 14px;
+  color: var(--ink-2);
+  margin-top: 16px;
+}
+.check-row .box {
+  width: 24px;
+  height: 24px;
+  border-radius: 8px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 0 2px rgba(42, 34, 51, 0.2);
+  transition: background 0.18s;
+}
+.check-row .box.on {
+  background: var(--ink);
+  color: var(--on-dark);
+  box-shadow: none;
+}
+
+/* seed step */
+.seed-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 18px 24px calc(24px + var(--safe-bottom));
+  text-align: center;
+}
+.seed-step h1 {
+  font-size: clamp(34px, 10vw, 44px);
+}
+.seed-drag {
+  margin-top: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  touch-action: none;
+  cursor: grab;
+  transition: transform 0.6s var(--ease-out), opacity 0.6s;
+}
+.seed-drag svg {
+  animation: bob 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 8px 12px rgba(42, 34, 51, 0.2));
+}
+.seed-drag.planted {
+  opacity: 0;
+}
+.seed-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  animation: nudge 1.6s ease-in-out infinite;
+}
+@keyframes nudge {
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.promise-art {
+  border-radius: var(--r-lg);
+  background: var(--fade-dawn);
+  padding: 12px 8px 0;
+}
+.mira-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  background: var(--fade-sky);
+}
+.bubble {
+  max-width: 86%;
+  padding: 12px 14px;
+  border-radius: 20px;
+  font-size: 15px;
+}
+.bubble.me {
+  align-self: flex-end;
+  background: var(--ink);
+  color: var(--on-dark);
+  border-bottom-right-radius: 6px;
+}
+.bubble.mira {
+  display: flex;
+  gap: 10px;
+  background: var(--card);
+  border-bottom-left-radius: 6px;
+  box-shadow: var(--shadow);
+}
+
+.transform {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+}
+.transform > div {
+  border-radius: var(--r-lg);
+  padding: 14px 10px;
+  background: var(--blush);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.transform > div.ceo {
+  background: var(--mint);
+}
+.transform span {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  width: 100%;
+}
+.mini-tree {
+  width: 84px;
+  height: 84px;
+}
+
+/* final screen */
+.planted {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: calc(40px + var(--safe-top)) 24px calc(24px + var(--safe-bottom));
+}
+.planted h1 {
+  font-size: clamp(36px, 11vw, 46px);
+  margin-top: 10px;
+}
+.planted-tree {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: grow-in 1.4s var(--ease-spring) 0.3s both;
+  transform-origin: bottom center;
+}
+.planted-tree svg {
+  height: 100%;
+  max-height: 380px;
+}
+@keyframes grow-in {
+  from {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+.ob-card > .q {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.ob-art.seed::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  width: 120px;
+  height: 26px;
+  margin-left: -60px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, #6b3e1f 0%, #8a5a2e 60%, rgba(138, 90, 46, 0) 72%);
+  z-index: -1;
+}
+.ob-art.unplanted::before {
+  content: '';
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  width: 2px;
+  height: 120px;
+  border-left: 2px dashed rgba(42, 34, 51, 0.25);
+}
+
+/* question steps: tree + card stacked, the tree standing on the card */
+.ob-stack {
+  position: absolute;
+  z-index: 3;
+  left: 10px;
+  right: 10px;
+  top: calc(52px + var(--safe-top));
+  bottom: calc(10px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.ob-stack .ob-art {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  height: auto;
+  flex: 1 1 auto;
+  min-height: 110px;
+  max-height: 340px;
+  margin-bottom: -14px;
+  z-index: 0;
+}
+.ob-stack .ob-bubble {
+  top: 8px;
+  left: 6px;
+}
+.ob-stack .ob-card {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  flex: 0 1 auto;
+  max-height: none;
+  min-height: 0;
+}
+.promise-art svg {
+  height: 170px;
+  width: 100%;
+}

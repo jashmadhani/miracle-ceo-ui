@@ -1,0 +1,88 @@
+.mood {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  background: #fff8ec;
+  overflow: hidden;
+  animation: fade-in 0.4s ease both;
+}
+/* soft purple / yellow / green fades (MindfulMe) */
+.mood-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.8;
+  animation: glow 12s ease-in-out infinite alternate;
+}
+.mood-glow.a {
+  width: 340px;
+  height: 340px;
+  top: -120px;
+  left: -100px;
+  background: #e3d7f7;
+}
+.mood-glow.b {
+  width: 300px;
+  height: 300px;
+  top: 30%;
+  right: -140px;
+  background: #fde3a8;
+  animation-delay: -4s;
+}
+.mood-glow.c {
+  width: 360px;
+  height: 360px;
+  bottom: -160px;
+  left: -60px;
+  background: #d9efdd;
+  animation-delay: -8s;
+}
+@keyframes glow {
+  to {
+    transform: translate(40px, 30px) scale(1.15);
+  }
+}
+.mood-inner {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: calc(48px + var(--safe-top)) 24px calc(24px + var(--safe-bottom));
+}
+.mood-title {
+  font-size: clamp(32px, 9.5vw, 40px);
+}
+.mood-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px 6px;
+  margin: auto 0;
+  padding: 12px 0;
+}
+.mood-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0 10px;
+  border-radius: 26px;
+  font-weight: 620;
+  font-size: 15px;
+  color: var(--ink-2);
+  animation: rise 0.5s var(--ease-out) both;
+  transition: background 0.2s, color 0.2s;
+}
+.mood-btn.on {
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+.mood-inner.reply {
+  text-align: center;
+  align-items: center;
+}
+.reply-face {
+  margin-top: 8vh;
+  margin-bottom: 18px;
+}

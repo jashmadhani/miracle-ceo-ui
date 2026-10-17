@@ -1,0 +1,53 @@
+.home-head {
+  padding: calc(18px + var(--safe-top)) 20px 64px;
+  background: linear-gradient(170deg, #f9b6a8 0%, #fbd3c5 55%, #fde3b0 100%);
+  border-radius: 0 0 40px 40px;
+}
+.home-head-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.home-me {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--card);
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 20px;
+  flex: none;
+  box-shadow: var(--shadow);
+}
+.home-date {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(42, 34, 51, 0.6);
+}
+.home-hello {
+  font-size: 26px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mood-mini {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.55);
+}
+.home-today {
+  margin-top: -44px;
+  position: relative;
+}
+.home-quote {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink-3);
+  margin: 40px 0 8px;
+  line-height: 1.2;
+}

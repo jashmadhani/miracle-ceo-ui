@@ -1,0 +1,64 @@
+/*
+ * Design tokens. The palette is provisional until Josh supplies the final one —
+ * every colour in the app comes from here, so swapping it is a one-file change.
+ */
+:root {
+  /* surfaces */
+  --paper: #fff6e8;
+  --card: #fffdf8;
+  --line: rgba(42, 34, 51, 0.08);
+
+  /* pastels (from "Being a parent" + the existing yellow, pink, blue) */
+  --butter: #fce3a0;
+  --butter-2: #f7cb62;
+  --blush: #fbd8d1;
+  --coral: #ef7f72;
+  --coral-2: #dd6458;
+  --sky: #d3e5f8;
+  --sky-2: #7fa9de;
+  --lilac: #e6dcf8;
+  --lilac-2: #a48bdc;
+  --mint: #d9efdd;
+  --mint-2: #8cc79a;
+
+  /* the one action colour */
+  --teal: #1f6f69;
+  --teal-2: #17554f;
+
+  /* text */
+  --ink: #2a2233;
+  --ink-2: #5e5468;
+  --ink-3: #8f8597;
+  --on-dark: #fffaf2;
+
+  /* skill colours (SQ / EQ / IQ) */
+  --sq: var(--sky-2);
+  --sq-bg: var(--sky);
+  --eq: var(--coral);
+  --eq-bg: var(--blush);
+  --iq: #e0a832;
+  --iq-bg: var(--butter);
+
+  /* type */
+  --display: 'Hagrid', 'Bricolage Grotesque Variable', -apple-system, system-ui, sans-serif;
+  --text: -apple-system, 'SF Pro Text', 'SF Pro', system-ui, 'Helvetica Neue', sans-serif;
+
+  /* shape */
+  --r-xl: 32px;
+  --r-lg: 24px;
+  --r-md: 18px;
+  --r-sm: 12px;
+  --shadow: 0 1px 2px rgba(42, 34, 51, 0.04), 0 8px 24px rgba(42, 34, 51, 0.07);
+  --shadow-lift: 0 2px 4px rgba(42, 34, 51, 0.06), 0 18px 40px rgba(42, 34, 51, 0.14);
+
+  /* the MindfulMe-style soft fades */
+  --fade-dawn: linear-gradient(160deg, #e6dcf8 0%, #fde9b8 52%, #d9efdd 100%);
+  --fade-peach: linear-gradient(170deg, #fde9b8 0%, #fbd8d1 100%);
+  --fade-sky: linear-gradient(175deg, #d3e5f8 0%, #fff6e8 100%);
+
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}

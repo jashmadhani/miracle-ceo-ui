@@ -1,0 +1,255 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { ActivityArt, Leaf, SpotBook, SpotHeadphones } from '../art/ActivityArt'
+import { Tree } from '../art/Tree'
+import { Scene } from '../art/Scene'
+import { Icon } from './Icon'
+import { Overlay, Sheet } from './Shell'
+import { ACTIVITIES, READS, SKILLS, VIDEOS, type Activity } from '../data/content'
+import { LEAVES_PER_TREE, today, useChild, useStore } from '../state/store'
+import './cards.css'
+
+export function useToday(): { act: Activity; done: boolean } {
+  const { s } = useStore()
+  const act = ACTIVITIES.find((a) => a.id === s.todayId) ?? ACTIVITIES[0]
+  const doneAt = s.done[act.id]
+  return { act, done: !!doneAt && new Date(doneAt).toISOString().slice(0, 10) === today() }
+}
+
+/** The big illustrated "today's activity" card — most of it is art, one obvious action. */
+export function TodayHero({ act, done, compact }: { act: Activity; done: boolean; compact?: boolean }) {
+  const nav = useNavigate()
+  const sk = SKILLS[act.skill]
+  return (
+    <button className={`today-hero sk-${act.skill} ${compact ? 'compact' : ''}`} onClick={() => nav(`/activity/${act.id}`)} aria-label={`${act.title}, ${act.minutes} minutes. ${done ? 'Done today' : 'Start together'}`}>
+      <div className="today-art">
+        <ActivityArt skill={act.skill} />
+      </div>
+      <div className="today-copy">
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          <span className="pill">
+            <Icon name={sk.icon} size={14} /> {sk.name}
+          </span>
+          <span className="pill">
+            <Icon name="clock" size={14} /> {act.minutes} min
+          </span>
+          <span className="pill">
+            <Leaf size={14} /> +3
+          </span>
+        </div>
+        <div className="today-row">
+          <h3 className="display today-title">{act.title}</h3>
+          <span className={`today-go ${done ? 'done' : ''}`}>{done ? <Icon name="check" size={26} stroke={2.6} /> : <Icon name="arrow" size={26} stroke={2.4} />}</span>
+        </div>
+        {done && <p className="today-done">Done today — lovely work.</p>}
+      </div>
+    </button>
+  )
+}
+
+export function TreeCard() {
+  const { s } = useStore()
+  const child = useChild()
+  const [full, setFull] = useState(false)
+  const inTree = s.leaves % LEAVES_PER_TREE
+  return (
+    <>
+      <div className="tree-card">
+        <div className="tree-card-head">
+          <div>
+            <h2 className="display" style={{ fontSize: 24 }}>
+              {child.name}’s tree
+            </h2>
+            <p className="muted" style={{ fontSize: 14 }}>
+              growing with you
+            </p>
+          </div>
+          <button className="icon-btn" onClick={() => setFull(true)} aria-label="Open tree full screen">
+            <Icon name="expand" size={20} />
+          </button>
+        </div>
+        <button className="tree-card-art" onClick={() => setFull(true)} aria-label="Open tree">
+          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
+        </button>
+        <div className="tree-card-foot">
+          <Leaf size={18} />
+          <b>{inTree}</b>
+          <span className="muted">of {LEAVES_PER_TREE} leaves</span>
+          <div className="progress" style={{ flex: 1, marginLeft: 8 }}>
+            <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--mint-2)' }} />
+          </div>
+        </div>
+      </div>
+      {full && <TreeFull onClose={() => setFull(false)} />}
+    </>
+  )
+}
+
+export function TreeFull({ onClose }: { onClose: () => void }) {
+  const { s } = useStore()
+  const child = useChild()
+  const inTree = s.leaves % LEAVES_PER_TREE
+  const recent = [...s.log].reverse().slice(0, 4)
+  return (
+    <Overlay>
+    <div className="tree-full" role="dialog" aria-modal="true" aria-label={`${child.name}'s tree`}>
+      <Scene mood="peach" hills={false} />
+      <button className="icon-btn" onClick={onClose} aria-label="Close" style={{ position: 'absolute', top: 'calc(14px + var(--safe-top))', right: 16, zIndex: 3 }}>
+        <Icon name="close" />
+      </button>
+      <div className="tree-full-art">
+        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
+      </div>
+      <div className="tree-full-panel">
+        <p className="eyebrow">The Pine · growing now</p>
+        <h2 className="display" style={{ fontSize: 30, margin: '4px 0 2px' }}>
+          {inTree} of {LEAVES_PER_TREE} leaves
+        </h2>
+        <p className="muted">Every leaf is time you actually spent together.</p>
+        <div className="leaf-log">
+          {recent.map((e) => (
+            <div key={e.at} className="leaf-log-row">
+              <span className="leaf-log-ic">
+                <Leaf size={16} />
+              </span>
+              <span style={{ flex: 1 }}>{e.label}</span>
+              <b style={{ color: 'var(--teal)' }}>+{e.leaves}</b>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+    </Overlay>
+  )
+}
+
+/** Bento grid of reads & listens — very little text in a lot of space. */
+export function KnowingBento() {
+  const [open, setOpen] = useState<(typeof READS)[number] | null>(null)
+  const [a, b, c, d] = READS
+  return (
+    <>
+      <div className="bento">
+        <button className="tile wide" style={{ background: a.tint, minHeight: 172 }} onClick={() => setOpen(a)}>
+          <span className="pill" style={{ alignSelf: 'flex-start' }}>
+            <Icon name="book" size={14} /> {a.kind} · {a.minutes} min
+          </span>
+          <span className="tile-title" style={{ fontSize: 26, marginTop: 'auto', maxWidth: '60%' }}>
+            {a.title}
+          </span>
+          <SpotBook className="tile-spot big" />
+        </button>
+        {[b, c].map((r) => (
+          <button key={r.id} className="tile" style={{ background: r.tint, minHeight: 190 }} onClick={() => setOpen(r)}>
+            {r.art === 'book' ? <SpotBook className="tile-spot" /> : <SpotHeadphones className="tile-spot" />}
+            <span className="tile-title" style={{ marginTop: 'auto' }}>
+              {r.title}
+            </span>
+            <span className="tile-meta">
+              {r.kind} · {r.minutes} min
+            </span>
+          </button>
+        ))}
+        <button className="tile wide row-tile" style={{ background: d.tint }} onClick={() => setOpen(d)}>
+          <span className="play-dot">
+            <Icon name="play" size={18} />
+          </span>
+          <span>
+            <span className="tile-title" style={{ display: 'block' }}>
+              {d.title}
+            </span>
+            <span className="tile-meta">
+              {d.kind} · {d.minutes} min
+            </span>
+          </span>
+        </button>
+      </div>
+      {open && (
+        <Sheet onClose={() => setOpen(null)} label={open.title}>
+          <div className="read-hero" style={{ background: open.tint }}>
+            {open.art === 'book' ? <SpotBook className="read-spot" /> : <SpotHeadphones className="read-spot" />}
+          </div>
+          <p className="eyebrow" style={{ marginTop: 18 }}>
+            {open.kind} · {open.minutes} min
+          </p>
+          <h2 className="display" style={{ fontSize: 30, margin: '6px 0 12px' }}>
+            {open.title}
+          </h2>
+          <p style={{ fontSize: 17, lineHeight: 1.55 }} className="muted">
+            A short, practical {open.kind === 'Read' ? 'read' : 'listen'} written for this age. Full content will load from the library once the backend is connected.
+          </p>
+          <button className="btn block" style={{ marginTop: 22 }} onClick={() => setOpen(null)}>
+            {open.kind === 'Read' ? 'Start reading' : 'Play'}
+          </button>
+        </Sheet>
+      )}
+    </>
+  )
+}
+
+export function VideoList() {
+  const { earn, toast } = useStore()
+  const [open, setOpen] = useState<(typeof VIDEOS)[number] | null>(null)
+  const [rated, setRated] = useState<string | null>(null)
+  return (
+    <>
+      <div className="video-list">
+        {VIDEOS.map((v) => (
+          <button key={v.id} className="video-row" onClick={() => { setOpen(v); setRated(null) }}>
+            <span className="video-thumb" style={{ background: v.tint }}>
+              <span className="play-dot">
+                <Icon name="play" size={16} />
+              </span>
+              <span className="video-time">{v.minutes} min</span>
+            </span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span className="r-title" style={{ display: 'block', fontWeight: 650, lineHeight: 1.25 }}>
+                {v.title}
+              </span>
+              <span className="muted" style={{ fontSize: 13 }}>
+                {v.topic}
+              </span>
+            </span>
+            <Icon name="chev" size={18} style={{ color: 'var(--ink-3)' }} />
+          </button>
+        ))}
+      </div>
+      {open && (
+        <Sheet onClose={() => setOpen(null)} label={open.title}>
+          <div className="video-player" style={{ background: open.tint }}>
+            <span className="play-dot big">
+              <Icon name="play" size={28} />
+            </span>
+          </div>
+          <p className="eyebrow" style={{ marginTop: 18 }}>
+            {open.topic} · {open.minutes} min
+          </p>
+          <h2 className="display" style={{ fontSize: 28, margin: '6px 0 10px' }}>
+            {open.title}
+          </h2>
+          <p className="muted" style={{ lineHeight: 1.5 }}>
+            {open.body}
+          </p>
+          <p style={{ fontWeight: 650, margin: '22px 0 10px' }}>Was it useful?</p>
+          <div className="chips">
+            {['Really useful', 'A little', 'Not for us right now'].map((r) => (
+              <button
+                key={r}
+                className={`chip ${rated === r ? 'on' : ''}`}
+                onClick={() => {
+                  if (!rated) {
+                    earn(1, `Watched “${open.title}”`, 'activity')
+                    toast({ title: '+1 leaf', body: 'Thanks for telling us.' })
+                  }
+                  setRated(r)
+                }}
+              >
+                {r}
+              </button>
+            ))}
+          </div>
+        </Sheet>
+      )}
+    </>
+  )
+}

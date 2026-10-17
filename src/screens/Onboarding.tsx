@@ -50,6 +50,7 @@ export function Onboarding() {
   const [schoolCode, setSchoolCode] = useState('')
   const [agree, setAgree] = useState(false)
   const [tips, setTips] = useState(false)
+  const [nudgeTerms, setNudgeTerms] = useState(false)
 
   const step = FLOW[i]
   useEdge(SKIES[step === 'planted' ? 'peach' : (MOOD[step] ?? 'dawn')][0])
@@ -88,13 +89,23 @@ export function Onboarding() {
               </button>
             ))}
           </div>
-          <Check on={agree} onClick={() => setAgree((v) => !v)}>
+          <Check on={agree} nudge={nudgeTerms} onClick={() => setAgree((v) => !v)}>
             I agree to the <b>Terms</b> and <b>Privacy Policy</b>. What I share about my child stays private.
           </Check>
           <Check on={tips} onClick={() => setTips((v) => !v)}>
             Send me the odd parenting tip (optional)
           </Check>
-          <Cta disabled={!s.parentName.trim() || !agree} onClick={() => next(`Nice to meet you, ${s.parentName.trim()}.`)} />
+          <Cta
+            disabled={!s.parentName.trim() || !agree}
+            onBlocked={() => {
+              // on short phones the Terms box can sit below the fold: bring it into view and point at it
+              if (!s.parentName.trim()) return
+              document.querySelector('.check-row')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+              setNudgeTerms(false)
+              requestAnimationFrame(() => setNudgeTerms(true))
+            }}
+            onClick={() => next(`Nice to meet you, ${s.parentName.trim()}.`)}
+          />
         </Q>
       )
       break
@@ -380,10 +391,11 @@ function Q({ kicker, title, hint, children }: { kicker: string; title: string; h
   )
 }
 
-function Cta({ label = 'Continue', disabled, onClick }: { label?: string; disabled?: boolean; onClick: () => void }) {
+function Cta({ label = 'Continue', disabled, onBlocked, onClick }: { label?: string; disabled?: boolean; onBlocked?: () => void; onClick: () => void }) {
   return (
     <div className="q-cta">
-      <button className="btn block" disabled={disabled} onClick={onClick}>
+      {/* a blocked Continue with a reason to show stays tappable, and says why instead of doing nothing */}
+      <button className={`btn block ${disabled && onBlocked ? 'is-disabled' : ''}`} disabled={disabled && !onBlocked} aria-disabled={disabled || undefined} onClick={disabled ? onBlocked : onClick}>
         {label}
       </button>
     </div>
@@ -405,9 +417,9 @@ function Choice({ emoji, title, sub, on, onClick }: { emoji: string; title: stri
   )
 }
 
-function Check({ on, onClick, children }: { on: boolean; onClick: () => void; children: ReactNode }) {
+function Check({ on, nudge, onClick, children }: { on: boolean; nudge?: boolean; onClick: () => void; children: ReactNode }) {
   return (
-    <button className="check-row" onClick={onClick} aria-pressed={on}>
+    <button className={`check-row ${nudge && !on ? 'nudge' : ''}`} onClick={onClick} aria-pressed={on}>
       <span className={`box ${on ? 'on' : ''}`}>{on && <Icon name="check" size={15} stroke={3} />}</span>
       <span>{children}</span>
     </button>

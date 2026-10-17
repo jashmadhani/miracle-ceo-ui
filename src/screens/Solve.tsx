@@ -31,7 +31,7 @@ export function Solve() {
           <p className="eyebrow">
             <Icon name="lock" size={12} style={{ display: 'inline', verticalAlign: '-1px' }} /> Just between us
           </p>
-          <h1 className="display" style={{ fontSize: 38, margin: '6px 0 18px' }}>
+          <h1 className="display solve-title">
             What’s on your mind?
           </h1>
           <div className="segmented" role="tablist">

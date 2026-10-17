@@ -28,9 +28,9 @@ export function EmailAuth() {
 
   return (
     <div className="screen" style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ position: 'relative', height: '34%', minHeight: 220, flex: 'none' }}>
+      <div className="auth-hero">
         <Scene mood="dawn" />
-        <div style={{ position: 'absolute', left: 0, right: 0, bottom: 20, display: 'flex', justifyContent: 'center' }}>
+        <div className="auth-hero-tree">
           <Tree growth={0.55} className="auth-tree" />
         </div>
         <div className="topbar" style={{ position: 'relative' }}>
@@ -44,10 +44,10 @@ export function EmailAuth() {
       </div>
 
       <form onSubmit={submit} className="pad auth-card rise">
-        <h1 className="display" style={{ fontSize: 34 }}>
+        <h1 className="display auth-title">
           {mode === 'signup' ? 'Create your account' : 'Welcome back'}
         </h1>
-        <p className="muted" style={{ margin: '8px 0 24px' }}>
+        <p className="muted auth-sub">
           {mode === 'signup' ? 'Takes a minute. Your child’s details stay private.' : 'Your tree is right where you left it.'}
         </p>
 
@@ -80,7 +80,7 @@ export function EmailAuth() {
           </button>
         )}
 
-        <button className="btn block" style={{ marginTop: 24 }} disabled={!valid}>
+        <button className="btn block auth-go" disabled={!valid}>
           {mode === 'signup' ? 'Create account' : 'Log in'}
         </button>
 

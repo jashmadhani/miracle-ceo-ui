@@ -444,3 +444,30 @@
 .voice-result {
   background: var(--mira-soft);
 }
+
+.solve-title {
+  font-size: clamp(32px, 10vw, 38px);
+  margin: 6px 0 18px;
+}
+/* shorter phones: a smaller header and Mira, so the heading clears the message box */
+@media (max-height: 700px) {
+  .solve-head {
+    padding-top: calc(14px + var(--safe-top));
+    padding-bottom: 46px;
+  }
+  .solve-title {
+    font-size: 30px;
+    margin: 4px 0 12px;
+  }
+  .ask-empty {
+    padding-top: 8px;
+  }
+  .ask-empty .mira {
+    width: 68px !important;
+    height: 68px !important;
+  }
+  .ask-empty .mira svg {
+    width: 68px;
+    height: 68px;
+  }
+}

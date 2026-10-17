@@ -335,7 +335,8 @@
   left: auto;
   right: auto;
   height: auto;
-  flex: 1 1 auto;
+  /* the tree only takes the height the card leaves over, so it gives way first */
+  flex: 1 1 0;
   min-height: 110px;
   max-height: 340px;
   margin-bottom: -14px;
@@ -357,4 +358,71 @@
 .promise-art .illus {
   height: 170px;
   width: 100%;
+}
+
+/*
+ * Shorter phones (iPhone SE / mini, most Androids inside the browser): the tree
+ * gives up height first, and the question card tightens, so every answer and
+ * checkbox sits above the Continue button instead of hiding under it.
+ */
+@media (max-height: 740px) {
+  .ob-stack .ob-art {
+    min-height: 64px;
+  }
+  .ob-stack .ob-bubble {
+    font-size: 13px;
+    padding: 9px 12px;
+  }
+  .q {
+    padding: 18px 16px 0;
+  }
+  .q-title {
+    font-size: 24px;
+    margin: 4px 0 12px;
+  }
+  .q .field {
+    height: 50px;
+  }
+  .q .chip {
+    min-height: 42px;
+    padding: 0 16px;
+  }
+  .q .choice {
+    min-height: 56px;
+    padding: 8px 14px;
+  }
+  .q .pick {
+    min-height: 52px;
+  }
+  .q .check-row {
+    margin-top: 12px;
+  }
+  .q-cta {
+    padding: 12px 0 14px;
+  }
+  .promise-art .illus {
+    height: 120px;
+  }
+  .transform > div {
+    padding: 10px 8px;
+  }
+}
+@media (max-height: 600px) {
+  .ob-stack .ob-art {
+    min-height: 40px;
+  }
+  .ob-stack .ob-bubble {
+    display: none;
+  }
+}
+
+/* a gentle nudge when Continue is tapped before the Terms box is ticked */
+.check-row.nudge .box {
+  animation: nudge-box 0.5s var(--ease-out) 2;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+@keyframes nudge-box {
+  30% {
+    transform: scale(1.25);
+  }
 }

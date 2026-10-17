@@ -26,10 +26,13 @@
 .home-hello {
   flex: 1;
   min-width: 0;
-  font-size: 40px;
-  white-space: nowrap;
+  font-size: clamp(30px, 10.5vw, 40px);
+  /* long names wrap onto a second line rather than being cut off */
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 .mood-mini {
   width: 52px;
@@ -52,4 +55,14 @@
   color: var(--ink-3);
   margin: 40px 0 8px;
   line-height: 1.2;
+}
+
+/* narrow phones: smaller round buttons so the greeting keeps its room */
+@media (max-width: 360px) {
+  .home-me,
+  .mood-mini {
+    width: 42px;
+    height: 42px;
+    font-size: 17px;
+  }
 }

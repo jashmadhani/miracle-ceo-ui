@@ -1,4 +1,8 @@
 .welcome {
+  /* a column: headline, then the art takes whatever height is left, then the buttons.
+     Nothing is pinned on top of anything, so short phones can't overlap. */
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 .welcome-bg {
@@ -14,6 +18,7 @@
 .welcome-top {
   position: relative;
   z-index: 2;
+  flex: none;
   padding: calc(22px + var(--safe-top)) 24px 0;
 }
 .welcome-title {
@@ -30,23 +35,27 @@
 
 /* the cream semicircle with the family's heads rising above it */
 .welcome-stage {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  position: relative;
   z-index: 2;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 .welcome-family {
+  flex: 0 1 236px;
+  min-height: 0;
   width: 88%;
   max-width: 360px;
-  height: 236px;
-  margin: 0 auto -64px;
+  margin: 12px auto -64px;
   position: relative;
   z-index: 1;
   animation: rise 0.8s var(--ease-out) both;
 }
 .welcome-arc {
   position: relative;
+  flex: none;
   padding: 96px 24px calc(18px + var(--safe-bottom));
 }
 .welcome-arc::before {
@@ -89,11 +98,31 @@
   font-size: 15px;
 }
 
-@media (max-height: 760px) {
-  .welcome-family {
-    height: 196px;
-  }
+/* shorter phones (iPhone SE, mini, most Androids inside the browser) */
+@media (max-height: 700px) {
   .welcome-title {
-    margin-top: 16px;
+    margin-top: 14px;
+    font-size: clamp(30px, 9vw, 36px);
+  }
+  .welcome-sub {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .welcome-family {
+    margin-bottom: -48px;
+  }
+  .welcome-arc {
+    padding-top: 70px;
+  }
+  .welcome-arc .btn {
+    min-height: 52px;
+  }
+  .dots {
+    margin-bottom: 12px;
+  }
+}
+@media (max-height: 580px) {
+  .welcome-sub {
+    display: none;
   }
 }

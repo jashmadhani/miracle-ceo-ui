@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
 import { Tree } from '../art/Tree'
+import { useTreeLeafTones } from '../art/leafColors'
 import { Leaf } from '../art/ActivityArt'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
 import { LEAVES_PER_TREE, useChild, useStore } from '../state/store'
@@ -15,6 +16,7 @@ export function Journey() {
   const days = new Set(s.log.map((e) => new Date(e.at).toDateString())).size || 1
   const done = Object.keys(s.done).length
   const inTree = s.leaves % LEAVES_PER_TREE
+  const tones = useTreeLeafTones()
 
   // week strip
   const now = new Date()
@@ -48,7 +50,7 @@ export function Journey() {
         <div className="pad">
           <button className="forest-card" onClick={() => nav('/journey/forest')}>
             <div className="forest-card-tree">
-              <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
+              <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} />
             </div>
             <div className="forest-card-copy">
               <p className="eyebrow">{child.name}’s forest</p>

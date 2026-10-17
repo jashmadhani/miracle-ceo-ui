@@ -1,5 +1,6 @@
 import type { Skill } from '../data/content'
 import { Illustration, illustrationUrl, type IllustrationName } from './Illustration'
+import { LEAF_TONES, type LeafTone } from './leafColors'
 import './art.css'
 
 const BY_SKILL: Record<Skill, IllustrationName> = { EQ: 'emotion-snap', SQ: 'conversation-snap', IQ: 'focus-hunt' }
@@ -36,11 +37,15 @@ export function SpotHeadphones({ className }: { className?: string }) {
   )
 }
 
-export function Leaf({ size = 18, color = 'var(--leaf)', className }: { size?: number; color?: string; className?: string }) {
+/** A small leaf icon. Pass a LeafTone to show the colour of what grew it. */
+export function Leaf({ size = 18, color = 'var(--leaf)', tone, className }: { size?: number; color?: string; tone?: LeafTone; className?: string }) {
+  const fill = tone?.fill ?? color
+  // pale leaves (showing up) get an outline so they read on cream
+  const edge = tone && tone === LEAF_TONES.other ? tone.stroke : undefined
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} className={className} aria-hidden>
-      <path d="M4 20 C4 10 10 4 20 4 C20 14 14 20 4 20 Z" fill={color} />
-      <path d="M4 20 L14 10" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+      <path d="M4 20 C4 10 10 4 20 4 C20 14 14 20 4 20 Z" fill={fill} stroke={edge} strokeWidth={edge ? 1.6 : undefined} />
+      <path d="M4 20 L14 10" stroke={edge ?? '#fff'} strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
     </svg>
   )
 }

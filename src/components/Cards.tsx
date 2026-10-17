@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ActivityArt, Leaf, SpotBook, SpotHeadphones } from '../art/ActivityArt'
 import { Tree } from '../art/Tree'
+import { LEAF_KEY, LEAF_TONES, leafTone, useTreeLeafTones } from '../art/leafColors'
 import { Scene } from '../art/Scene'
 import { Icon } from './Icon'
 import { Overlay, Sheet } from './Shell'
@@ -87,6 +88,7 @@ export function TreeCard({ bare }: { bare?: boolean }) {
   const offset = s.leaves - inTree
   // leaves earned since the tree was last shown drop in with a glow, then count as seen
   const [newFrom] = useState(() => Math.max(0, s.seenLeaves - offset))
+  const tones = useTreeLeafTones()
   const fresh = Math.max(0, inTree - newFrom)
   useEffect(() => {
     if (s.seenLeaves === s.leaves) return
@@ -110,7 +112,7 @@ export function TreeCard({ bare }: { bare?: boolean }) {
           </button>
         </div>
         <button className="tree-card-art" onClick={() => setFull(true)} aria-label="Open tree">
-          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} newFrom={newFrom < inTree ? newFrom : undefined} />
+          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} newFrom={newFrom < inTree ? newFrom : undefined} />
           {fresh > 0 && (
             <span className="new-leaves">
               <Leaf size={14} color="var(--leaf)" /> +{fresh} new
@@ -136,6 +138,7 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
   const child = useChild()
   const inTree = s.leaves % LEAVES_PER_TREE
   const events = leafEvents(s.log).slice(s.leaves - inTree)
+  const tones = useTreeLeafTones()
   const [sel, setSel] = useState<number | null>(null)
   const picked = sel != null ? events[sel] : null
   const recent = [...s.log].reverse().slice(0, 4)
@@ -147,13 +150,13 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
         <Icon name="close" />
       </button>
       <div className="tree-full-art">
-        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} selected={sel} onLeaf={(i) => setSel(i === sel ? null : i)} />
+        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} selected={sel} onLeaf={(i) => setSel(i === sel ? null : i)} />
       </div>
       <div className="tree-full-panel">
         {picked ? (
           <div className="leaf-pick" key={sel}>
             <span className="leaf-pick-ic">
-              <Leaf size={22} color="var(--leaf)" />
+              <Leaf size={22} tone={tones[sel!]} />
             </span>
             <span style={{ flex: 1 }}>
               <span className="eyebrow">Leaf {sel! + 1} · {new Date(picked.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</span>
@@ -168,7 +171,7 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
           </div>
         ) : (
           <p className="muted" style={{ fontSize: 14, marginBottom: 10 }}>
-            Tap a golden leaf to see the moment that grew it.
+            Tap a leaf to see the moment that grew it.
           </p>
         )}
         <p className="eyebrow">The Pine · growing now</p>
@@ -176,11 +179,19 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
           {inTree} of {LEAVES_PER_TREE} leaves
         </h2>
         <p className="muted">Every leaf is time you spent together.</p>
+        {/* what each colour means */}
+        <div className="leaf-key">
+          {LEAF_KEY.map(([k, label]) => (
+            <span key={k}>
+              <Leaf size={15} tone={LEAF_TONES[k]} /> {label}
+            </span>
+          ))}
+        </div>
         <div className="leaf-log">
           {recent.map((e) => (
             <div key={e.at} className="leaf-log-row">
               <span className="leaf-log-ic">
-                <Leaf size={16} color="var(--leaf)" />
+                <Leaf size={16} tone={leafTone(e)} />
               </span>
               <span style={{ flex: 1 }}>{e.label}</span>
               <b style={{ color: 'var(--teal)' }}>+{e.leaves}</b>

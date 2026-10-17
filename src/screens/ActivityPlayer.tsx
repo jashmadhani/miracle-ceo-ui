@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { Tree } from '../art/Tree'
+import { LEAF_TONES, useTreeLeafTones, type LeafTone } from '../art/leafColors'
 import { Scene } from '../art/Scene'
 import { MiraOrb } from '../art/MiraOrb'
 import { Icon } from '../components/Icon'
@@ -19,6 +20,7 @@ export function ActivityPlayer() {
   const child = useChild()
   const act = ACTIVITIES.find((a) => a.id === id) ?? ACTIVITIES[0]
   const sk = SKILLS[act.skill]
+  const tones = useTreeLeafTones()
   useEdge({ EQ: '#f9c9ce', SQ: '#c2e2db', IQ: '#fbdc9f' }[act.skill], false, '#fbf7f1')
   const [phase, setPhase] = useState<Phase>('intro')
   const [n, setN] = useState(0)
@@ -41,7 +43,7 @@ export function ActivityPlayer() {
     setPhase('celebrate')
   }
 
-  if (phase === 'celebrate') return <Celebrate skill={sk.name} onDone={() => nav('/home')} leaves={s.leaves % LEAVES_PER_TREE} name={child.name} />
+  if (phase === 'celebrate') return <Celebrate skill={sk.name} tone={LEAF_TONES[act.skill]} tones={tones} onDone={() => nav('/home')} leaves={s.leaves % LEAVES_PER_TREE} name={child.name} />
 
   return (
     <div className={`screen act sk-${act.skill}`}>
@@ -212,7 +214,7 @@ export function ActivityPlayer() {
         )}
         {phase === 'read' && (
           <button className="btn block" onClick={finish}>
-            <Leaf size={20} color="#ffb937" /> Grow 3 leaves
+            <Leaf size={20} tone={LEAF_TONES[act.skill]} /> Grow 3 leaves
           </button>
         )}
       </div>
@@ -232,14 +234,14 @@ function Opts({ value, onPick, options }: { value?: string; onPick: (v: string) 
   )
 }
 
-function Celebrate({ skill, leaves, name, onDone }: { skill: string; leaves: number; name: string; onDone: () => void }) {
+function Celebrate({ skill, tone, tones, leaves, name, onDone }: { skill: string; tone: LeafTone; tones: LeafTone[]; leaves: number; name: string; onDone: () => void }) {
   return (
     <div className="screen celebrate">
       <Scene mood="peach" />
       <div className="fall" aria-hidden>
         {[...Array(9)].map((_, i) => (
           <span key={i} style={{ left: `${10 + i * 10}%`, animationDelay: `${(i % 3) * 0.35 + i * 0.08}s` }}>
-            <Leaf size={22 + (i % 3) * 6} color={['#ffb937', '#ffc94f', '#ff9475'][i % 3]} />
+            <Leaf size={22 + (i % 3) * 6} tone={tone} />
           </span>
         ))}
       </div>
@@ -252,7 +254,7 @@ function Celebrate({ skill, leaves, name, onDone }: { skill: string; leaves: num
           You did it together, and told Mira how it went.
         </p>
         <div className="celebrate-tree">
-          <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} newFrom={Math.max(0, leaves - 3)} />
+          <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} tones={tones} newFrom={Math.max(0, leaves - 3)} />
         </div>
         <div className="celebrate-count rise rise-3">
           <span>

@@ -4,6 +4,7 @@ import { Icon } from '../components/Icon'
 import { useEdge } from '../components/edge'
 import { Sheet } from '../components/Shell'
 import { Tree } from '../art/Tree'
+import { leafTone, useTreeLeafTones } from '../art/leafColors'
 import { Leaf } from '../art/ActivityArt'
 import { scallop } from '../art/shapes'
 import { TREES } from '../data/content'
@@ -26,6 +27,7 @@ export function Forest() {
   const H = 360 + TREES.length * GAP
   const current = Math.floor(s.leaves / LEAVES_PER_TREE)
   const inTree = s.leaves % LEAVES_PER_TREE
+  const tones = useTreeLeafTones()
   const yAt = (i: number) => H - 230 - i * GAP
 
   // fly in from the far end of the forest down to "you are here"
@@ -124,7 +126,7 @@ export function Forest() {
               aria-label={isCur ? `${name}, growing now` : done ? `${name}, fully grown` : `${name}, grows after ${(i + 1) * LEAVES_PER_TREE} leaves`}
             >
               <span style={{ width: isCur ? 150 : 104, height: isCur ? 160 : 112, filter: !isCur && !done ? 'grayscale(.8) brightness(1.15) opacity(.7)' : undefined }}>
-                <Tree growth={isCur ? 0.35 + (inTree / LEAVES_PER_TREE) * 0.65 : 1} blossoms={isCur ? inTree : 0} sway={isCur} />
+                <Tree growth={isCur ? 0.35 + (inTree / LEAVES_PER_TREE) * 0.65 : 1} blossoms={isCur ? inTree : 0} tones={isCur ? tones : undefined} sway={isCur} />
               </span>
               <span className="spot-label">{isCur ? `${name} · growing` : done ? name : <>
                 <Icon name="lock" size={10} style={{ display: 'inline', verticalAlign: '-1px' }} /> {name}
@@ -146,7 +148,7 @@ export function Forest() {
       {detail && (
         <Sheet onClose={() => setDetail(false)} label="The Pine">
           <div className="tree-detail-hero">
-            <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
+            <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} />
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 16 }}>
             <h2 className="display" style={{ fontSize: 30 }}>
@@ -178,7 +180,7 @@ export function Forest() {
           <div className="leaf-grid">
             {[...Array(LEAVES_PER_TREE)].map((_, i) => (
               <span key={i} className={i < inTree ? 'on' : ''}>
-                <Leaf size={18} color={i < inTree ? 'var(--leaf)' : '#e6dfd4'} />
+                {i < inTree ? <Leaf size={18} tone={tones[i]} /> : <Leaf size={18} color="#e6dfd4" />}
               </span>
             ))}
           </div>
@@ -189,7 +191,7 @@ export function Forest() {
             {[...s.log].reverse().map((e) => (
               <div key={e.at} className="row">
                 <span className="r-icon" style={{ background: 'var(--reward-soft)' }}>
-                  <Leaf size={18} />
+                  <Leaf size={18} tone={leafTone(e)} />
                 </span>
                 <span style={{ flex: 1 }}>
                   <span className="r-title" style={{ display: 'block' }}>

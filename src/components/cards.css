@@ -519,3 +519,19 @@
 .hsec-teal .video-thumb {
   background: rgba(255, 255, 255, 0.7) !important;
 }
+
+/* the colour key under the tree: one leaf per skill, plus showing up */
+.leaf-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 10px 0 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.leaf-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

@@ -1,12 +1,14 @@
 import { useMemo } from 'react'
 import { rng, scallop } from './shapes'
+import type { LeafTone } from './leafColors'
 import './art.css'
 
 /*
  * The tree has real branches, and every leaf grows ON a branch.
  * - Green leaves fill in as the tree grows (growth 0 → 1).
- * - Earned leaves are golden and sit on their own branch spots, so a new one
- *   reads as "one more leaf on the tree", not a dot floating in a blob.
+ * - Earned leaves sit on their own branch spots, so a new one reads as "one
+ *   more leaf on the tree", not a dot floating in a blob. Each takes the colour
+ *   of what grew it (see leafColors.ts); gold when no colours are given.
  * - Only a nearly full-grown tree fills out into the bushy canopy (reference 08).
  */
 
@@ -94,8 +96,10 @@ const ANCHORS = buildAnchors()
 type Props = {
   /** 0 = seed, 1 = fully grown */
   growth?: number
-  /** earned leaves, one golden leaf each, on their own branch spots */
+  /** earned leaves, one leaf each, on their own branch spots */
   blossoms?: number
+  /** colour of each earned leaf, oldest first */
+  tones?: LeafTone[]
   /** leaves from this index on are new — they drop in with a glow */
   newFrom?: number
   /** a highlighted leaf (tapped) */
@@ -107,7 +111,7 @@ type Props = {
   title?: string
 }
 
-export function Tree({ growth = 1, blossoms = 0, newFrom, selected = null, onLeaf, sway = true, ground = true, className, title }: Props) {
+export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, sway = true, ground = true, className, title }: Props) {
   const g = Math.max(0, Math.min(1, growth))
 
   // golden spots are spread evenly through the anchor list; green leaves take the rest
@@ -172,10 +176,11 @@ export function Tree({ growth = 1, blossoms = 0, newFrom, selected = null, onLea
             </g>
           ))}
 
-          {/* earned golden leaves */}
+          {/* earned leaves, each in the colour of what grew it */}
           {gold.map((a, i) => {
             const isNew = newFrom != null && i >= newFrom
             const isSel = selected === i
+            const tone = tones?.[i] ?? { fill: GOLD, stroke: '#fffaf0' }
             return (
               <g
                 key={`e${i}`}
@@ -189,8 +194,8 @@ export function Tree({ growth = 1, blossoms = 0, newFrom, selected = null, onLea
                 {(isNew || isSel) && <circle className="leaf-halo" r="15" fill="#fff6dc" />}
                 <g className="leaf-body" style={isNew ? { animationDelay: `${0.25 * (i - (newFrom ?? 0))}s` } : undefined}>
                   <g transform={`rotate(${a.rot.toFixed(0)}) scale(${isSel ? 2.3 : 1.8})`}>
-                    <path d={LEAF_PATH} fill={GOLD} stroke="#fffaf0" strokeWidth="1.8" />
-                    <path d="M0 -8 L0 8" stroke="#fffaf0" strokeWidth="1.2" strokeLinecap="round" opacity="0.8" />
+                    <path d={LEAF_PATH} fill={tone.fill} stroke={tone.stroke} strokeWidth="1.8" />
+                    <path d="M0 -8 L0 8" stroke={tone.stroke} strokeWidth="1.2" strokeLinecap="round" opacity="0.8" />
                   </g>
                 </g>
               </g>

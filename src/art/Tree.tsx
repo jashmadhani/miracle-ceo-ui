@@ -20,11 +20,11 @@ const CLUMPS: [number, number, number][] = [
   [200, 255, 44],
 ]
 
-const SHADE = '#4f7a2e'
-const MID = '#719d3c'
-const LIGHT = '#97bd57'
-const SHINE = '#bcd77a'
-const LEAF = '#e2a44a'
+const SHADE = '#3f7a1e'
+const MID = '#62a32a'
+const LIGHT = '#8fc93f'
+const SHINE = '#bde06a'
+const LEAF = '#ffb937'
 
 type Props = {
   /** 0 = seed, 1 = fully grown */
@@ -65,7 +65,7 @@ export function Tree({ growth = 1, blossoms = 0, newFrom, selected = null, onLea
 
   return (
     <svg viewBox="0 0 400 440" className={className} role="img" aria-label={title ?? 'A growing tree'}>
-      {ground && <ellipse cx="200" cy="420" rx={150 * trunkScale} ry="14" fill="#cbd8a6" opacity="0.6" />}
+      {ground && <ellipse cx="200" cy="420" rx={150 * trunkScale} ry="14" fill="#c3df8a" opacity="0.6" />}
 
       <g style={{ transformOrigin: '200px 424px', transform: `scale(${trunkScale})` }}>
         {/* trunk and branches */}
@@ -129,7 +129,7 @@ function Sprout({ g, className, ground, title }: { g: number; className?: string
   const t = g / 0.12
   return (
     <svg viewBox="0 0 400 440" className={className} role="img" aria-label={title ?? 'A seed'}>
-      {ground && <ellipse cx="200" cy="420" rx="70" ry="10" fill="#cbd8a6" opacity="0.6" />}
+      {ground && <ellipse cx="200" cy="420" rx="70" ry="10" fill="#c3df8a" opacity="0.6" />}
       {t < 0.25 ? (
         <g className="seed-bob">
           <ellipse cx="200" cy="404" rx="16" ry="20" fill="#8a5222" />

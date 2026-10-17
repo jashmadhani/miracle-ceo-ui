@@ -159,7 +159,7 @@ export function ActivityPlayer() {
         {phase === 'read' && (
           <div className="rise">
             <div className="mira-read">
-              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--teal)' }}>
+              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--mira)' }}>
                 <MiraOrb size={22} /> Mira’s read
               </p>
               <p className="say-line" style={{ fontWeight: 500 }}>
@@ -207,7 +207,7 @@ export function ActivityPlayer() {
         )}
         {phase === 'read' && (
           <button className="btn block" onClick={finish}>
-            <Leaf size={20} color="#fce3a0" /> Grow 3 leaves
+            <Leaf size={20} color="#ffb937" /> Grow 3 leaves
           </button>
         )}
       </div>
@@ -234,12 +234,12 @@ function Celebrate({ skill, leaves, name, onDone }: { skill: string; leaves: num
       <div className="fall" aria-hidden>
         {[...Array(9)].map((_, i) => (
           <span key={i} style={{ left: `${10 + i * 10}%`, animationDelay: `${(i % 3) * 0.35 + i * 0.08}s` }}>
-            <Leaf size={22 + (i % 3) * 6} color={['#6aab17', '#98cd1b', '#ffb3c1'][i % 3]} />
+            <Leaf size={22 + (i % 3) * 6} color={['#ffb937', '#ffc94f', '#ff9475'][i % 3]} />
           </span>
         ))}
       </div>
       <div className="celebrate-inner">
-        <p className="eyebrow rise" style={{ color: 'var(--coral-2)' }}>
+        <p className="eyebrow rise" style={{ color: 'var(--accent-deep)' }}>
           {skill} · together
         </p>
         <h1 className="display rise rise-1">3 leaves grown</h1>

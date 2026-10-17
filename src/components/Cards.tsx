@@ -33,7 +33,7 @@ export function TodayHero({ act, done, compact }: { act: Activity; done: boolean
           <span className="pill">
             <Icon name="clock" size={14} /> {act.minutes} min
           </span>
-          <span className="pill">
+          <span className="pill" style={{ background: 'var(--reward-soft)', color: 'var(--reward-deep)' }}>
             <Leaf size={14} /> +3
           </span>
         </div>

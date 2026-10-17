@@ -34,27 +34,27 @@ export function ActivityArt({ skill, className }: { skill: Skill; className?: st
       {skill === 'EQ' && (
         <>
           <ellipse cx="160" cy="210" rx="130" ry="12" fill={INK} opacity="0.07" />
-          <Kid x={110} y={130} top="#9aaec4" hair="#6b3e26" />
-          <Kid x={210} y={130} top="#e3c486" hair="#3a2430" flip mouth="o" />
+          <Kid x={110} y={130} top="#4fa69f" hair="#6b3e26" />
+          <Kid x={210} y={130} top="#ffc94f" hair="#3a2430" flip mouth="o" />
           {/* feeling cards floating between them */}
           <g className="float-a">
             <rect x="136" y="34" width="48" height="58" rx="10" fill="#fffdf8" transform="rotate(-8 160 63)" />
-            <circle cx="160" cy="58" r="11" fill="#ead193" />
+            <circle cx="160" cy="58" r="11" fill="#ffc94f" />
             <path d="M154 62 Q160 68 166 62" stroke={INK} strokeWidth="2.4" fill="none" strokeLinecap="round" />
           </g>
           <g className="float-b">
-            <path d="M246 46 C246 38 256 34 262 42 C268 34 278 38 278 46 C278 58 262 66 262 66 C262 66 246 58 246 46 Z" fill="#d79c89" />
+            <path d="M246 46 C246 38 256 34 262 42 C268 34 278 38 278 46 C278 58 262 66 262 66 C262 66 246 58 246 46 Z" fill="#ff7a59" />
           </g>
           <g className="float-c">
-            <path d="M52 64 C52 58 59 55 63 61 C67 55 74 58 74 64 C74 72 63 78 63 78 C63 78 52 72 52 64 Z" fill="#e6c0b4" />
+            <path d="M52 64 C52 58 59 55 63 61 C67 55 74 58 74 64 C74 72 63 78 63 78 C63 78 52 72 52 64 Z" fill="#ffb29d" />
           </g>
         </>
       )}
       {skill === 'SQ' && (
         <>
           <ellipse cx="160" cy="210" rx="130" ry="12" fill={INK} opacity="0.07" />
-          <Kid x={100} y={130} top="#d79c89" hair="#3a2430" />
-          <Kid x={220} y={130} top="#ab9fc0" hair="#8a5a2e" flip />
+          <Kid x={100} y={130} top="#ff8a6b" hair="#3a2430" />
+          <Kid x={220} y={130} top="#9c90ee" hair="#8a5a2e" flip />
           <g className="float-a">
             <path d="M52 40 h76 a14 14 0 0 1 14 14 v20 a14 14 0 0 1 -14 14 h-50 l-14 12 v-12 h-12 a14 14 0 0 1 -14 -14 v-20 a14 14 0 0 1 14 -14 Z" fill="#fffdf8" />
             <circle cx="72" cy="64" r="4" fill={INK} />
@@ -62,7 +62,7 @@ export function ActivityArt({ skill, className }: { skill: Skill; className?: st
             <circle cx="108" cy="64" r="4" fill={INK} />
           </g>
           <g className="float-b">
-            <path d="M196 30 h70 a14 14 0 0 1 14 14 v16 a14 14 0 0 1 -14 14 h-12 v12 l-14 -12 h-44 a14 14 0 0 1 -14 -14 v-16 a14 14 0 0 1 14 -14 Z" fill="#ead193" />
+            <path d="M196 30 h70 a14 14 0 0 1 14 14 v16 a14 14 0 0 1 -14 14 h-12 v12 l-14 -12 h-44 a14 14 0 0 1 -14 -14 v-16 a14 14 0 0 1 14 -14 Z" fill="#ffc94f" />
             <path d="M208 52 h44" stroke={INK} strokeWidth="4" strokeLinecap="round" />
           </g>
         </>
@@ -70,7 +70,7 @@ export function ActivityArt({ skill, className }: { skill: Skill; className?: st
       {skill === 'IQ' && (
         <>
           <ellipse cx="160" cy="210" rx="130" ry="12" fill={INK} opacity="0.07" />
-          <Kid x={140} y={130} top="#9aaec4" hair="#6b3e26" mouth="o" />
+          <Kid x={140} y={130} top="#4fa69f" hair="#6b3e26" mouth="o" />
           {/* magnifier */}
           <g className="float-a" style={{ transformOrigin: '210px 120px' }}>
             <circle cx="214" cy="104" r="26" fill="#fffdf8" fillOpacity="0.6" stroke={INK} strokeWidth="7" />
@@ -79,13 +79,13 @@ export function ActivityArt({ skill, className }: { skill: Skill; className?: st
           </g>
           {/* shapes */}
           <g className="float-b">
-            <rect x="40" y="56" width="30" height="30" rx="7" fill="#d79c89" transform="rotate(12 55 71)" />
+            <rect x="40" y="56" width="30" height="30" rx="7" fill="#ff7a59" transform="rotate(12 55 71)" />
           </g>
           <g className="float-c">
-            <path d="M262 40 L284 76 L240 76 Z" fill="#ead193" />
+            <path d="M262 40 L284 76 L240 76 Z" fill="#ffc94f" />
           </g>
           <g className="float-a">
-            <circle cx="72" cy="150" r="14" fill="#ab9fc0" />
+            <circle cx="72" cy="150" r="14" fill="#9c90ee" />
           </g>
         </>
       )}

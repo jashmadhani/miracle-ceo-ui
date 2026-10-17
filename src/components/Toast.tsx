@@ -13,7 +13,7 @@ export function Toast() {
   return (
     <div className="toast" key={toastMsg.key} role="status">
       <span className="leafdot">
-        <Leaf size={20} color="#2a2233" />
+        <Leaf size={20} color="var(--ink)" />
       </span>
       <span>
         <b style={{ display: 'block' }}>{toastMsg.title}</b>

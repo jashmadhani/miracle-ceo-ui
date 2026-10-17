@@ -1,0 +1,84 @@
+MIRACLE CEO - COLOUR PALETTE PROPOSAL (v3, for approval)
+
+WHAT COMPARABLE APPS USE (brand colours pulled from each site, Oct 2026)
+
+Parenting / child development
+- Kinedu: bright sky blue #0086D8, deep navy text #1A1D2E, warm off-white #FBFAF8.
+- Huckleberry: cyan #36D2EA, slate #4A566F, white.
+- Lovevery: ultramarine #202EA8, pale mint #DFF5F3, grey text.
+
+Gamified / kids
+- Duolingo: green #58CC02 plus sky blue #1CB0F6. Loud and high energy.
+- Lingokids: orange #FF9500, cream #F8F2E9, deep purple text #301C59.
+
+Calm-but-engaging reference
+- Headspace: blue #0061EF, warm off-white #F9F4F2, near-black #2D2C2B.
+
+Patterns worth copying
+1. A warm off-white page, never pure white or grey. Cards are white on top of it.
+2. One confident, saturated main colour that does the "tap me" job.
+3. Dark text tinted toward navy or purple, not pure black. It feels friendlier.
+4. Engaging apps add one hot colour (orange or green) for progress and reward. That moment of colour is what makes coming back feel rewarding.
+5. Blue is everywhere in this category, so a blue-leaning teal keeps the trust and still stands apart.
+
+Why v2 felt pale: every colour was pulled toward beige, so nothing stood out and the hierarchy was flat. v3 brings back saturation, but each colour gets one job.
+
+THE PALETTE - 6 COLOURS, IN ORDER OF IMPORTANCE
+
+1. LAGOON TEAL #0B7A74 (primary action)
+   Job: everything you tap to move forward. Primary buttons, the active tab, toggles, links, selected progress.
+   Tint for soft fills: #E2F2F0
+   White text on it: 5.2:1, passes accessibility for body text.
+   Why: blue-green signals trust and calm (like Kinedu and Headspace) and sets us apart from the all-blue competitors.
+
+2. SUNSET CORAL #FF7A59 (energy / featured)
+   Job: the one thing on each screen we most want tapped. Today's activity card, the onboarding hero, the "+ new" badge, the stop button while recording.
+   Tint: #FFE8E1
+   Use dark Night Plum text on it (5.8:1). Never put white body text on coral.
+   Why: the warm, emotional colour. It brings the Lingokids energy without the shouting.
+
+3. MARIGOLD #FFB937 (reward)
+   Job: only for things you have earned. Golden leaves, the leaf counter, celebrations, streaks, "Done today".
+   Tint: #FFF3D9
+   Why: borrowed from games. If gold always means "you earned this", parents learn to love seeing it.
+
+4. DREAM LAVENDER #6A5AE0 (Mira only)
+   Job: anything Mira says or does. Her pearl, "Mira's read", the answer tabs, the voice waveform, the thinking state.
+   Tint: #EEEBFF
+   White text on it: 5.0:1.
+   Why: gives the AI its own recognisable colour, gentle and slightly magical, so parents always know when Mira is speaking.
+
+5. NIGHT PLUM #2A2340 (ink)
+   Job: headings and body text (secondary text at 65%), selected chips, the dark voice bar, night scenes.
+   Why: softer and warmer than black, and gives strong contrast for readability.
+
+6. OAT #FBF7F1 (base), with white #FFFFFF cards
+   Job: page background, card surfaces, sheets.
+   Sand #F1EBE2 is the one neutral for quiet fills like input fields and disabled buttons.
+   Why: the warm off-white that Kinedu, Lingokids and Headspace all use. Calm, never clinical.
+
+HIERARCHY AND HOW MUCH OF EACH
+
+Proportions on a typical screen
+- About 60%: Oat and white surfaces.
+- About 25%: Night Plum text and icons.
+- About 10%: Lagoon Teal actions.
+- About 5%: the accents (Coral, Marigold, Lavender), each only where its job applies.
+
+Rules that keep it consistent
+- At most one Coral element per screen. It marks "start here".
+- Marigold only ever means earned. Never use it for decoration or buttons.
+- Lavender only ever means Mira. Nothing else in the app is purple.
+- Teal is the only colour for primary buttons. Secondary buttons are white with a Night Plum outline.
+- Never place two accent colours as large solid blocks side by side.
+- Skill markers (EQ, SQ, IQ) are small tint chips with an icon, never big blocks:
+  - Emotional (EQ): Coral tint.
+  - Social (SQ): Teal tint.
+  - Intelligence (IQ): Marigold tint.
+- Illustrations draw from the same six colours plus their tints. The tree keeps its natural greens, and earned leaves are Marigold.
+
+How it lands on key screens
+- Home: Oat page, Coral "today's activity" card, white tree card with Marigold leaves, white read tiles, Teal tab highlight.
+- Ask Mira: Oat page, Lavender pearl and waveform, white answer cards with Lavender tabs, Teal send button.
+- Activity: Coral header art, white step card, Teal "Next", Marigold celebration.
+- Journey: white stat cards (the leaves count in Marigold), Teal progress bars, Night Plum for today's day in the week strip.

@@ -104,10 +104,10 @@ export function Journey() {
                       {sk.name}
                     </span>
                     <div className="progress" style={{ marginTop: 8 }}>
-                      <i style={{ width: `${Math.max(3, n * 20)}%`, background: sk.fg }} />
+                      <i style={{ width: `${Math.max(3, n * 20)}%`, background: 'var(--teal)' }} />
                     </div>
                   </span>
-                  <span className="pill" style={{ background: 'var(--sand)', color: 'var(--ink-2)' }}>
+                  <span className="pill" style={{ background: sk.bg, color: sk.fg }}>
                     {n === 0 ? 'Not started' : n === 1 ? 'Just begun' : 'Growing'}
                   </span>
                 </div>
@@ -124,7 +124,7 @@ export function Journey() {
                 <div key={d.toISOString()} className={`week-day ${t ? 'today' : ''} ${future ? 'future' : ''}`}>
                   <span>{d.toLocaleDateString(undefined, { weekday: 'narrow' })}</span>
                   <b>{d.getDate()}</b>
-                  <i className={leaves ? 'on' : ''}>{leaves ? <Leaf size={12} color={t ? '#f0d39a' : 'var(--leaf)'} /> : null}</i>
+                  <i className={leaves ? 'on' : ''}>{leaves ? <Leaf size={12} color="var(--leaf)" /> : null}</i>
                 </div>
               ))}
             </div>
@@ -142,7 +142,7 @@ export function Journey() {
                     <small className="muted">{new Date(e.at).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}</small>
                     <b style={{ display: 'block', fontWeight: 620 }}>{e.label}</b>
                   </span>
-                  <span className="pill" style={{ background: 'var(--accent-soft)' }}>
+                  <span className="pill" style={{ background: 'var(--reward-soft)', color: 'var(--reward-deep)' }}>
                     +{e.leaves}
                   </span>
                 </div>
@@ -156,11 +156,11 @@ export function Journey() {
           <div className="card">
             {(
               [
-                ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--sand)'],
-                ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--sand)'],
-                ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--sand)'],
-                ['/journey/solutions', 'bookmark', 'Saved answers', `${s.saved.length} saved`, 'var(--sand)'],
-                ['/journey/settings', 'settings', 'Settings', s.email || 'Account', 'var(--sand)'],
+                ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--primary-soft)'],
+                ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--primary-soft)'],
+                ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--primary-soft)'],
+                ['/journey/solutions', 'bookmark', 'Saved answers', `${s.saved.length} saved`, 'var(--primary-soft)'],
+                ['/journey/settings', 'settings', 'Settings', s.email || 'Account', 'var(--primary-soft)'],
               ] as const
             ).map(([to, ic, t, sub, bg]) => (
               <button key={to} className="row" onClick={() => nav(to)}>

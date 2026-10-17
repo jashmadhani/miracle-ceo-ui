@@ -50,7 +50,7 @@
   box-shadow: var(--shadow);
 }
 .suggest-tile svg {
-  color: var(--teal);
+  color: var(--mira);
 }
 
 .thread {
@@ -146,7 +146,7 @@
   align-items: center;
   gap: 10px;
   padding: 0 6px 0 10px;
-  background: var(--ink);
+  background: var(--mira);
   box-shadow: var(--shadow-lift);
   animation: bar-in 0.45s var(--ease-spring) both;
 }
@@ -196,7 +196,7 @@
   background: var(--sand);
 }
 .ans-card.ceo {
-  background: var(--primary-soft);
+  background: var(--mira-soft);
 }
 .ans-card ul {
   margin: 0;
@@ -418,4 +418,15 @@
   position: absolute;
   left: 20px;
   top: -24px;
+}
+
+/* Mira's answer tabs carry her colour */
+.answer .segmented {
+  background: var(--mira-soft);
+}
+.answer .segmented button.on {
+  color: var(--mira);
+}
+.voice-result {
+  background: var(--mira-soft);
 }

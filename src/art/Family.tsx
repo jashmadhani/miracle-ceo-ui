@@ -11,10 +11,10 @@ const SKIN_SHADE = '#d79a72'
 const CHILD_SKIN = '#f0c39c'
 const HAIR = '#3a2430'
 const CHILD_HAIR = '#6b3e26'
-const TOP = '#d79c89'
-const TOP_SHADE = '#c4866f'
-const LEGS = '#5f6b88'
-const CHILD_TOP = '#e3c486'
+const TOP = '#ff8a6b'
+const TOP_SHADE = '#e86e50'
+const LEGS = '#3f3a63'
+const CHILD_TOP = '#ffc94f'
 
 /**
  * Parent and child, flat 2D in the Kidory "boy and the bear" spirit:
@@ -30,7 +30,7 @@ export function Family({ parent: who = 'mom', pose = 'lap', className }: Props) 
 
       {/* parent — legs crossed */}
       <path d="M66 338 C64 300 104 286 150 292 L210 292 C256 286 296 300 294 338 Z" fill={LEGS} />
-      <path d="M92 330 C110 314 150 312 180 318 C210 312 250 314 268 330" stroke="#3b4a7c" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.6" />
+      <path d="M92 330 C110 314 150 312 180 318 C210 312 250 314 268 330" stroke="#2a2340" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.6" />
 
       <g className="breathe" style={{ transformOrigin: '180px 300px' }}>
         {/* torso */}
@@ -97,7 +97,7 @@ export function Family({ parent: who = 'mom', pose = 'lap', className }: Props) 
           <g className="book" style={{ transformOrigin: '182px 284px' }}>
             <path d="M150 270 L182 278 L214 270 L214 302 L182 310 L150 302 Z" fill="#fffdf8" />
             <path d="M182 278 L182 310" stroke="#d3c7b6" strokeWidth="2" />
-            <path d="M146 268 L150 270 L150 302 L146 300 Z M218 268 L214 270 L214 302 L218 300 Z" fill="#8ea2ba" />
+            <path d="M146 268 L150 270 L150 302 L146 300 Z M218 268 L214 270 L214 302 L218 300 Z" fill="#0b7a74" />
             <path d="M158 284 L174 288 M158 292 L174 296 M190 288 L206 284 M190 296 L206 292" stroke="#e1d6c6" strokeWidth="2.5" strokeLinecap="round" />
           </g>
           <circle cx="156" cy="290" r="11" fill={SKIN} />

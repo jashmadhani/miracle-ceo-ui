@@ -65,10 +65,10 @@ export function Brand({ light }: { light?: boolean }) {
       <svg viewBox="0 0 32 32" width="30" height="30" aria-hidden>
         <circle cx="16" cy="16" r="16" fill="#fffdf8" />
         <path d="M16 26v-9" stroke="#7a4518" strokeWidth="2.6" strokeLinecap="round" />
-        <circle cx="11.5" cy="14" r="5" fill="#6aab17" />
-        <circle cx="20.5" cy="14" r="5" fill="#98cd1b" />
-        <circle cx="16" cy="9.5" r="5.5" fill="#6aab17" />
-        <circle cx="14" cy="8.5" r="2" fill="#c4e620" />
+        <circle cx="11.5" cy="14" r="5" fill="#62a32a" />
+        <circle cx="20.5" cy="14" r="5" fill="#8fc93f" />
+        <circle cx="16" cy="9.5" r="5.5" fill="#62a32a" />
+        <circle cx="14" cy="8.5" r="2" fill="#bde06a" />
       </svg>
       <span>Miracle CEO</span>
     </div>

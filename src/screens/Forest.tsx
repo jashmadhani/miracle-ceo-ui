@@ -81,26 +81,26 @@ export function Forest() {
         <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" style={{ height: H }} aria-hidden>
           <defs>
             <linearGradient id="meadow" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stopColor="#f6e7c4" />
-              <stop offset="0.12" stopColor="#d7ecc4" />
-              <stop offset="1" stopColor="#c6e3ad" />
+              <stop offset="0" stopColor="#fff1d4" />
+              <stop offset="0.12" stopColor="#cfe8b6" />
+              <stop offset="1" stopColor="#b9dd98" />
             </linearGradient>
           </defs>
           <rect width={W} height={H} fill="url(#meadow)" />
           {/* distant hills at the far end */}
-          <path d={`M0 160 C80 110 160 130 220 150 C290 172 340 120 ${W} 130 L${W} 260 L0 260Z`} fill="#e3d7f7" opacity="0.7" />
+          <path d={`M0 160 C80 110 160 130 220 150 C290 172 340 120 ${W} 130 L${W} 260 L0 260Z`} fill="#e4defb" opacity="0.7" />
           {/* scattered bushes */}
           {[...Array(Math.floor(H / 120))].map((_, i) => {
             const x = i % 2 ? 30 + ((i * 37) % 60) : W - 40 - ((i * 53) % 60)
             const y = 300 + i * 118
-            return <path key={i} d={scallop(x, y, 18, 7, i + 3)} fill={i % 3 ? '#9fcf7a' : '#86c06a'} />
+            return <path key={i} d={scallop(x, y, 18, 7, i + 3)} fill={i % 3 ? '#8fc93f' : '#62a32a'} />
           })}
           {/* pond */}
-          <ellipse cx={W - 90} cy={H - 120} rx="62" ry="22" fill="#a9cdf0" />
-          <ellipse cx={W - 98} cy={H - 124} rx="40" ry="10" fill="#cfe3f8" />
+          <ellipse cx={W - 90} cy={H - 120} rx="62" ry="22" fill="#8fd1c8" />
+          <ellipse cx={W - 98} cy={H - 124} rx="40" ry="10" fill="#d9efec" />
           {/* path */}
-          <path d={d} stroke="#ead6ae" strokeWidth="34" fill="none" strokeLinecap="round" />
-          <path d={d} stroke="#f5e7c8" strokeWidth="22" fill="none" strokeLinecap="round" strokeDasharray="2 14" />
+          <path d={d} stroke="#ffe0a3" strokeWidth="34" fill="none" strokeLinecap="round" />
+          <path d={d} stroke="#fff1d4" strokeWidth="22" fill="none" strokeLinecap="round" strokeDasharray="2 14" />
         </svg>
 
         <span className="day-flag" style={{ left: pathX(-1) + 40, top: H - 60 }}>
@@ -160,8 +160,8 @@ export function Forest() {
               <span className="eyebrow">Did you know?</span>
               <span style={{ marginTop: 8, fontWeight: 560 }}>Pine needles stay green through snowy winters.</span>
             </div>
-            <div className="tile" style={{ background: 'var(--teal)', color: 'var(--on-dark)', minHeight: 0 }}>
-              <span className="eyebrow" style={{ color: 'rgba(255,250,242,.7)' }}>
+            <div className="tile" style={{ background: 'var(--primary-soft)', color: 'var(--teal-2)', minHeight: 0 }}>
+              <span className="eyebrow" style={{ color: 'var(--teal)' }}>
                 It teaches
               </span>
               <span className="tile-title" style={{ marginTop: 8 }}>
@@ -176,7 +176,7 @@ export function Forest() {
           <div className="leaf-grid">
             {[...Array(LEAVES_PER_TREE)].map((_, i) => (
               <span key={i} className={i < inTree ? 'on' : ''}>
-                <Leaf size={18} color={i < inTree ? '#6aab17' : '#e2dccf'} />
+                <Leaf size={18} color={i < inTree ? 'var(--leaf)' : '#e6dfd4'} />
               </span>
             ))}
           </div>
@@ -186,7 +186,7 @@ export function Forest() {
           <div className="card">
             {[...s.log].reverse().map((e) => (
               <div key={e.at} className="row">
-                <span className="r-icon" style={{ background: 'var(--mint)' }}>
+                <span className="r-icon" style={{ background: 'var(--reward-soft)' }}>
                   <Leaf size={18} />
                 </span>
                 <span style={{ flex: 1 }}>

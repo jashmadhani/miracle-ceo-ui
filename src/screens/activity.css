@@ -4,13 +4,13 @@
   overflow: hidden;
 }
 .act.sk-EQ {
-  background: linear-gradient(180deg, #f8efe5 0%, #f0e2d5 45%, var(--paper) 100%);
+  background: linear-gradient(180deg, #ff9475 0%, #ffb29d 40%, var(--paper) 62%);
 }
 .act.sk-SQ {
-  background: linear-gradient(180deg, #f8efe5 0%, #f0e2d5 45%, var(--paper) 100%);
+  background: linear-gradient(180deg, #ff9475 0%, #ffb29d 40%, var(--paper) 62%);
 }
 .act.sk-IQ {
-  background: linear-gradient(180deg, #f8efe5 0%, #f0e2d5 45%, var(--paper) 100%);
+  background: linear-gradient(180deg, #ff9475 0%, #ffb29d 40%, var(--paper) 62%);
 }
 .act-top {
   display: flex;
@@ -27,7 +27,7 @@
   flex: 1;
   height: 5px;
   border-radius: 3px;
-  background: rgba(43, 42, 51, 0.1);
+  background: rgba(255, 255, 255, 0.6);
   transition: background 0.3s;
 }
 .segments i.past {
@@ -177,7 +177,7 @@
 .mira-read {
   padding: 18px;
   border-radius: var(--r-lg);
-  background: var(--fade-dawn);
+  background: var(--mira-soft);
 }
 
 /* celebration */
@@ -229,7 +229,7 @@
   margin-left: auto;
   font-family: var(--display);
   font-size: 34px;
-  color: var(--teal);
+  color: var(--reward-deep);
   display: flex;
   align-items: baseline;
 }

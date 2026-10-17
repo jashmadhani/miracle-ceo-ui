@@ -99,7 +99,7 @@
   background: rgba(42, 34, 51, 0.06);
 }
 .week-day i.on {
-  background: var(--accent-soft);
+  background: var(--reward-soft);
 }
 .week-day.today {
   background: var(--ink);
@@ -139,7 +139,7 @@
 
 /* ---------- forest map ---------- */
 .forest {
-  background: #d7ecc4;
+  background: #cfe8b6;
 }
 .forest-top {
   position: sticky;
@@ -259,9 +259,9 @@
 }
 
 .stat.featured {
-  background: var(--accent-soft);
+  background: var(--reward-soft);
   box-shadow: none;
 }
 .stat.featured b {
-  color: var(--accent);
+  color: var(--reward-deep);
 }

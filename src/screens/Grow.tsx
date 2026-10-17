@@ -73,8 +73,8 @@ export function Grow() {
               const sk = SKILLS[k]
               const n = ACTIVITIES.filter((a) => a.skill === k && s.done[a.id]).length
               return (
-                <button key={k} className={`skill-tile ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} style={{ background: sk.bg }} onClick={() => choose(k)}>
-                  <span className="skill-ic" style={{ color: sk.fg }}>
+                <button key={k} className={`skill-tile ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} style={{ background: 'var(--card)', boxShadow: 'var(--shadow)' }} onClick={() => choose(k)}>
+                  <span className="skill-ic" style={{ color: sk.fg, background: sk.bg }}>
                     <Icon name={sk.icon} size={24} />
                   </span>
                   <span className="skill-code">{k}</span>
@@ -180,13 +180,13 @@ export function Grow() {
               <button
                 key={t}
                 className="tile topic"
-                style={{ background: SKILLS[k as Skill].bg, minHeight: 116 }}
+                style={{ background: 'var(--card)', boxShadow: 'var(--shadow)', minHeight: 116 }}
                 onClick={() => {
                   setKind(k as Skill)
                   document.querySelector('.filters')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                 }}
               >
-                <span className="pill" style={{ alignSelf: 'flex-start' }}>
+                <span className="pill" style={{ alignSelf: 'flex-start', background: SKILLS[k as Skill].bg, color: SKILLS[k as Skill].fg }}>
                   {SKILLS[k as Skill].name}
                 </span>
                 <span className="tile-title" style={{ marginTop: 'auto' }}>
@@ -237,7 +237,7 @@ function Ring({ value, max, big }: { value: number; max: number; big?: boolean }
         cy={size / 2}
         r={r}
         fill="none"
-        stroke="var(--lilac-2)"
+        stroke="var(--mira)"
         strokeWidth={big ? 12 : 7}
         strokeLinecap="round"
         strokeDasharray={`${(value / max) * c} ${c}`}

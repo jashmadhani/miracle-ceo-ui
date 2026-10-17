@@ -108,7 +108,7 @@ function Ask() {
               {m.state === 'thinking' ? (
                 <div className="thinking">
                   <MiraOrb state="thinking" size={30} />
-                  <div style={{ width: 110, color: 'var(--accent)' }}>
+                  <div style={{ width: 110, color: 'var(--mira)' }}>
                     <Waveform state="thinking" bars={14} height={24} />
                   </div>
                   <span className="muted" style={{ fontSize: 14 }}>
@@ -181,7 +181,7 @@ function VoiceBar({ onCancel, onDone }: { onCancel: () => void; onDone: (t: stri
         <Icon name="close" size={20} />
       </button>
       <div className="voicebar-wave">
-        <Waveform state={live ? 'listening' : 'idle'} bars={30} height={40} color="var(--on-dark)" />
+        <Waveform state={live ? 'listening' : 'idle'} bars={30} height={40} color="#ffffff" />
       </div>
       <span className="voicebar-time">0:{String(secs).padStart(2, '0')}</span>
       <button className="composer-btn send light" onClick={() => onDone('Why does bedtime take so long?')} aria-label="Stop and send">
@@ -385,7 +385,7 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
               {phase === 'thinking' ? 'One moment.' : 'How was today, really?'}
             </h1>
             <div className="voice-wave">
-              <Waveform state={phase === 'listening' ? 'listening' : phase === 'thinking' ? 'thinking' : 'idle'} bars={36} height={110} color="#efe6d4" />
+              <Waveform state={phase === 'listening' ? 'listening' : phase === 'thinking' ? 'thinking' : 'idle'} bars={36} height={110} color="#c9c1f7" />
             </div>
             <p className="voice-time">0:{String(secs).padStart(2, '0')}</p>
             {phase === 'ready' && (
@@ -403,7 +403,7 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
         ) : (
           <div className="rise" style={{ marginTop: 'auto' }}>
             <div className="voice-result">
-              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--teal)' }}>
+              <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--mira)' }}>
                 <MiraOrb size={22} /> The good Mira heard
               </p>
               <ul>
@@ -468,7 +468,7 @@ function Challenges() {
               <p className="display" style={{ fontSize: 22 }}>
                 Building {child.name}’s seven days…
               </p>
-              <div style={{ width: 160, color: 'var(--lilac-2)' }}>
+              <div style={{ width: 160, color: 'var(--mira)' }}>
                 <Waveform state="thinking" bars={16} height={22} />
               </div>
             </div>

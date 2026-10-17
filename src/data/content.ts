@@ -4,9 +4,9 @@
 export type Skill = 'EQ' | 'SQ' | 'IQ'
 
 export const SKILLS: Record<Skill, { name: string; long: string; bg: string; fg: string; icon: 'heart' | 'users' | 'bulb' }> = {
-  EQ: { name: 'Emotional', long: 'Feelings & calm', bg: 'var(--sand)', fg: 'var(--eq)', icon: 'heart' },
-  SQ: { name: 'Social', long: 'Friends & sharing', bg: 'var(--sand)', fg: 'var(--sq)', icon: 'users' },
-  IQ: { name: 'Intelligence', long: 'Curiosity & focus', bg: 'var(--sand)', fg: 'var(--iq)', icon: 'bulb' },
+  EQ: { name: 'Emotional', long: 'Feelings & calm', bg: 'var(--eq-bg)', fg: 'var(--eq)', icon: 'heart' },
+  SQ: { name: 'Social', long: 'Friends & sharing', bg: 'var(--sq-bg)', fg: 'var(--sq)', icon: 'users' },
+  IQ: { name: 'Intelligence', long: 'Curiosity & focus', bg: 'var(--iq-bg)', fg: 'var(--iq)', icon: 'bulb' },
 }
 
 export type Step = { say: string; line?: string }

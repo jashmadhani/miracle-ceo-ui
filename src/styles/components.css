@@ -12,7 +12,7 @@
   font-weight: 650;
   font-size: 17px;
   letter-spacing: -0.01em;
-  box-shadow: 0 6px 18px rgba(31, 111, 105, 0.28);
+  box-shadow: 0 6px 18px rgba(11, 122, 116, 0.3);
   transition: transform 0.15s var(--ease-out), background 0.2s, opacity 0.2s;
 }
 .btn:active {
@@ -350,7 +350,7 @@
   transition: color 0.2s;
 }
 .tabbar a.active {
-  color: var(--ink);
+  color: var(--teal);
 }
 .tabbar a.active::before {
   content: '';

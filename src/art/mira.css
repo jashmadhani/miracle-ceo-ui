@@ -1,3 +1,4 @@
+/* Mira — Dream Lavender is hers alone. */
 .mira {
   position: relative;
   display: inline-grid;
@@ -8,8 +9,8 @@
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #eef3f0 42%, #d3e0da 100%);
-  box-shadow: 0 8px 24px rgba(74, 114, 104, 0.18), inset 0 -6px 14px rgba(74, 114, 104, 0.12);
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #eeebff 42%, #c9c1f7 100%);
+  box-shadow: 0 8px 24px rgba(106, 90, 224, 0.22), inset 0 -6px 14px rgba(106, 90, 224, 0.15);
   animation: mira-breathe 5s ease-in-out infinite;
   transition: background 0.5s, box-shadow 0.5s;
 }
@@ -27,7 +28,7 @@
   position: absolute;
   inset: 12%;
   border-radius: 50%;
-  border: 1.5px solid rgba(74, 114, 104, 0.28);
+  border: 1.5px solid rgba(106, 90, 224, 0.3);
   opacity: 0;
 }
 .mira-orbit {
@@ -44,8 +45,8 @@
   height: 12%;
   margin-left: -6%;
   border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 10px rgba(217, 146, 111, 0.7);
+  background: var(--mira);
+  box-shadow: 0 0 10px rgba(106, 90, 224, 0.7);
 }
 
 @keyframes mira-breathe {
@@ -56,7 +57,7 @@
 @keyframes mira-ripple {
   0% {
     transform: scale(1);
-    opacity: 0.55;
+    opacity: 0.6;
   }
   100% {
     transform: scale(1.75);
@@ -64,26 +65,25 @@
   }
 }
 
-/* attentive: the parent is typing / has focused the composer */
+/* attentive / listening / thinking: the pearl deepens into her lavender */
 .mira-attentive .mira-core,
 .mira-listening .mira-core,
 .mira-thinking .mira-core {
-  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #f6efe6 40%, #e7c9b5 100%);
-  box-shadow: 0 10px 30px rgba(217, 146, 111, 0.3), inset 0 -6px 14px rgba(181, 114, 95, 0.15);
+  background: radial-gradient(circle at 34% 30%, #ffffff 0%, #c9c1f7 38%, #6a5ae0 100%);
+  box-shadow: 0 10px 30px rgba(106, 90, 224, 0.4), inset 0 -6px 14px rgba(42, 35, 64, 0.2);
 }
 .mira-attentive .r1 {
   opacity: 1;
   transform: scale(1.18);
   transition: transform 0.4s var(--ease-spring), opacity 0.3s;
-  border-color: rgba(217, 146, 111, 0.4);
+  border-color: rgba(106, 90, 224, 0.45);
 }
 
-/* listening: rings open outward continuously */
 .mira-listening .mira-core {
   animation: mira-breathe 1.2s ease-in-out infinite;
 }
 .mira-listening .mira-ring {
-  border-color: rgba(217, 146, 111, 0.55);
+  border-color: rgba(106, 90, 224, 0.6);
   animation: mira-ripple 2.1s ease-out infinite;
 }
 .mira-listening .r2 {
@@ -93,7 +93,6 @@
   animation-delay: 1.4s;
 }
 
-/* thinking: a slow light travels around the pearl */
 .mira-thinking .mira-orbit {
   opacity: 1;
   animation: spin 2.4s linear infinite;
@@ -102,7 +101,13 @@
   opacity: 1;
   transform: scale(1.18);
   border-style: dashed;
-  border-color: rgba(217, 146, 111, 0.35);
+  border-color: rgba(106, 90, 224, 0.45);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
 }
 
 /* presence chip */
@@ -116,7 +121,7 @@
   box-shadow: var(--shadow);
   font-size: 14px;
   font-weight: 620;
-  color: var(--ink-2);
+  color: var(--mira);
   opacity: 0;
   transform: translateY(6px);
   transition: opacity 0.3s, transform 0.3s var(--ease-out);

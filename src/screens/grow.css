@@ -65,7 +65,7 @@
   width: 100%;
   padding: 16px 18px;
   border-radius: var(--r-lg);
-  background: var(--fade-dawn);
+  background: var(--mira-soft);
   text-align: left;
 }
 
@@ -114,8 +114,14 @@
   flex: none;
   padding: 6px 2px 0;
 }
-.act-thumb {
-  background: var(--sand);
+.act-item.sk-EQ .act-thumb {
+  background: var(--eq-bg);
+}
+.act-item.sk-SQ .act-thumb {
+  background: var(--sq-bg);
+}
+.act-item.sk-IQ .act-thumb {
+  background: var(--iq-bg);
 }
 .act-thumb svg {
   width: 100%;

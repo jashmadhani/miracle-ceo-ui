@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { ChildSwitcher, TabBar } from '../components/Shell'
-import { useEdge } from '../components/edge'
+import { TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
 import { Tree } from '../art/Tree'
 import { Leaf } from '../art/ActivityArt'
@@ -27,16 +26,13 @@ export function Journey() {
     const leaves = s.log.filter((e) => new Date(e.at).toDateString() === d.toDateString()).reduce((a, e) => a + e.leaves, 0)
     return { d, leaves, today: d.toDateString() === now.toDateString(), future: d > now }
   })
-  useEdge('#ec6f7d')
   const todays = s.log.filter((e) => new Date(e.at).toDateString() === now.toDateString())
 
   return (
     <>
       <div className="screen with-tabbar journey">
-        {/* colour blocks, as on Home: coral header with the numbers, cream below */}
-        <section className="hsec hsec-top hsec-coral">
-        <header className="journey-head">
-          <p className="eyebrow">
+        <header className="pad journey-head">
+          <p className="eyebrow" style={{ color: 'var(--coral-2)' }}>
             Since {new Date(first).toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}
           </p>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12 }}>
@@ -47,29 +43,9 @@ export function Journey() {
               <Icon name="settings" />
             </button>
           </div>
-          <div style={{ marginTop: 14 }}>
-            <ChildSwitcher tone="glass" />
-          </div>
         </header>
 
-          <div className="stats">
-            <div className="stat">
-              <b>{days}</b>
-              <span>day{days === 1 ? '' : 's'} together</span>
-            </div>
-            <div className="stat featured">
-              <b>{s.leaves}</b>
-              <span>leaves grown</span>
-            </div>
-            <div className="stat">
-              <b>{done}</b>
-              <span>moments done</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="hsec journey-body">
-
+        <div className="pad">
           <button className="forest-card" onClick={() => nav('/journey/forest')}>
             <div className="forest-card-tree">
               <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} />
@@ -90,6 +66,24 @@ export function Journey() {
               </span>
             </div>
           </button>
+
+          {/* the numbers as one slim strip under the forest */}
+          <div className="stat-strip">
+            <div>
+              <b>{days}</b>
+              <span>day{days === 1 ? '' : 's'} together</span>
+            </div>
+            <div className="leaves">
+              <b>
+                <Leaf size={18} /> {s.leaves}
+              </b>
+              <span>leaves grown</span>
+            </div>
+            <div>
+              <b>{done}</b>
+              <span>moments done</span>
+            </div>
+          </div>
 
           <div className="section-head">
             <h2>How {child.name} is growing</h2>
@@ -181,7 +175,7 @@ export function Journey() {
               </button>
             ))}
           </div>
-        </section>
+        </div>
       </div>
       <TabBar />
     </>

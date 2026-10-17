@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChildSwitcher, Sheet, TabBar } from '../components/Shell'
-import { TodayBlock, useToday } from '../components/Cards'
-import { useEdge } from '../components/edge'
+import { Sheet, TabBar } from '../components/Shell'
+import { useToday } from '../components/Cards'
 import { Icon } from '../components/Icon'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
@@ -22,7 +21,6 @@ export function Grow() {
   const [insights, setInsights] = useState(false)
 
   const doneCount = Object.keys(s.done).length
-  useEdge('#f4b23f')
   const list = ACTIVITIES.filter((a) => (kind === 'all' || a.skill === kind) && (time === 'any' || a.minutes <= time))
 
   const choose = (sk: Skill) => {
@@ -50,21 +48,43 @@ export function Grow() {
   return (
     <>
       <div className="screen with-tabbar grow">
-        {/* colour blocks, as on Home: amber header, cream middle, teal close */}
-        <section className="hsec hsec-top hsec-amber">
-          <header className="grow-head">
-            <h1 className="display" style={{ fontSize: 40 }}>
-              Let’s grow
-              <br />
-              together.
-            </h1>
-            <ChildSwitcher tone="glass" />
-          </header>
-          <TodayBlock act={act} done={done} />
-        </section>
+        <header className="pad grow-head">
+          <p className="eyebrow">
+            For {child.name} · {child.age.label}
+          </p>
+          <h1 className="display grow-title">Let’s grow together.</h1>
+        </header>
 
-        <section className="hsec grow-body">
-          <div className="section-head" style={{ marginTop: 0 }}>
+        {/* today's moment: one amber card, the scene breaking out of its top edge */}
+        <div className="pad">
+          <button className={`grow-today sk-${act.skill}`} onClick={() => nav(`/activity/${act.id}`)} aria-label={`${act.title}, ${act.minutes} minutes. ${done ? 'Done today' : 'Start'}`}>
+            <span className="grow-today-art">
+              <ActivityArt skill={act.skill} id={act.id} />
+            </span>
+            <span className="eyebrow">Today’s moment</span>
+            <span className="display grow-today-title">{act.title}</span>
+            <span className="grow-today-row">
+              <span className="grow-today-meta">
+                <Icon name="clock" size={15} /> {act.minutes} min
+                <Leaf size={15} /> +3
+              </span>
+              <span className={`grow-today-go ${done ? 'done' : ''}`}>
+                {done ? (
+                  <>
+                    <Icon name="check" size={18} stroke={2.8} /> Done today
+                  </>
+                ) : (
+                  <>
+                    Start <Icon name="arrow" size={18} stroke={2.4} />
+                  </>
+                )}
+              </span>
+            </span>
+          </button>
+        </div>
+
+        <div className="pad">
+          <div className="section-head">
             <h2>What shall we work on?</h2>
           </div>
           <div className="skills">
@@ -72,8 +92,8 @@ export function Grow() {
               const sk = SKILLS[k]
               const n = ACTIVITIES.filter((a) => a.skill === k && s.done[a.id]).length
               return (
-                <button key={k} className={`skill-tile ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} style={{ background: 'var(--card)', boxShadow: 'var(--shadow)' }} onClick={() => choose(k)}>
-                  <span className="skill-ic" style={{ color: sk.fg, background: sk.bg }}>
+                <button key={k} className={`skill-tile sk-${k} ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} onClick={() => choose(k)}>
+                  <span className="skill-ic">
                     <Icon name={sk.icon} size={24} />
                   </span>
                   <span className="skill-code">{k}</span>
@@ -90,8 +110,7 @@ export function Grow() {
             Picking one swaps today’s moment.
           </p>
 
-          <div style={{ marginTop: 20 }}>
-          <button className="insight-tile" onClick={() => setInsights(true)}>
+          <button className="insight-tile" style={{ marginTop: 20 }} onClick={() => setInsights(true)}>
             <Ring value={Math.min(doneCount, INSIGHT_AFTER)} max={INSIGHT_AFTER} />
             <span style={{ flex: 1 }}>
               <span className="tile-title" style={{ display: 'block' }}>
@@ -103,7 +122,6 @@ export function Grow() {
             </span>
             <Icon name="chev" />
           </button>
-          </div>
 
           <div className="section-head">
             <h2>Something to try</h2>
@@ -134,38 +152,38 @@ export function Grow() {
               </button>
             ))}
           </div>
-          <div className="act-list">
-            {list.map((a) => (
-              <button key={a.id} className={`act-item sk-${a.skill}`} onClick={() => nav(`/activity/${a.id}`)}>
-                <span className="act-thumb">
-                  <ActivityArt skill={a.skill} id={a.id} />
-                </span>
-                <span className="act-item-copy">
-                  <span className="eyebrow" style={{ color: SKILLS[a.skill].fg }}>
-                    {a.topic}
-                  </span>
-                  <span className="tile-title">{a.title}</span>
-                  <span className="act-item-meta">
-                    <Icon name="clock" size={14} /> {a.minutes} min
-                    <Leaf size={14} /> +3
-                    {s.done[a.id] && (
-                      <b style={{ color: 'var(--teal)', display: 'inline-flex', alignItems: 'center', gap: 2 }}>
-                        <Icon name="check" size={14} stroke={3} /> Done
-                      </b>
-                    )}
-                  </span>
-                </span>
-              </button>
-            ))}
-            {list.length === 0 && <div className="empty">Nothing fits those filters yet.</div>}
-          </div>
-        </section>
+        </div>
 
-        <section className="hsec hsec-teal hsec-last">
-          <div className="section-head" style={{ marginTop: 0 }}>
+        {/* activities swipe sideways, big art first */}
+        <div className="act-rail">
+          {list.map((a) => (
+            <button key={a.id} className={`act-card-v sk-${a.skill}`} onClick={() => nav(`/activity/${a.id}`)}>
+              <span className="act-card-v-art">
+                <ActivityArt skill={a.skill} id={a.id} />
+                {s.done[a.id] && (
+                  <span className="act-card-v-done">
+                    <Icon name="check" size={14} stroke={3} /> Done
+                  </span>
+                )}
+              </span>
+              <span className="eyebrow" style={{ color: SKILLS[a.skill].fg }}>
+                {a.topic}
+              </span>
+              <span className="act-card-v-title">{a.title}</span>
+              <span className="act-item-meta">
+                <Icon name="clock" size={14} /> {a.minutes} min
+                <Leaf size={14} /> +3
+              </span>
+            </button>
+          ))}
+          {list.length === 0 && <div className="empty">Nothing fits those filters yet.</div>}
+        </div>
+
+        <div className="pad">
+          <div className="section-head">
             <h2>Pick what’s on your mind</h2>
           </div>
-          <div className="bento">
+          <div className="topics">
             {[
               ['SQ', 'Making friends'],
               ['SQ', 'Sharing & turns'],
@@ -176,23 +194,20 @@ export function Grow() {
             ].map(([k, t]) => (
               <button
                 key={t}
-                className="tile topic"
-                style={{ background: '#d4ece7', minHeight: 116 }}
+                className={`topic sk-${k}`}
                 onClick={() => {
                   setKind(k as Skill)
                   document.querySelector('.filters')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
                 }}
               >
-                <span className="pill" style={{ alignSelf: 'flex-start', background: '#fff', color: SKILLS[k as Skill].fg }}>
-                  {SKILLS[k as Skill].name}
+                <span className="topic-dot">
+                  <Icon name={SKILLS[k as Skill].icon} size={16} />
                 </span>
-                <span className="tile-title" style={{ marginTop: 'auto' }}>
-                  {t}
-                </span>
+                <span className="topic-title">{t}</span>
               </button>
             ))}
           </div>
-        </section>
+        </div>
       </div>
       <TabBar />
       {insights && (

@@ -387,9 +387,11 @@
   color: var(--ink);
 }
 .today-block-eyebrow {
-  font-size: 15px;
-  font-weight: 650;
-  color: rgba(42, 35, 64, 0.75);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
 }
 .today-block-art {
   height: 196px;

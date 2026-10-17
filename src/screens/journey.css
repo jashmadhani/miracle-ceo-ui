@@ -2,14 +2,46 @@
   background: var(--page-bg);
 }
 .journey-head {
-  padding-top: 8px;
+  padding-top: calc(22px + var(--safe-top));
 }
-.journey-body {
-  background: var(--sec-cream);
-  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.08);
+.journey-head + .pad > .forest-card {
+  margin-top: 18px;
 }
-.journey-body > .forest-card {
-  margin-top: 0;
+/* three numbers in one white strip */
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 12px;
+  padding: 14px 6px;
+  border-radius: var(--r-lg);
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.stat-strip > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+.stat-strip > div + div {
+  border-left: 1px solid var(--line);
+}
+.stat-strip b {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--display);
+  font-size: 28px;
+  line-height: 1.1;
+}
+.stat-strip .leaves b {
+  color: var(--reward-deep);
+}
+.stat-strip span {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
 }
 .stats {
   display: grid;

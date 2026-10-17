@@ -2,11 +2,77 @@
   background: var(--page-bg);
 }
 .grow-head {
-  padding-top: 10px;
+  padding-top: calc(22px + var(--safe-top));
+}
+.grow-title {
+  font-size: 40px;
+  margin-top: 6px;
+}
+
+/* today's moment — a standalone amber card; the scene breaks out of its top edge */
+.grow-today {
+  position: relative;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 96px;
+  padding: 118px 20px 20px;
+  border-radius: var(--r-xl);
+  background: var(--sec-amber-tile);
+  text-align: left;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s var(--ease-out);
+}
+.grow-today:active {
+  transform: scale(0.985);
+}
+.grow-today-art {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: -84px;
+  height: 196px;
+}
+.grow-today .eyebrow {
+  color: var(--reward-deep);
+}
+.grow-today-title {
+  font-size: 30px;
+  margin-top: 4px;
+}
+.grow-today-row {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
+  margin-top: 14px;
+}
+.grow-today-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.grow-today-meta svg + svg {
+  margin-left: 8px;
+}
+.grow-today-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 46px;
+  padding: 0 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--on-dark);
+  font-weight: 650;
+  font-size: 16px;
+}
+.grow-today-go.done {
+  background: var(--card);
+  color: var(--teal);
 }
 .skills {
   display: grid;
@@ -21,7 +87,19 @@
   min-height: 168px;
   border-radius: var(--r-lg);
   text-align: left;
+  color: #fff;
   transition: transform 0.15s var(--ease-out), box-shadow 0.2s;
+}
+/* solid palette colours, one per skill */
+.skill-tile.sk-SQ {
+  background: var(--sec-teal);
+}
+.skill-tile.sk-EQ {
+  background: var(--sec-coral);
+}
+.skill-tile.sk-IQ {
+  background: var(--sec-amber);
+  color: var(--ink);
 }
 .skill-tile:active {
   transform: scale(0.97);
@@ -39,7 +117,7 @@
   border-radius: 14px;
   display: grid;
   place-items: center;
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.25);
 }
 .skill-code {
   font-family: var(--display);
@@ -55,13 +133,9 @@
 }
 .skill-meta {
   font-size: 12px;
-  color: var(--ink-2);
+  opacity: 0.8;
 }
 
-.grow-body {
-  background: var(--sec-cream);
-  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.08);
-}
 .insight-tile {
   display: flex;
   align-items: center;
@@ -157,4 +231,125 @@
 .act-item-meta svg + svg,
 .act-item-meta b {
   margin-left: 6px;
+}
+
+/* activities swipe sideways */
+.act-rail {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 2px 20px 16px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 20px;
+  scrollbar-width: none;
+}
+.act-rail::-webkit-scrollbar {
+  display: none;
+}
+.act-card-v {
+  flex: none;
+  width: 222px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 10px 16px;
+  border-radius: var(--r-lg);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  text-align: left;
+  scroll-snap-align: start;
+}
+.act-card-v-art {
+  position: relative;
+  height: 140px;
+  margin-bottom: 8px;
+  padding: 10px 8px 4px;
+  border-radius: 18px;
+}
+.act-card-v.sk-EQ .act-card-v-art {
+  background: var(--eq-bg);
+}
+.act-card-v.sk-SQ .act-card-v-art {
+  background: var(--sq-bg);
+}
+.act-card-v.sk-IQ .act-card-v-art {
+  background: var(--iq-bg);
+}
+.act-card-v-done {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+}
+.act-card-v .eyebrow,
+.act-card-v .act-item-meta {
+  padding: 0 6px;
+}
+.act-card-v .eyebrow {
+  font-size: 11px;
+}
+.act-card-v-title {
+  padding: 0 6px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.1;
+}
+
+/* topics — tinted tiles with a skill dot */
+.topics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.topic {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+  min-height: 112px;
+  padding: 16px;
+  border-radius: var(--r-lg);
+  text-align: left;
+}
+.topic.sk-SQ {
+  background: var(--sq-bg);
+}
+.topic.sk-EQ {
+  background: var(--eq-bg);
+}
+.topic.sk-IQ {
+  background: var(--iq-bg);
+}
+.topic-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--card);
+}
+.topic.sk-SQ .topic-dot {
+  color: var(--sq);
+}
+.topic.sk-EQ .topic-dot {
+  color: var(--eq);
+}
+.topic.sk-IQ .topic-dot {
+  color: var(--iq);
+}
+.topic-title {
+  margin-top: auto;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.1;
 }

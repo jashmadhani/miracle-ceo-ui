@@ -3,8 +3,9 @@
 }
 .home-head-row {
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-end;
+  gap: 10px;
+  margin-top: 6px;
 }
 .home-me {
   width: 48px;
@@ -23,7 +24,9 @@
   color: rgba(42, 34, 51, 0.6);
 }
 .home-hello {
-  font-size: 26px;
+  flex: 1;
+  min-width: 0;
+  font-size: 40px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

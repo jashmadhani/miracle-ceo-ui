@@ -51,21 +51,20 @@ export function Home() {
       <div className="screen with-tabbar home">
         {/* colour-block sections, following the designer's Home (reference 07b) */}
         <section className="hsec hsec-top hsec-coral">
+          {/* same header pattern as the other tabs: eyebrow, big title, actions on the right */}
+          <p className="eyebrow">
+            {greeting()} · {date}
+          </p>
           <div className="home-head-row">
-            <button className="home-me" onClick={() => nav('/journey')} aria-label="Your journey">
-              {(s.parentName || 'Y')[0].toUpperCase()}
-            </button>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <h1 className="display home-hello">Hello, {s.parentName || 'friend'}</h1>
-              <p className="home-date">
-                {greeting()} · {date}
-              </p>
-            </div>
+            <h1 className="display home-hello">Hello, {s.parentName || 'friend'}</h1>
             {s.mood && s.moodDay === today() && (
               <button className="mood-mini" onClick={() => setCheckin(true)} aria-label="Change today’s mood">
                 <MoodFace mood={s.mood} size={34} />
               </button>
             )}
+            <button className="home-me" onClick={() => nav('/journey')} aria-label="Your journey">
+              {(s.parentName || 'Y')[0].toUpperCase()}
+            </button>
           </div>
           <div style={{ marginTop: 14 }}>
             <ChildSwitcher tone="glass" />

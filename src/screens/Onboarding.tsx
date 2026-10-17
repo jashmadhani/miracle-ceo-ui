@@ -84,7 +84,7 @@ export function Onboarding() {
           <div className="chips">
             {(['mom', 'dad', 'guardian'] as Role[]).map((r) => (
               <button key={r} className={`chip ${s.role === r ? 'on' : ''}`} onClick={() => set({ role: r })}>
-                {r === 'mom' ? 'Mom' : r === 'dad' ? 'Dad' : 'Guardian'}
+                {r === 'mom' ? 'Mum' : r === 'dad' ? 'Dad' : 'Guardian'}
               </button>
             ))}
           </div>
@@ -123,7 +123,7 @@ export function Onboarding() {
     case 'child':
       card = (
         <Q kicker="Your child" title="Who’s growing with you?">
-          <input className="field" placeholder="Their name" value={s.child.name} onChange={(e) => set({ child: { ...s.child, name: e.target.value } })} />
+          <input className="field" placeholder="Their name or nickname" value={s.child.name} onChange={(e) => set({ child: { ...s.child, name: e.target.value } })} />
           <label className="label" style={{ marginTop: 16 }} htmlFor="dob">
             Birthday
           </label>
@@ -155,7 +155,7 @@ export function Onboarding() {
           ].map(([e, t]) => (
             <Choice key={t} emoji={e} title={t} on={s.firstChild === t} onClick={() => set({ firstChild: t })} />
           ))}
-          <Cta disabled={!s.firstChild} onClick={() => next('First time? Everyone learns this by doing.')} />
+          <Cta disabled={!s.firstChild} onClick={() => next('Every child teaches us something new.')} />
         </Q>
       )
       break
@@ -169,7 +169,7 @@ export function Onboarding() {
       break
     case 'hard':
       card = (
-        <Q kicker="Right now" title="What’s been hard lately?" hint="Up to three. Nobody else sees this.">
+        <Q kicker="Right now" title="Where would you like a little help?" hint="Up to three. Nobody else sees this.">
           <PickGrid items={ONBOARDING.hard} selected={s.hard} onToggle={(t) => toggle('hard', t, 3)} max={3} />
           <Cta label={s.hard.length ? 'Continue' : 'Nothing right now'} onClick={() => next(s.hard.length ? 'That helps. We’ll start there.' : 'Lovely. We’ll keep it playful.')} />
         </Q>
@@ -177,7 +177,7 @@ export function Onboarding() {
       break
     case 'tried':
       card = (
-        <Q kicker="Right now" title="What have you already tried?" hint="No judgement — we’ve all Googled at midnight.">
+        <Q kicker="Right now" title="What have you already tried?" hint="No judgement. We have all Googled at midnight.">
           <PickGrid items={ONBOARDING.tried} selected={s.tried} onToggle={(t) => toggle('tried', t)} />
           <Cta label={s.tried.length ? 'Continue' : 'Skip'} onClick={() => next('Every question you’ve asked about them is love.')} />
         </Q>
@@ -185,11 +185,11 @@ export function Onboarding() {
       break
     case 'mira':
       card = (
-        <Q kicker="Meet Mira" title="Ask the hard questions. Any hour.">
+        <Q kicker="Meet Mira" title="Ask Mira anything, big or small.">
           <div className="mira-preview">
-            <div className="bubble me">{s.hard[0] === 'Bedtime' || !s.hard.length ? 'Why does bedtime take so long?' : `Help — ${s.hard[0].toLowerCase()} is a daily fight.`}</div>
+            <div className="bubble me">{s.hard[0] === 'Settling at bedtime' || !s.hard.length ? 'How can bedtime feel calmer?' : `Can you help with ${s.hard[0].toLowerCase()}?`}</div>
             <div className="bubble mira">
-              <MiraOrb size={22} /> Here’s what’s really going on for {childName}, and one thing to try tonight.
+              <MiraOrb size={22} /> Here’s what might be going on for {childName}, and one small thing to try tonight.
             </div>
           </div>
           <Cta label="I’d like that" onClick={() => next()} />
@@ -210,28 +210,28 @@ export function Onboarding() {
           {ONBOARDING.time.map(([e, t, sub]) => (
             <Choice key={t} emoji={e} title={t} sub={sub} on={s.time === t} onClick={() => set({ time: t })} />
           ))}
-          <Cta disabled={!s.time} onClick={() => next('Look — its first real branches.')} />
+          <Cta disabled={!s.time} onClick={() => next('Look, its first real branches.')} />
         </Q>
       )
       break
     case 'transform':
       card = (
-        <Q kicker="Your journey" title="From bonsai parenting to a tree that grows free.">
+        <Q kicker="Your journey" title={`Grow together with ${childName}.`}>
           <div className="transform">
             <div>
               <BonsaiMini />
-              <p className="eyebrow">Bonsai</p>
-              <span>Reactive</span>
-              <span>Overwhelmed</span>
-              <span>Controlling</span>
+              <p className="eyebrow">Bonsai moments</p>
+              <span>In a rush</span>
+              <span>Busy mind</span>
+              <span>Doing it for them</span>
             </div>
             <Icon name="arrow" size={26} style={{ color: 'var(--ink-3)', alignSelf: 'center' }} />
             <div className="ceo">
               <Tree growth={0.8} sway={false} ground={false} className="mini-tree" />
-              <p className="eyebrow">Miracle CEO</p>
-              <span>Conscious</span>
-              <span>Emotionally intelligent</span>
-              <span>Outstanding</span>
+              <p className="eyebrow">Miracle CEO moments</p>
+              <span>Pause and connect</span>
+              <span>Calm heart</span>
+              <span>Doing it together</span>
             </div>
           </div>
           <Cta label="Grow my tree" onClick={() => next()} />
@@ -254,7 +254,7 @@ export function Onboarding() {
           <h1 className="display rise rise-1">
             Welcome, {s.parentName.trim() || 'friend'}.
             <br />
-            Let’s grow {childName}.
+            Let’s grow together.
           </h1>
           <div className="planted-tree">
             <Tree growth={0.4} />
@@ -268,7 +268,7 @@ export function Onboarding() {
               nav('/home', { replace: true })
             }}
           >
-            Show me today’s moment <Icon name="arrow" size={20} />
+            Show me today’s activity <Icon name="arrow" size={20} />
           </button>
           <p className="muted" style={{ textAlign: 'center', fontSize: 14, marginTop: 12 }}>
             You can change any of this later.
@@ -329,7 +329,7 @@ function SeedStep({ planted, onPlant }: { planted: boolean; onPlant: () => void 
         Every child starts as a <span style={{ color: 'var(--coral-2)' }}>seed</span>.
       </h1>
       <p className="muted" style={{ fontSize: 17, marginTop: 10 }}>
-        Your job is the gardener’s. Drag it into the soil.
+        You are the gardener. Drag the seed into the soil.
       </p>
       <div
         className={`seed-drag ${planted ? 'planted' : ''}`}
@@ -356,7 +356,7 @@ function SeedStep({ planted, onPlant }: { planted: boolean; onPlant: () => void 
         </svg>
         {!planted && (
           <span className="seed-hint">
-            <Icon name="down" size={18} /> slide down
+            <Icon name="down" size={18} /> Slide it down
           </span>
         )}
       </div>

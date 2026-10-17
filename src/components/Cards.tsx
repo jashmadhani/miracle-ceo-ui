@@ -41,7 +41,7 @@ export function TodayHero({ act, done, compact }: { act: Activity; done: boolean
           <h3 className="display today-title">{act.title}</h3>
           <span className={`today-go ${done ? 'done' : ''}`}>{done ? <Icon name="check" size={26} stroke={2.6} /> : <Icon name="arrow" size={26} stroke={2.4} />}</span>
         </div>
-        {done && <p className="today-done">Done today — lovely work.</p>}
+        {done && <p className="today-done">Done today. Lovely work.</p>}
       </div>
     </button>
   )
@@ -74,7 +74,7 @@ export function TodayBlock({ act, done }: { act: Activity; done: boolean }) {
         </div>
         <span className={`today-block-go ${done ? 'done' : ''}`}>{done ? <Icon name="check" size={28} stroke={2.6} /> : <Icon name="arrow" size={28} stroke={2.4} />}</span>
       </div>
-      {done && <p className="today-block-done">Done today — lovely work.</p>}
+      {done && <p className="today-block-done">Done today. Lovely work.</p>}
     </button>
   )
 }
@@ -175,7 +175,7 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
         <h2 className="display" style={{ fontSize: 30, margin: '4px 0 2px' }}>
           {inTree} of {LEAVES_PER_TREE} leaves
         </h2>
-        <p className="muted">Every leaf is time you actually spent together.</p>
+        <p className="muted">Every leaf is time you spent together.</p>
         <div className="leaf-log">
           {recent.map((e) => (
             <div key={e.at} className="leaf-log-row">

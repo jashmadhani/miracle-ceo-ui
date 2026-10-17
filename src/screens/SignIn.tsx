@@ -9,9 +9,9 @@ import { useStore } from '../state/store'
 import './welcome.css'
 
 const SLIDES: { title: string; sub: string; mood: SceneMood; art: IllustrationName }[] = [
-  { title: 'Grow with your child, a little every day.', sub: 'Five-minute moments that build big skills.', mood: 'dawn', art: 'family' },
-  { title: 'Every hard moment has a next step.', sub: 'Tantrums, bedtime, siblings — Mira helps, any hour.', mood: 'peach', art: 'mum-hug' },
-  { title: 'Watch their whole self grow.', sub: 'Feelings, friendships, curiosity and calm.', mood: 'day', art: 'parents-walk' },
+  { title: 'Five calm minutes a day, together.', sub: 'Small moments that help your child grow.', mood: 'dawn', art: 'family' },
+  { title: 'Ask anything. Mira listens first.', sub: 'Bedtime, siblings, big feelings. Any hour, big or small.', mood: 'peach', art: 'mum-hug' },
+  { title: 'Feelings, friendships and a curious mind.', sub: 'One little moment at a time.', mood: 'day', art: 'parents-walk' },
 ]
 
 /** Full-bleed art with the controls floating over a cream semicircle (meditation-centre reference). */

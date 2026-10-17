@@ -53,7 +53,7 @@ export function ChildProfile() {
               </div>
             </div>
             <div className="tile wide" style={{ background: 'var(--sand)', minHeight: 0 }}>
-              <span className="eyebrow">Hard right now</span>
+              <span className="eyebrow">A little help with</span>
               <div className="chips" style={{ marginTop: 10 }}>
                 {(s.hard.length ? s.hard : ['Nothing right now']).map((g) => (
                   <span key={g} className="pill">
@@ -78,11 +78,12 @@ export function ChildProfile() {
 }
 
 const TRAITS: [string, string][] = [
-  ['Cautious', 'Impulsive'],
-  ['Sensitive', 'Thick-skinned'],
-  ['Inward', 'Outward'],
-  ['Routine-led', 'Spontaneous'],
-  ['Persistent', 'Gives up quickly'],
+  // two ways of being, both fine: describes moments, never labels the child
+  ['Takes it slow', 'Jumps right in'],
+  ['Feels things deeply', 'Shrugs things off'],
+  ['Likes it quiet', 'Loves a crowd'],
+  ['Loves a routine', 'Loves a surprise'],
+  ['Keeps at it', 'Moves on quickly'],
 ]
 
 export function ChildEdit() {
@@ -158,7 +159,7 @@ export function ChildEdit() {
         </section>
 
         <section className="edit-sec">
-          <h2 className="edit-h">Hard right now</h2>
+          <h2 className="edit-h">A little help with</h2>
           <PickGrid items={ONBOARDING.hard} selected={hard} onToggle={(t) => setHard(flip(hard, t))} />
         </section>
 

@@ -98,11 +98,11 @@ svg {
   line-height: 1.02;
 }
 
+/* small labels stay in sentence case: the voice audit rules out ALL-CAPS labels */
 .eyebrow {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 650;
+  letter-spacing: 0;
   color: var(--ink-3);
 }
 

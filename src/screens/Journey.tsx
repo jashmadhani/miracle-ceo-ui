@@ -81,7 +81,7 @@ export function Journey() {
             </div>
             <div>
               <b>{done}</b>
-              <span>moments done</span>
+              <span>activities done</span>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ export function Journey() {
                     </div>
                   </span>
                   <span className="pill" style={{ background: sk.bg, color: sk.fg }}>
-                    {n === 0 ? 'Not started' : n === 1 ? 'Just begun' : 'Growing'}
+                    {n === 0 ? 'Ready to start' : n === 1 ? 'Just begun' : 'Growing'}
                   </span>
                 </div>
               )

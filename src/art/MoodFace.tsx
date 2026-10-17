@@ -6,7 +6,7 @@ export type Mood = 'great' | 'good' | 'okay' | 'tired' | 'low' | 'anxious'
 export const MOODS: { id: Mood; label: string; color: string; deep: string; seed: number; reply: string; sub: string }[] = [
   { id: 'great', label: 'Great', color: '#fcd893', deep: '#f4b23f', seed: 3, reply: 'Love that.', sub: 'Let’s put that energy somewhere good today.' },
   { id: 'good', label: 'Good', color: '#d4ece7', deep: '#3e8a80', seed: 8, reply: 'Good is plenty.', sub: 'A small moment together will keep it going.' },
-  { id: 'okay', label: 'Okay', color: '#f4efdb', deep: '#b9a78c', seed: 14, reply: 'Okay is a fine place to start.', sub: 'Most days are okay days. They quietly add up.' },
+  { id: 'okay', label: 'Okay', color: '#f4efdb', deep: '#b9a78c', seed: 14, reply: 'Okay is a fine place to start.', sub: 'Most days are okay days, and they all add up.' },
   { id: 'tired', label: 'Tired', color: '#dfe9e1', deep: '#6e8f86', seed: 21, reply: 'Then we keep it tiny.', sub: 'Five minutes, nothing to prepare.' },
   { id: 'low', label: 'Low', color: '#e5e1ea', deep: '#5e5872', seed: 27, reply: 'Thanks for being honest.', sub: 'Go gently. Mira is here if you want to talk.' },
   { id: 'anxious', label: 'Worried', color: '#f9c9ce', deep: '#ec6f7d', seed: 33, reply: 'That’s a lot to carry.', sub: 'One breath, then one small thing. That’s all.' },

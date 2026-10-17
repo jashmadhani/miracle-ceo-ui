@@ -97,7 +97,7 @@ function Ask() {
             <MiraOrb state={mira} size={104} />
           </div>
           <h2 className="display" style={{ fontSize: 24, textAlign: 'center' }}>
-            Tell Mira what’s weighing on you
+            Ask Mira anything, big or small
           </h2>
           <p className="muted" style={{ textAlign: 'center', marginTop: 6 }}>
             Or start with one of these.
@@ -123,7 +123,7 @@ function Ask() {
                     <Waveform state="thinking" bars={14} height={24} />
                   </div>
                   <span className="muted" style={{ fontSize: 14 }}>
-                    Reading what’s written for this age…
+                    Thinking about this for you…
                   </span>
                 </div>
               ) : (
@@ -195,7 +195,7 @@ function VoiceBar({ onCancel, onDone }: { onCancel: () => void; onDone: (t: stri
         <Waveform state={live ? 'listening' : 'idle'} bars={30} height={40} color="#ffffff" />
       </div>
       <span className="voicebar-time">0:{String(secs).padStart(2, '0')}</span>
-      <button className="composer-btn send light" onClick={() => onDone('Why does bedtime take so long?')} aria-label="Stop and send">
+      <button className="composer-btn send light" onClick={() => onDone('How can bedtime feel calmer?')} aria-label="Stop and send">
         <Icon name="send" size={20} stroke={2.4} />
       </button>
     </div>
@@ -205,7 +205,7 @@ function VoiceBar({ onCancel, onDone }: { onCancel: () => void; onDone: (t: stri
 function Answer() {
   const child = useChild()
   const { s, set, toast } = useStore()
-  const a = ANSWER(child.name, child.He)
+  const a = ANSWER(child.name)
   const [view, setView] = useState<'why' | 'bonsai' | 'ceo'>('why')
   const [helped, setHelped] = useState<null | boolean>(null)
   const [check, setCheck] = useState<string | null>(null)
@@ -218,8 +218,8 @@ function Answer() {
         {(
           [
             ['why', 'Why'],
-            ['bonsai', 'Bonsai'],
-            ['ceo', 'Miracle CEO'],
+            ['bonsai', 'Quick fix'],
+            ['ceo', 'Try this'],
           ] as const
         ).map(([k, l]) => (
           <button key={k} className={view === k ? 'on' : ''} onClick={() => setView(k)} role="tab" aria-selected={view === k}>
@@ -238,7 +238,7 @@ function Answer() {
       )}
       {view === 'bonsai' && (
         <div className="ans-card bonsai rise">
-          <p className="eyebrow">What most of us do</p>
+          <p className="eyebrow">The quick fix</p>
           <ul>
             {a.bonsai.map((p) => (
               <li key={p}>{p}</li>
@@ -262,7 +262,7 @@ function Answer() {
 
       <div className="ans-practice">
         <p className="eyebrow" style={{ color: 'var(--teal)' }}>
-          One small thing tonight
+          One small thing to try
         </p>
         <p style={{ fontWeight: 600, fontSize: 17, margin: '6px 0 14px' }}>{a.practice}</p>
         <button className="btn small" onClick={() => toast({ title: 'On the tree', body: 'We’ll check in on it tomorrow.' })}>
@@ -282,6 +282,7 @@ function Answer() {
       </div>
 
       <p className="ans-closing">{a.closing}</p>
+      <p className="muted ai-note">Mira is our AI guide. She put this together from what you shared, and you know {child.name} best.</p>
 
       <div className="ans-actions">
         <button className={`chip ${helped === true ? 'on' : ''}`} onClick={() => setHelped(true)}>
@@ -323,7 +324,7 @@ function Share() {
           <h2 className="display" style={{ fontSize: 32, color: 'var(--on-dark)' }}>
             How was today, really?
           </h2>
-          <p style={{ color: 'rgba(255,250,242,.75)', margin: '6px 0 18px' }}>Just talk. Mira finds the good you were too tired to notice.</p>
+          <p style={{ color: 'rgba(255,250,242,.75)', margin: '6px 0 18px' }}>Say it however it comes. Mira will help you find the good bits.</p>
           <span className="btn light" style={{ alignSelf: 'flex-start' }}>
             <Icon name="mic" size={20} /> Start talking
           </span>
@@ -410,7 +411,7 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
                 <Icon name="stop" size={28} />
               </button>
             )}
-            <p style={{ color: 'rgba(255,250,242,.6)', textAlign: 'center', fontSize: 13, marginTop: 14 }}>Demo only — nothing is recorded yet.</p>
+            <p style={{ color: 'rgba(255,250,242,.6)', textAlign: 'center', fontSize: 13, marginTop: 14 }}>Demo only. Nothing is recorded yet.</p>
           </>
         ) : (
           <div className="rise" style={{ marginTop: 'auto' }}>
@@ -419,8 +420,8 @@ function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
                 <MiraOrb size={22} /> The good Mira heard
               </p>
               <ul>
-                <li>You stayed calm when bedtime ran late — that was patience under pressure.</li>
-                <li>You noticed they were tired before it became a meltdown.</li>
+                <li>You stayed calm when bedtime ran late. That took patience.</li>
+                <li>You spotted they were tired early, and slowed things down.</li>
               </ul>
               <p className="muted" style={{ fontSize: 14 }}>Rest well. Tomorrow is a new small moment.</p>
             </div>
@@ -445,7 +446,7 @@ function Challenges() {
   return (
     <div className="pad" style={{ marginTop: 18 }}>
       <p className="muted" style={{ marginBottom: 14 }}>
-        Every parent faces these. Pick one — seven days, one small move a day.
+        Moments every parent knows. Pick one and take one small step a day, for seven days.
       </p>
       <div className="bento">
         {CHALLENGES.map((c, i) => {
@@ -492,7 +493,7 @@ function Challenges() {
                 {open.title}
               </h2>
               <p className="muted">
-                {s.challenge?.id === open.id ? `${s.challenge.moves} of 7 moves done` : 'Seven days, one small move a day. Leaves come with each move.'}
+                {s.challenge?.id === open.id ? `${s.challenge.moves} of 7 steps done` : 'One small step a day, for seven days. Each step grows a leaf.'}
               </p>
               <div className="plan">
                 {BEDTIME_PLAN.map((m, i) => {

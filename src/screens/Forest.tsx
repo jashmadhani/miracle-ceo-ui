@@ -106,7 +106,7 @@ export function Forest() {
         </svg>
 
         <span className="day-flag" style={{ left: pathX(-1) + 40, top: H - 60 }}>
-          DAY ONE
+          Day one
         </span>
 
         {TREES.map((name, i) => {

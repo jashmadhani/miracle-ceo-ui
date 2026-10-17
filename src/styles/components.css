@@ -743,3 +743,10 @@
   pointer-events: none;
   background-color: var(--edge-bottom);
 }
+
+/* the kind, plain AI note under anything Mira writes */
+.ai-note {
+  font-size: 13px;
+  line-height: 1.4;
+  margin-top: 12px;
+}

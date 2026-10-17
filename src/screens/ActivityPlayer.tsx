@@ -123,7 +123,7 @@ export function ActivityPlayer() {
             <h2 className="display act-say">Carry it into the rest of the week.</h2>
             <div className="say-card practice">
               <p className="eyebrow" style={{ color: 'var(--teal)' }}>
-                Miracle CEO practice
+                Practise it this week
               </p>
               <p className="say-line">{act.practice}</p>
             </div>
@@ -135,12 +135,12 @@ export function ActivityPlayer() {
             <h2 className="display act-say" style={{ marginTop: 0 }}>
               How did it go?
             </h2>
-            <Opts value={fb.how} onPick={(v) => setFb({ ...fb, how: v })} options={['Loved it', 'Enjoyed it', 'It was okay', 'Not interested']} />
+            <Opts value={fb.how} onPick={(v) => setFb({ ...fb, how: v })} options={['Loved it', 'Enjoyed it', 'It was okay', 'Wanted something else']} />
             {fb.how && (
               <div className="rise">
                 <p className="fb-q">{act.observe.q}</p>
                 <p className="muted" style={{ fontSize: 14, marginBottom: 10 }}>
-                  This is the part Mira learns from.
+                  Every note helps Mira choose the next activity for {child.name}.
                 </p>
                 <Opts value={fb.obs} onPick={(v) => setFb({ ...fb, obs: v })} options={act.observe.options} />
               </div>
@@ -148,11 +148,11 @@ export function ActivityPlayer() {
             {fb.obs && (
               <div className="rise">
                 <p className="fb-q">Would you do it again?</p>
-                <Opts value={fb.again} onPick={(v) => setFb({ ...fb, again: v })} options={['Definitely', 'Probably', 'Maybe', 'Not this one']} />
+                <Opts value={fb.again} onPick={(v) => setFb({ ...fb, again: v })} options={['Definitely', 'Probably', 'Maybe', 'Maybe another day']} />
                 <label className="label" htmlFor="note" style={{ marginTop: 18 }}>
                   One thing {child.name} said or did (optional)
                 </label>
-                <input id="note" className="field" placeholder="It helps Mira most" value={fb.note} onChange={(e) => setFb({ ...fb, note: e.target.value })} />
+                <input id="note" className="field" placeholder="A word, a face, a funny moment" value={fb.note} onChange={(e) => setFb({ ...fb, note: e.target.value })} />
               </div>
             )}
           </div>
@@ -162,7 +162,7 @@ export function ActivityPlayer() {
           <div className="rise">
             <div className="mira-read">
               <p className="eyebrow" style={{ display: 'flex', gap: 8, alignItems: 'center', color: 'var(--mira)' }}>
-                <MiraOrb size={22} /> Mira’s read
+                <MiraOrb size={22} /> What Mira noticed
               </p>
               <p className="say-line" style={{ fontWeight: 500 }}>
                 {act.read}
@@ -170,13 +170,16 @@ export function ActivityPlayer() {
             </div>
             <div className="say-card practice" style={{ marginTop: 12 }}>
               <p className="eyebrow" style={{ color: 'var(--teal)' }}>
-                What Mira noticed
+                You told Mira
               </p>
               <p style={{ fontWeight: 650, marginTop: 6 }}>{fb.obs}</p>
               <p className="muted" style={{ fontSize: 14, marginTop: 2 }}>
-                Noted as something on its way.
+                Thank you. Mira will keep this in mind for next time.
               </p>
             </div>
+            <p className="muted ai-note">
+              Mira is our AI guide. She learns from the moments you share, and you know {child.name} best.
+            </p>
           </div>
         )}
       </div>
@@ -246,7 +249,7 @@ function Celebrate({ skill, leaves, name, onDone }: { skill: string; leaves: num
         </p>
         <h1 className="display rise rise-1">3 leaves grown</h1>
         <p className="muted rise rise-2" style={{ fontSize: 17 }}>
-          Because you did it together — and told Mira how it went.
+          You did it together, and told Mira how it went.
         </p>
         <div className="celebrate-tree">
           <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} newFrom={Math.max(0, leaves - 3)} />
@@ -254,7 +257,7 @@ function Celebrate({ skill, leaves, name, onDone }: { skill: string; leaves: num
         <div className="celebrate-count rise rise-3">
           <span>
             <b>{name}’s tree</b>
-            <small>Every leaf is time you actually spent together</small>
+            <small>Every leaf is time you spent together</small>
           </span>
           <strong>
             {leaves}

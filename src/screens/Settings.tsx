@@ -108,7 +108,7 @@ export function Settings() {
           <div className="danger">
             <b>Delete account</b>
             <p className="muted" style={{ fontSize: 14, margin: '4px 0 12px' }}>
-              Removes your account and everything in it — {child.name}’s profile, the forest, every answer and note. This can’t be undone.
+              This removes your account and everything in it: {child.name}’s profile, the forest, every answer and note. You won’t be able to bring it back.
             </p>
             <button className="link-btn" style={{ color: 'var(--coral-2)', padding: 0 }} onClick={() => setConfirm(true)}>
               Delete my account…

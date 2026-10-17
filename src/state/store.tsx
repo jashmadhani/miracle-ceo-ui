@@ -75,7 +75,7 @@ const DEMO: Partial<State> = {
   child: { name: 'Test Kid', dob: '2020-01-01', gender: 'boy' },
   firstChild: 'Yes, my first',
   grow: ['Making friends', 'Naming feelings'],
-  hard: ['Bedtime'],
+  hard: ['Settling at bedtime'],
   time: '5–10 min',
   leaves: 2,
   log: [{ at: Date.now() - 60000, label: 'Planted your tree', kind: 'visit', leaves: 2 }],

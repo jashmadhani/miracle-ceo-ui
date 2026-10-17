@@ -26,7 +26,7 @@ export function Grow() {
   const choose = (sk: Skill) => {
     const pick = ACTIVITIES.find((a) => a.skill === sk && a.id !== s.todayId && !s.done[a.id]) ?? ACTIVITIES.find((a) => a.skill === sk)!
     set({ todayId: pick.id })
-    toast({ title: `Today: ${pick.title}`, body: `Swapped in a ${SKILLS[sk].name.toLowerCase()} moment.` })
+    toast({ title: `Today: ${pick.title}`, body: `Swapped in a ${SKILLS[sk].name.toLowerCase()} activity.` })
   }
 
   const surprise = () => {
@@ -61,7 +61,7 @@ export function Grow() {
             <span className="grow-today-art">
               <ActivityArt skill={act.skill} id={act.id} />
             </span>
-            <span className="eyebrow">Today’s moment</span>
+            <span className="eyebrow">Today’s activity</span>
             <span className="display grow-today-title">{act.title}</span>
             <span className="grow-today-row">
               <span className="grow-today-meta">
@@ -98,7 +98,7 @@ export function Grow() {
                   </span>
                   <span className="skill-code">{k}</span>
                   <span className="skill-name">{sk.name}</span>
-                  <span className="skill-meta">{n ? `${n} done` : 'Not started'}</span>
+                  <span className="skill-meta">{n ? `${n} done` : 'Ready to start'}</span>
                 </button>
               )
             })}
@@ -107,7 +107,7 @@ export function Grow() {
             <Icon name="shuffle" size={20} /> Not sure? Let it choose
           </button>
           <p className="muted" style={{ fontSize: 13, textAlign: 'center', marginTop: 8 }}>
-            Picking one swaps today’s moment.
+            Picking one changes today’s activity.
           </p>
 
           <button className="insight-tile" style={{ marginTop: 20 }} onClick={() => setInsights(true)}>
@@ -117,7 +117,7 @@ export function Grow() {
                 Insights by Mira
               </span>
               <span className="muted" style={{ fontSize: 14 }}>
-                {doneCount >= INSIGHT_AFTER ? 'Ready to read' : `${INSIGHT_AFTER - doneCount} more moments to unlock`}
+                {doneCount >= INSIGHT_AFTER ? 'Ready to read' : `Ready after ${INSIGHT_AFTER - doneCount} more activities`}
               </span>
             </span>
             <Icon name="chev" />
@@ -215,10 +215,10 @@ export function Grow() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '8px 0 4px' }}>
             <Ring value={Math.min(doneCount, INSIGHT_AFTER)} max={INSIGHT_AFTER} big />
             <h2 className="display" style={{ fontSize: 28, margin: '16px 0 6px' }}>
-              {doneCount} of {INSIGHT_AFTER} moments
+              {doneCount} of {INSIGHT_AFTER} activities
             </h2>
             <p className="muted" style={{ maxWidth: 300 }}>
-              After {Math.max(0, INSIGHT_AFTER - doneCount)} more, Mira can start telling you what she sees in {child.name}.
+              Mira is still getting to know {child.name}. After {Math.max(0, INSIGHT_AFTER - doneCount)} more activities together, she’ll share what she sees.
             </p>
             <button
               className="btn block"
@@ -228,7 +228,7 @@ export function Grow() {
                 nav(`/activity/${act.id}`)
               }}
             >
-              Do today’s moment
+              Do today’s activity
             </button>
           </div>
         </Sheet>

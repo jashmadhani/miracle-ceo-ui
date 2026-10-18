@@ -119,7 +119,6 @@ const SAMPLE: Activity[] = [
     practice: 'Name your own feelings out loud once a day.',
     observe: { q: 'How did they guess?', options: ['First try', 'After a few clues', 'With a little help', 'Still warming up'] },
     read: 'Guessing how someone else feels is where kindness starts.',
-    art: 'eq-3', // stand-in until its own illustration is made
   },
   {
     id: 'speech-bubbles',
@@ -135,7 +134,6 @@ const SAMPLE: Activity[] = [
     practice: 'Keep the strip for the next playdate.',
     observe: { q: 'How did they fill the bubbles?', options: ['Their own ideas', 'After we talked', 'With my words', 'Still warming up'] },
     read: 'Seeing words on paper helps them pick them up in the moment.',
-    art: 'sq-6', // stand-in until its own illustration is made
   },
   {
     id: 'focus-fortress',
@@ -151,7 +149,6 @@ const SAMPLE: Activity[] = [
     practice: 'Use checkpoints for homework this week.',
     observe: { q: 'How did they keep going?', options: ['All three rounds', 'Two rounds', 'One round', 'Still warming up'] },
     read: 'Short rounds with a clear finish help them keep going for longer.',
-    art: 'iq-1', // stand-in until its own illustration is made
   },
 ]
 

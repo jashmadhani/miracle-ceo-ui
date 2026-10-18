@@ -57,7 +57,7 @@
   color: var(--on-dark);
   box-shadow: 0 8px 20px rgba(11, 122, 116, 0.35);
   flex: none;
-  animation: go 2.4s ease-in-out infinite;
+  animation: none; /* no pulsing: calm, not game-like */
 }
 .today-go.done {
   background: var(--leaf);
@@ -430,8 +430,8 @@
   flex: none;
   background: #fff;
   color: var(--accent-deep);
-  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.22), 0 10px 24px rgba(120, 30, 45, 0.25);
-  animation: go 2.4s ease-in-out infinite;
+  box-shadow: 0 8px 20px rgba(120, 30, 45, 0.2);
+  animation: none; /* no pulsing: calm, not game-like */
 }
 .today-block-go.done {
   background: var(--leaf);

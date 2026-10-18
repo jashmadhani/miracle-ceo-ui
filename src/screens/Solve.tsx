@@ -513,7 +513,7 @@ function Challenges() {
                             style={{ marginTop: 10 }}
                             onClick={() => {
                               set((p) => ({ challenge: { id: open.id, moves: (p.challenge?.moves ?? 0) + 1 } }))
-                              toast({ title: '+1 leaf', body: `Day ${i + 1} done.` })
+                              toast({ title: `Day ${i + 1} done`, body: 'A leaf added to the tree.' })
                             }}
                           >
                             <Icon name="check" size={16} /> Done today

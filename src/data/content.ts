@@ -2,6 +2,8 @@
 // voice audit (references/VOICE-AUDIT-NOTES.md): plain words, goals instead of
 // problems, no labels for parents or children, "they" for the child.
 
+import { CATALOGUE } from './catalogue'
+
 export type Skill = 'EQ' | 'SQ' | 'IQ'
 
 export const SKILLS: Record<Skill, { name: string; long: string; bg: string; fg: string; icon: 'heart' | 'users' | 'bulb' }> = {
@@ -19,17 +21,20 @@ export type Activity = {
   minutes: number
   summary: string
   steps: Step[]
-  magic: string
-  support: string
-  challenge: string
+  magic?: string
+  support?: string
+  challenge?: string
   practice: string
   observe: { q: string; options: string[] }
   read: string
+  /** illustration to use when the activity has none of its own yet (stand-in) */
+  art?: string
 }
 
 const SNAP_LINE = 'There can be more than one good answer. Tell me the clue that made you pick yours.'
 
-export const ACTIVITIES: Activity[] = [
+// the six sample activities from the live app, kept alongside the catalogue
+const SAMPLE: Activity[] = [
   {
     id: 'emotion-snap',
     skill: 'EQ',
@@ -114,6 +119,7 @@ export const ACTIVITIES: Activity[] = [
     practice: 'Name your own feelings out loud once a day.',
     observe: { q: 'How did they guess?', options: ['First try', 'After a few clues', 'With a little help', 'Still warming up'] },
     read: 'Guessing how someone else feels is where kindness starts.',
+    art: 'eq-3', // stand-in until its own illustration is made
   },
   {
     id: 'speech-bubbles',
@@ -129,6 +135,7 @@ export const ACTIVITIES: Activity[] = [
     practice: 'Keep the strip for the next playdate.',
     observe: { q: 'How did they fill the bubbles?', options: ['Their own ideas', 'After we talked', 'With my words', 'Still warming up'] },
     read: 'Seeing words on paper helps them pick them up in the moment.',
+    art: 'sq-6', // stand-in until its own illustration is made
   },
   {
     id: 'focus-fortress',
@@ -144,8 +151,11 @@ export const ACTIVITIES: Activity[] = [
     practice: 'Use checkpoints for homework this week.',
     observe: { q: 'How did they keep going?', options: ['All three rounds', 'Two rounds', 'One round', 'Still warming up'] },
     read: 'Short rounds with a clear finish help them keep going for longer.',
+    art: 'iq-1', // stand-in until its own illustration is made
   },
 ]
+
+export const ACTIVITIES: Activity[] = [...CATALOGUE, ...SAMPLE]
 
 export const READS = [
   { id: 'r1', kind: 'Read', title: 'Big feelings at six', minutes: 4, tint: 'var(--accent-soft)', art: 'book' as const },

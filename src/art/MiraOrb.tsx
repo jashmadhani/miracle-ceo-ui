@@ -3,12 +3,11 @@ import './mira.css'
 export type MiraState = 'idle' | 'attentive' | 'listening' | 'thinking'
 
 /**
- * Mira is a friendly little microphone — Home's amber, a smiling face, a teal stand.
- * idle: bobs and blinks · attentive: looks up and brightens ·
- * listening: mouth opens, sound waves pulse out both sides · thinking: dots bounce above.
+ * Mira is a simple microphone mark: Home's amber head on a teal stand, no face.
+ * idle: rests · attentive: perks up · listening: sound waves pulse out both
+ * sides · thinking: dots bounce above.
  */
 export function MiraOrb({ state = 'idle', size = 96 }: { state?: MiraState; size?: number }) {
-  const listening = state === 'listening'
   return (
     <span className={`mira mira-${state}`} style={{ width: size, height: size }} aria-hidden>
       <svg viewBox="0 0 120 120" width={size} height={size}>
@@ -45,22 +44,8 @@ export function MiraOrb({ state = 'idle', size = 96 }: { state?: MiraState; size
           <path d="M44 30 h32 M44 37 h32" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="3" strokeLinecap="round" />
           <ellipse cx="49" cy="25" rx="5" ry="3.5" fill="#ffffff" opacity="0.6" />
 
-          {/* face */}
-          <g className="mira-eyes">
-            <g className="blink" style={{ transformOrigin: '60px 52px' }}>
-              <circle cx="51" cy="52" r="3.6" fill="#2a2340" />
-              <circle cx="69" cy="52" r="3.6" fill="#2a2340" />
-              <circle cx="52.2" cy="50.8" r="1.2" fill="#fff" />
-              <circle cx="70.2" cy="50.8" r="1.2" fill="#fff" />
-            </g>
-          </g>
-          <ellipse cx="45" cy="60" rx="4.5" ry="3" fill="#ec6f7d" opacity="0.45" />
-          <ellipse cx="75" cy="60" rx="4.5" ry="3" fill="#ec6f7d" opacity="0.45" />
-          {listening ? (
-            <ellipse className="mira-mouth-o" cx="60" cy="63" rx="4.5" ry="5" fill="#2a2340" />
-          ) : (
-            <path d="M54 61 Q60 67 66 61" stroke="#2a2340" strokeWidth="3" strokeLinecap="round" fill="none" />
-          )}
+          {/* grille: a calm mark, no cartoon face */}
+          <path d="M46 46 h28 M46 53 h28 M46 60 h28" stroke="#ffffff" strokeOpacity="0.55" strokeWidth="3" strokeLinecap="round" />
         </g>
       </svg>
     </span>

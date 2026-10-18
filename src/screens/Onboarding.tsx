@@ -113,7 +113,7 @@ export function Onboarding() {
       card = (
         <Q kicker="How it works" title="Five minutes. One small moment, every day.">
           <div className="promise-art">
-            <ActivityArt skill="EQ" id="feeling-word" />
+            <ActivityArt skill="SQ" id="sq-0" />
           </div>
           <Cta label="Sounds doable" onClick={() => next()} />
         </Q>
@@ -402,11 +402,11 @@ function Cta({ label = 'Continue', disabled, onBlocked, onClick }: { label?: str
   )
 }
 
-function Choice({ emoji, title, sub, on, onClick }: { emoji: string; title: string; sub?: string; on: boolean; onClick: () => void }) {
+// emoji is still passed by callers but no longer drawn: calmer, more grown-up choices
+function Choice({ title, sub, on, onClick }: { emoji?: string; title: string; sub?: string; on: boolean; onClick: () => void }) {
   return (
     <button className={`choice ${on ? 'on' : ''}`} onClick={onClick} aria-pressed={on} style={{ marginBottom: 10 }}>
-      <span className="emoji">{emoji}</span>
-      <span>
+      <span style={{ flex: 1 }}>
         <span className="c-title" style={{ display: 'block' }}>
           {title}
         </span>

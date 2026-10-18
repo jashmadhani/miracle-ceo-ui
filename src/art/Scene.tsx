@@ -4,10 +4,10 @@ import './art.css'
 export type SceneMood = 'dawn' | 'day' | 'peach' | 'dusk' | 'night'
 
 export const SKIES: Record<SceneMood, [string, string, string]> = {
-  dawn: ['#fde4e6', '#fdfbe9', '#fff1d4'],
-  day: ['#d4ece7', '#fdfbe9', '#fff1d4'],
-  peach: ['#ffefcc', '#fff6e6', '#ffe3d9'],
-  dusk: ['#d4ece7', '#fdfbe9', '#fcd893'],
+  dawn: ['#f7ebe5', '#fbf6ee', '#fdfbe9'],
+  day: ['#e4efe9', '#f3f7f0', '#fdfbe9'],
+  peach: ['#f9eedb', '#fcf6ea', '#fdfbe9'],
+  dusk: ['#e9ebe4', '#f5f4ec', '#fdfbe9'],
   night: ['#22303a', '#2b4d4b', '#3e8a80'],
 }
 
@@ -22,10 +22,10 @@ type Props = {
 }
 
 /**
- * Full-bleed illustrated backdrop: gradient sky, sun, drifting clouds,
+ * Full-bleed backdrop: a soft sky and a quiet ground line,
  * three layers of soft hills with flowers. Scales to cover any phone.
  */
-export function Scene({ mood = 'dawn', hills = true, sun = true, stars, children, className }: Props) {
+export function Scene({ mood = 'dawn', hills = true, stars, children, className }: Props) {
   const [a, b, c] = SKIES[mood]
   const night = mood === 'night'
   const id = `sky-${mood}`
@@ -58,59 +58,11 @@ export function Scene({ mood = 'dawn', hills = true, sun = true, stars, children
             />
           ))}
 
-        {sun && (
-          <g className="sun-float">
-            <circle cx="300" cy="360" r="120" fill={`url(#${id}-glow)`} />
-            {night ? (
-              <>
-                <mask id={`${id}-moon`}>
-                  <rect width="390" height="844" fill="#fff" />
-                  <circle cx="318" cy="348" r="40" fill="#000" />
-                </mask>
-                <circle cx="300" cy="360" r="44" fill="#fff3c9" mask={`url(#${id}-moon)`} />
-              </>
-            ) : (
-              <circle cx="300" cy="360" r="44" fill="#ffc24d" />
-            )}
-          </g>
-        )}
-
-        <g className="cloud-drift" opacity={night ? 0.35 : 0.9}>
-          <path d="M36 180 C36 164 52 156 64 162 C70 148 92 146 102 160 C116 156 128 166 124 180 Z" fill="#fffaf2" />
-        </g>
-        <g className="cloud-drift slow" opacity={night ? 0.3 : 0.8}>
-          <path d="M210 120 C210 108 222 102 232 106 C238 96 256 96 262 106 C272 104 282 112 278 122 Z" fill="#fffaf2" />
-        </g>
-
+        {/* one quiet ground line: no sun, clouds or flowers, so the scenes read as calm rather than storybook */}
         {hills && (
           <>
-            <path d="M-20 560 C60 500 140 520 210 540 C280 560 340 500 420 520 L420 844 L-20 844 Z" fill={night ? '#2f5753' : '#d4ece7'} />
-            <path d="M-20 620 C40 590 110 580 190 600 C270 620 330 580 420 590 L420 844 L-20 844 Z" fill={night ? '#356660' : '#fde4e6'} />
-            <path d="M-20 690 C80 660 170 670 230 680 C300 692 360 670 420 676 L420 844 L-20 844 Z" fill={night ? '#3e7a72' : '#fcd893'} />
-            {!night &&
-              [
-                [40, 700, '#ff7a59'],
-                [70, 712, '#3e8a80'],
-                [330, 690, '#ff7a59'],
-                [360, 704, '#3e8a80'],
-                [300, 712, '#3e8a80'],
-              ].map(([x, y, col], i) => (
-                <g key={i} className="flower-sway" style={{ transformOrigin: `${x}px ${Number(y) + 22}px`, animationDelay: `${i * 0.3}s` }}>
-                  <path d={`M${x} ${Number(y) + 22} L${x} ${y}`} stroke="#3f8f6a" strokeWidth="2.5" />
-                  {[0, 72, 144, 216, 288].map((r) => (
-                    <ellipse
-                      key={r}
-                      cx={x as number}
-                      cy={(y as number) - 6}
-                      rx="3.6"
-                      ry="6"
-                      fill={col as string}
-                      transform={`rotate(${r} ${x} ${y})`}
-                    />
-                  ))}
-                  <circle cx={x as number} cy={y as number} r="3" fill="#fff1b8" />
-                </g>
-              ))}
+            <path d="M-20 620 C80 596 190 600 260 612 C320 622 370 606 420 604 L420 844 L-20 844 Z" fill={night ? '#2f5753' : '#efe8d6'} />
+            <path d="M-20 690 C90 672 200 676 270 686 C330 694 380 680 420 680 L420 844 L-20 844 Z" fill={night ? '#356660' : '#e7dfca'} />
           </>
         )}
       </svg>

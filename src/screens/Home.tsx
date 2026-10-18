@@ -39,7 +39,7 @@ export function Home() {
   useEffect(() => {
     if (returned && !checkin) {
       setReturned(false)
-      const t = setTimeout(() => toast({ title: '+2 leaves', body: 'You came back today.' }), 500)
+      const t = setTimeout(() => toast({ title: 'Good to see you', body: 'Two leaves added to the tree.' }), 500)
       return () => clearTimeout(t)
     }
   }, [returned, checkin, toast])

@@ -1,13 +1,15 @@
-import type { Skill } from '../data/content'
+import { ACTIVITIES, type Skill } from '../data/content'
 import { Illustration, illustrationUrl, type IllustrationName } from './Illustration'
 import { LEAF_TONES, type LeafTone } from './leafColors'
 import './art.css'
 
-const BY_SKILL: Record<Skill, IllustrationName> = { EQ: 'emotion-snap', SQ: 'conversation-snap', IQ: 'focus-hunt' }
+const BY_SKILL: Record<Skill, IllustrationName> = { EQ: 'eq-0', SQ: 'sq-0', IQ: 'iq-0' }
 
-/** Card-sized illustration for an activity: its own scene when it has one, else its skill's. */
+/** Card-sized illustration for an activity: its own scene, its stand-in, or its skill's first scene. */
 export function ActivityArt({ skill, id, className }: { skill: Skill; id?: string; className?: string }) {
-  const name = (id && illustrationUrl(id) ? id : BY_SKILL[skill]) as IllustrationName
+  const own = id && illustrationUrl(id) ? id : undefined
+  const standIn = ACTIVITIES.find((a) => a.id === id)?.art
+  const name = own ?? standIn ?? BY_SKILL[skill]
   return <Illustration name={name} className={`activity-art ${className ?? ''}`} />
 }
 

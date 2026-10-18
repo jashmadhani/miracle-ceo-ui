@@ -16,7 +16,7 @@ export function Grow() {
   const child = useChild()
   const { act, done } = useToday()
   const [kind, setKind] = useState<Skill | 'all'>('all')
-  const [time, setTime] = useState<'any' | 5 | 20>('any')
+  const [time, setTime] = useState<'any' | 5 | 15 | 30>('any')
   const [spinning, setSpinning] = useState<Skill | null>(null)
   const [insights, setInsights] = useState(false)
 
@@ -66,7 +66,6 @@ export function Grow() {
             <span className="grow-today-row">
               <span className="grow-today-meta">
                 <Icon name="clock" size={15} /> {act.minutes} min
-                <Leaf size={15} /> +3
               </span>
               <span className={`grow-today-go ${done ? 'done' : ''}`}>
                 {done ? (
@@ -93,11 +92,11 @@ export function Grow() {
               const n = ACTIVITIES.filter((a) => a.skill === k && s.done[a.id]).length
               return (
                 <button key={k} className={`skill-tile sk-${k} ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} onClick={() => choose(k)}>
-                  <span className="skill-ic">
-                    <Icon name={sk.icon} size={24} />
+                  <span className="skill-ic" style={{ background: sk.bg, color: sk.fg }}>
+                    <Icon name={sk.icon} size={22} />
                   </span>
-                  <span className="skill-code">{k}</span>
                   <span className="skill-name">{sk.name}</span>
+                  <span className="skill-long">{sk.long}</span>
                   <span className="skill-meta">{n ? `${n} done` : 'Ready to start'}</span>
                 </button>
               )
@@ -144,7 +143,8 @@ export function Grow() {
               [
                 ['any', 'Any time'],
                 [5, '5 min'],
-                [20, '≤ 20 min'],
+                [15, '≤ 15 min'],
+                [30, '≤ 30 min'],
               ] as const
             ).map(([k, l]) => (
               <button key={String(k)} className={`chip ${time === k ? 'on' : ''}`} onClick={() => setTime(k)}>
@@ -172,7 +172,6 @@ export function Grow() {
               <span className="act-card-v-title">{a.title}</span>
               <span className="act-item-meta">
                 <Icon name="clock" size={14} /> {a.minutes} min
-                <Leaf size={14} /> +3
               </span>
             </button>
           ))}

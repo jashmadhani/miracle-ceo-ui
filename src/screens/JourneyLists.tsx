@@ -99,7 +99,7 @@ export function Library() {
               </span>
               <span className="tile-title">{a.title}</span>
               <span className="act-item-meta">
-                <Icon name="clock" size={14} /> {a.minutes} min <Leaf size={14} /> +3
+                <Icon name="clock" size={14} /> {a.minutes} min
                 {s.done[a.id] && (
                   <b style={{ color: 'var(--teal)' }}>
                     <Icon name="check" size={14} stroke={3} style={{ display: 'inline', verticalAlign: '-2px' }} /> Done

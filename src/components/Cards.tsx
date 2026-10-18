@@ -34,9 +34,6 @@ export function TodayHero({ act, done, compact }: { act: Activity; done: boolean
           <span className="pill">
             <Icon name="clock" size={14} /> {act.minutes} min
           </span>
-          <span className="pill" style={{ background: 'var(--reward-soft)', color: 'var(--reward-deep)' }}>
-            <Leaf size={14} /> +3
-          </span>
         </div>
         <div className="today-row">
           <h3 className="display today-title">{act.title}</h3>
@@ -66,10 +63,7 @@ export function TodayBlock({ act, done }: { act: Activity; done: boolean }) {
               <Icon name="clock" size={14} /> {act.minutes} min
             </span>
             <span className="pill">
-              <Leaf size={14} /> +3
-            </span>
-            <span className="pill">
-              <Icon name={sk.icon} size={14} /> {act.skill} {sk.name.toLowerCase()}
+              <Icon name={sk.icon} size={14} /> {sk.name}
             </span>
           </div>
         </div>
@@ -371,7 +365,7 @@ export function VideoList() {
                 onClick={() => {
                   if (!rated) {
                     earn(1, `Watched “${open.title}”`, 'activity')
-                    toast({ title: '+1 leaf', body: 'Thanks for telling us.' })
+                    toast({ title: 'Thanks for telling us', body: 'A leaf added to the tree.' })
                   }
                   setRated(r)
                 }}

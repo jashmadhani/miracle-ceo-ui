@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { Tree } from '../art/Tree'
 import { LEAF_TONES, useTreeLeafTones, type LeafTone } from '../art/leafColors'
-import { Scene } from '../art/Scene'
+import { Scene, SKIES } from '../art/Scene'
 import { MiraOrb } from '../art/MiraOrb'
 import { Icon } from '../components/Icon'
 import { ACTIVITIES, SKILLS } from '../data/content'
@@ -21,8 +21,9 @@ export function ActivityPlayer() {
   const act = ACTIVITIES.find((a) => a.id === id) ?? ACTIVITIES[0]
   const sk = SKILLS[act.skill]
   const tones = useTreeLeafTones()
-  useEdge({ EQ: '#f9c9ce', SQ: '#c2e2db', IQ: '#fbdc9f' }[act.skill], false, '#fbf7f1')
   const [phase, setPhase] = useState<Phase>('intro')
+  // status bar follows the screen: the skill's tint while doing it, the calm cream sky after
+  useEdge(phase === 'celebrate' ? SKIES.peach[0] : { EQ: '#f9c9ce', SQ: '#c2e2db', IQ: '#fbdc9f' }[act.skill], false, '#fbf7f1')
   const [n, setN] = useState(0)
   const [tip, setTip] = useState<'magic' | 'support' | 'challenge' | null>(null)
   const [fb, setFb] = useState<{ how?: string; obs?: string; again?: string; note: string }>({ note: '' })
@@ -34,6 +35,13 @@ export function ActivityPlayer() {
     setTip(null)
   }, [n, phase])
 
+  // each feedback answer reveals the next question below: bring it into view
+  useEffect(() => {
+    if (phase !== 'feedback' || !fb.how) return
+    const t = setTimeout(() => body.current?.scrollTo({ top: body.current.scrollHeight, behavior: 'smooth' }), 80)
+    return () => clearTimeout(t)
+  }, [fb.how, fb.obs, phase])
+
   const total = act.steps.length
   const step = act.steps[n]
 
@@ -43,7 +51,7 @@ export function ActivityPlayer() {
     setPhase('celebrate')
   }
 
-  if (phase === 'celebrate') return <Celebrate skill={sk.name} tone={LEAF_TONES[act.skill]} tones={tones} onDone={() => nav('/home')} leaves={s.leaves % LEAVES_PER_TREE} name={child.name} />
+  if (phase === 'celebrate') return <Celebrate skill={sk.name} title={act.title} tones={tones} onDone={() => nav('/home')} leaves={s.leaves % LEAVES_PER_TREE} name={child.name} />
 
   return (
     <div className={`screen act sk-${act.skill}`}>
@@ -80,9 +88,6 @@ export function ActivityPlayer() {
               <span>
                 <Icon name="book" size={18} /> {total} steps
               </span>
-              <span>
-                <Leaf size={18} /> +3 leaves
-              </span>
             </div>
           </div>
         )}
@@ -96,25 +101,35 @@ export function ActivityPlayer() {
             {step.line && (
               <div className="say-card">
                 <p className="eyebrow" style={{ color: 'var(--teal)' }}>
-                  <Icon name="chat" size={14} style={{ display: 'inline', verticalAlign: '-2px' }} /> Say something like
+                  {step.line.startsWith('“') ? (
+                    <>
+                      <Icon name="chat" size={14} style={{ display: 'inline', verticalAlign: '-2px' }} /> Say something like
+                    </>
+                  ) : (
+                    'A small tip'
+                  )}
                 </p>
                 <p className="say-line">{step.line}</p>
               </div>
             )}
-            <div className="tips">
-              {(
-                [
-                  ['magic', '✨', 'Make it playful', act.magic],
-                  ['support', '🤲', 'Make it easier', act.support],
-                  ['challenge', '🧗', 'Make it harder', act.challenge],
-                ] as const
-              ).map(([k, e, t]) => (
-                <button key={k} className={`tip ${tip === k ? 'on' : ''}`} onClick={() => setTip(tip === k ? null : k)} aria-expanded={tip === k}>
-                  <span className="tip-e">{e}</span>
-                  <span>{t}</span>
-                </button>
-              ))}
-            </div>
+            {/* only the tips this activity has */}
+            {(act.magic || act.support || act.challenge) && (
+              <div className="tips">
+                {(
+                  [
+                    ['magic', 'Make it playful', act.magic],
+                    ['support', 'Make it easier', act.support],
+                    ['challenge', 'Make it harder', act.challenge],
+                  ] as const
+                )
+                  .filter(([, , body]) => body)
+                  .map(([k, t]) => (
+                    <button key={k} className={`tip ${tip === k ? 'on' : ''}`} onClick={() => setTip(tip === k ? null : k)} aria-expanded={tip === k}>
+                      {t}
+                    </button>
+                  ))}
+              </div>
+            )}
             {tip && <p className="tip-body rise">{act[tip]}</p>}
           </div>
         )}
@@ -150,7 +165,7 @@ export function ActivityPlayer() {
             {fb.obs && (
               <div className="rise">
                 <p className="fb-q">Would you do it again?</p>
-                <Opts value={fb.again} onPick={(v) => setFb({ ...fb, again: v })} options={['Definitely', 'Probably', 'Maybe', 'Maybe another day']} />
+                <Opts value={fb.again} onPick={(v) => setFb({ ...fb, again: v })} options={['Yes, definitely', 'Probably', 'Maybe another day']} />
                 <label className="label" htmlFor="note" style={{ marginTop: 18 }}>
                   One thing {child.name} said or did (optional)
                 </label>
@@ -214,7 +229,7 @@ export function ActivityPlayer() {
         )}
         {phase === 'read' && (
           <button className="btn block" onClick={finish}>
-            <Leaf size={20} tone={LEAF_TONES[act.skill]} /> Grow 3 leaves
+            Finish <Icon name="arrow" size={20} />
           </button>
         )}
       </div>
@@ -234,24 +249,16 @@ function Opts({ value, onPick, options }: { value?: string; onPick: (v: string) 
   )
 }
 
-function Celebrate({ skill, tone, tones, leaves, name, onDone }: { skill: string; tone: LeafTone; tones: LeafTone[]; leaves: number; name: string; onDone: () => void }) {
+/** After an activity: a quiet "done together", with the new leaves settling on the tree. */
+function Celebrate({ skill, title, tones, leaves, name, onDone }: { skill: string; title: string; tones: LeafTone[]; leaves: number; name: string; onDone: () => void }) {
   return (
     <div className="screen celebrate">
       <Scene mood="peach" />
-      <div className="fall" aria-hidden>
-        {[...Array(9)].map((_, i) => (
-          <span key={i} style={{ left: `${10 + i * 10}%`, animationDelay: `${(i % 3) * 0.35 + i * 0.08}s` }}>
-            <Leaf size={22 + (i % 3) * 6} tone={tone} />
-          </span>
-        ))}
-      </div>
       <div className="celebrate-inner">
-        <p className="eyebrow rise" style={{ color: 'var(--accent-deep)' }}>
-          {skill} · together
-        </p>
-        <h1 className="display rise rise-1">3 leaves grown</h1>
+        <p className="eyebrow rise">{skill} · together</p>
+        <h1 className="display rise rise-1">Done, together.</h1>
         <p className="muted rise rise-2" style={{ fontSize: 17 }}>
-          You did it together, and told Mira how it went.
+          You did {title} with {name}, and told Mira how it went.
         </p>
         <div className="celebrate-tree">
           <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} tones={tones} newFrom={Math.max(0, leaves - 3)} />
@@ -259,7 +266,7 @@ function Celebrate({ skill, tone, tones, leaves, name, onDone }: { skill: string
         <div className="celebrate-count rise rise-3">
           <span>
             <b>{name}’s tree</b>
-            <small>Every leaf is time you spent together</small>
+            <small>3 leaves added for today’s activity</small>
           </span>
           <strong>
             {leaves}

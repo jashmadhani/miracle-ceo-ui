@@ -35,12 +35,8 @@ export function MoodFace({ mood, size = 96, active }: { mood: Mood; size?: numbe
 function Expression({ mood }: { mood: Mood }) {
   const ink = '#3a2f45'
   const s = { stroke: ink, strokeWidth: 3, strokeLinecap: 'round' as const, fill: 'none' }
-  const cheeks = (
-    <>
-      <ellipse cx="31" cy="60" rx="5" ry="3" fill="#f08d86" opacity="0.45" />
-      <ellipse cx="69" cy="60" rx="5" ry="3" fill="#f08d86" opacity="0.45" />
-    </>
-  )
+  // no blush cheeks or floating "z": simple faces read as calm and grown-up
+  const cheeks = null
   switch (mood) {
     case 'great':
       return (
@@ -77,10 +73,7 @@ function Expression({ mood }: { mood: Mood }) {
         <g>
           <path d="M32 50 Q38 54 44 50" {...s} />
           <path d="M56 50 Q62 54 68 50" {...s} />
-          <ellipse cx="50" cy="65" rx="4" ry="3.5" fill={ink} />
-          <text x="70" y="34" fontSize="11" fontWeight="700" fill={ink} opacity="0.5" className="zz">
-            z
-          </text>
+          <path d="M44 65 Q50 62 56 65" {...s} />
         </g>
       )
     case 'low':
@@ -94,8 +87,9 @@ function Expression({ mood }: { mood: Mood }) {
     case 'anxious':
       return (
         <g>
-          <path d="M32 40 L42 43" {...s} />
-          <path d="M68 40 L58 43" {...s} />
+          {/* worried, not cross: the inner ends of the brows lift */}
+          <path d="M32 43 Q37 41 42 38" {...s} />
+          <path d="M68 43 Q63 41 58 38" {...s} />
           <circle cx="38" cy="50" r="3.4" fill={ink} />
           <circle cx="62" cy="50" r="3.4" fill={ink} />
           <path d="M38 65 Q42 61 46 65 Q50 69 54 65 Q58 61 62 65" {...s} />

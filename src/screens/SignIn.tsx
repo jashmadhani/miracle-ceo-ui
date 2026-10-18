@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Scene, Foliage, SKIES, type SceneMood } from '../art/Scene'
+import { Scene, SKIES, type SceneMood } from '../art/Scene'
 import { useEdge } from '../components/edge'
 import { Illustration, type IllustrationName } from '../art/Illustration'
 import { Brand } from '../components/Shell'
@@ -9,9 +9,9 @@ import { useStore } from '../state/store'
 import './welcome.css'
 
 const SLIDES: { title: string; sub: string; mood: SceneMood; art: IllustrationName }[] = [
-  { title: 'Five calm minutes a day, together.', sub: 'Small moments that help your child grow.', mood: 'dawn', art: 'family' },
-  { title: 'Ask anything. Mira listens first.', sub: 'Bedtime, siblings, big feelings. Any hour, big or small.', mood: 'peach', art: 'mum-hug' },
-  { title: 'Feelings, friendships and a curious mind.', sub: 'One little moment at a time.', mood: 'day', art: 'parents-walk' },
+  { title: 'Five calm minutes a day, together.', sub: 'Small moments that help your child grow.', mood: 'dawn', art: 'sq-6' },
+  { title: 'Ask anything. Mira listens first.', sub: 'Bedtime, siblings, big feelings. Any hour, big or small.', mood: 'peach', art: 'eq-6' },
+  { title: 'Feelings, friendships and a curious mind.', sub: 'One little moment at a time.', mood: 'day', art: 'sq-2' },
 ]
 
 /** Full-bleed art with the controls floating over a cream semicircle (meditation-centre reference). */
@@ -44,7 +44,6 @@ export function SignIn() {
           <Scene mood={sl.mood} />
         </div>
       ))}
-      <Foliage side="left" className="welcome-leaves" />
 
       <header className="welcome-top">
         <Brand />

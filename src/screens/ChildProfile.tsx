@@ -18,7 +18,7 @@ export function ChildProfile() {
         <BackBar to="/journey" label="Journey" />
         <div className="pad">
           <div className="profile-hero">
-            <Illustration name={s.role === 'dad' ? 'dad-hug' : 'mum-hug'} className="profile-art" />
+            <Illustration name={s.role === 'dad' ? 'eq-4' : 'eq-6'} className="profile-art" />
             <div>
               <h1 className="display" style={{ fontSize: 34 }}>
                 {child.name}

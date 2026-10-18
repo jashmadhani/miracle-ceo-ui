@@ -1,25 +1,16 @@
 /*
- * Professional 2D illustrations from Storyset (storyset.com, Freepik licence:
- * free for commercial use with attribution — credited in Settings → About).
- * Each file was cleaned, recoloured to the app palette and given gentle
- * in-file CSS motion; see src/art/illustrations/README.md.
+ * The activity illustrations: one painted scene per activity, keyed by activity
+ * id (sq-0 … iq-6 from the catalogue, plus the sample activities). Cut from the
+ * generated sheets with transparent backgrounds; the cleaned 1x masters live in
+ * references/illustration-kit/source.
  */
-const FILES = import.meta.glob<string>('./illustrations/*.svg', { eager: true, query: '?url', import: 'default' })
+const FILES = import.meta.glob<string>('./illustrations/activities/*.webp', { eager: true, query: '?url', import: 'default' })
 
-export type IllustrationName =
-  | 'family'
-  | 'dad-hug'
-  | 'mum-hug'
-  | 'parents-walk'
-  | 'emotion-snap'
-  | 'feeling-word'
-  | 'conversation-snap'
-  | 'speech-bubbles'
-  | 'focus-hunt'
-  | 'focus-fortress'
+/** an activity id, or any scene from the set reused elsewhere (sign-in, profile) */
+export type IllustrationName = string
 
 export function illustrationUrl(name: string): string | undefined {
-  return FILES[`./illustrations/${name}.svg`]
+  return FILES[`./illustrations/activities/${name}.webp`]
 }
 
 export function Illustration({ name, className, alt = '' }: { name: IllustrationName; className?: string; alt?: string }) {

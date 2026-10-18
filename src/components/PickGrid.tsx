@@ -1,8 +1,9 @@
 import { Icon } from './Icon'
 
 /**
- * Emoji + word choices laid out as an even two-column grid of tiles
- * (like the original app's choice grid) instead of ragged wrapped pills.
+ * Word choices laid out as an even two-column grid of tiles (like the original
+ * app's choice grid). The data still carries an emoji per item; it isn't shown,
+ * to keep the onboarding calm and grown-up.
  */
 export function PickGrid({
   items,
@@ -18,14 +19,11 @@ export function PickGrid({
   const full = max != null && selected.length >= max
   return (
     <div className="pick-grid">
-      {items.map(([emoji, label]) => {
+      {items.map(([, label]) => {
         const on = selected.includes(label)
         const locked = full && !on
         return (
           <button key={label} type="button" className={`pick ${on ? 'on' : ''}`} onClick={() => !locked && onToggle(label)} aria-pressed={on} disabled={locked}>
-            <span className="pick-emoji" aria-hidden>
-              {emoji}
-            </span>
             <span className="pick-label">{label}</span>
             {on && (
               <span className="pick-check" aria-hidden>

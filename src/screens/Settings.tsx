@@ -115,12 +115,6 @@ export function Settings() {
             </button>
           </div>
 
-          <p className="muted" style={{ fontSize: 12, textAlign: 'center', margin: '22px 0 8px' }}>
-            Illustrations by{' '}
-            <a href="https://storyset.com/people" target="_blank" rel="noreferrer" style={{ color: 'inherit' }}>
-              Storyset
-            </a>
-          </p>
         </div>
       </div>
       <TabBar />

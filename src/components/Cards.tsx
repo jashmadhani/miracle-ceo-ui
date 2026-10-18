@@ -101,12 +101,17 @@ export function TreeCard({ bare }: { bare?: boolean }) {
               growing with you
             </p>
           </div>
+          <button className="leaf-chip" onClick={() => setFull(true)} aria-label={`${inTree} of ${LEAVES_PER_TREE} leaves. Open the tree`}>
+            <Leaf size={16} color="var(--leaf)" />
+            <b>{inTree}</b>
+            <small>/{LEAVES_PER_TREE}</small>
+          </button>
           <button className={`icon-btn ${bare ? 'flat' : ''}`} onClick={() => setFull(true)} aria-label="Open tree full screen">
             <Icon name="expand" size={20} />
           </button>
         </div>
         <button className="tree-card-art" onClick={() => setFull(true)} aria-label="Open tree">
-          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} newFrom={newFrom < inTree ? newFrom : undefined} />
+          <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} newFrom={newFrom < inTree ? newFrom : undefined} buds />
           {fresh > 0 && (
             <span className="new-leaves">
               <Leaf size={14} color="var(--leaf)" /> +{fresh} new
@@ -114,9 +119,7 @@ export function TreeCard({ bare }: { bare?: boolean }) {
           )}
         </button>
         <div className="tree-card-foot">
-          <Leaf size={18} color="var(--leaf)" />
-          <b>{inTree}</b>
-          <span className="muted">of {LEAVES_PER_TREE} leaves</span>
+          <span className="muted">{inTree === 0 ? 'The first leaf comes with today’s activity' : `${LEAVES_PER_TREE - inTree} more leaves and it’s fully grown`}</span>
           <div className="progress" style={{ flex: 1, marginLeft: 8 }}>
             <i style={{ width: `${(inTree / LEAVES_PER_TREE) * 100}%`, background: 'var(--leaf)' }} />
           </div>
@@ -144,7 +147,7 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
         <Icon name="close" />
       </button>
       <div className="tree-full-art">
-        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} selected={sel} onLeaf={(i) => setSel(i === sel ? null : i)} />
+        <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} buds selected={sel} onLeaf={(i) => setSel(i === sel ? null : i)} />
       </div>
       <div className="tree-full-panel">
         {picked ? (

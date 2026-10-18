@@ -1,5 +1,5 @@
 import { useEdge } from '../components/edge'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { Tree } from '../art/Tree'
@@ -51,7 +51,7 @@ export function ActivityPlayer() {
     setPhase('celebrate')
   }
 
-  if (phase === 'celebrate') return <Celebrate skill={sk.name} title={act.title} tones={tones} onDone={() => nav('/home')} leaves={s.leaves % LEAVES_PER_TREE} name={child.name} />
+  if (phase === 'celebrate') return <Celebrate skill={sk.name} skillKey={act.skill} title={act.title} tones={tones} onDone={() => nav('/home')} leaves={s.leaves % LEAVES_PER_TREE} name={child.name} />
 
   return (
     <div className={`screen act sk-${act.skill}`}>
@@ -250,10 +250,27 @@ function Opts({ value, onPick, options }: { value?: string; onPick: (v: string) 
 }
 
 /** After an activity: a quiet "done together", with the new leaves settling on the tree. */
-function Celebrate({ skill, title, tones, leaves, name, onDone }: { skill: string; title: string; tones: LeafTone[]; leaves: number; name: string; onDone: () => void }) {
+function Celebrate({ skill, skillKey, title, tones, leaves, name, onDone }: { skill: string; skillKey: keyof typeof LEAF_TONES; title: string; tones: LeafTone[]; leaves: number; name: string; onDone: () => void }) {
+  const added = Math.min(3, leaves)
+  const from = leaves - added
+  // the count ticks up as each leaf lands on the tree
+  const [shown, setShown] = useState(from)
+  useEffect(() => {
+    const ts = Array.from({ length: added }, (_, k) => setTimeout(() => setShown(from + k + 1), (0.6 + 0.9 * k + 1.1) * 1000))
+    return () => ts.forEach(clearTimeout)
+  }, [added, from])
+  const col = LEAF_TONES[skillKey].fill
   return (
-    <div className="screen celebrate">
+    <div className="screen celebrate" style={{ '--cel': col } as CSSProperties}>
       <Scene mood="peach" />
+      <div className="cel-rays" aria-hidden />
+      <div className="cel-confetti" aria-hidden>
+        {Array.from({ length: 18 }, (_, k) => (
+          <span key={k} style={{ left: `${(k * 37) % 100}%`, animationDelay: `${(k % 6) * 0.18}s`, animationDuration: `${2.6 + (k % 4) * 0.4}s`, '--r': `${(k % 2 ? 1 : -1) * (200 + k * 20)}deg` } as CSSProperties}>
+            <Leaf size={12 + (k % 3) * 3} tone={k % 3 === 0 ? LEAF_TONES.other : LEAF_TONES[skillKey]} />
+          </span>
+        ))}
+      </div>
       <div className="celebrate-inner">
         <p className="eyebrow rise">{skill} · together</p>
         <h1 className="display rise rise-1">Done, together.</h1>
@@ -261,15 +278,21 @@ function Celebrate({ skill, title, tones, leaves, name, onDone }: { skill: strin
           You did {title} with {name}, and told Mira how it went.
         </p>
         <div className="celebrate-tree">
-          <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} tones={tones} newFrom={Math.max(0, leaves - 3)} />
+          <Tree growth={0.35 + (leaves / LEAVES_PER_TREE) * 0.65} blossoms={leaves} tones={tones} newFrom={from} buds fly />
         </div>
-        <div className="celebrate-count rise rise-3">
+        <p className="sr-only" role="status">
+          {added === 1 ? '1 leaf' : `${added} leaves`} added. {name}’s tree has {leaves} of {LEAVES_PER_TREE}.
+        </p>
+        <div className="celebrate-count rise rise-3" aria-hidden>
+          <span className="cel-plus" style={{ background: col }}>
+            +{added}
+          </span>
           <span>
             <b>{name}’s tree</b>
-            <small>3 leaves added for today’s activity</small>
+            <small>{added === 1 ? '1 leaf' : `${added} leaves`} for today’s activity</small>
           </span>
-          <strong>
-            {leaves}
+          <strong key={shown} className={shown > from ? 'tick' : undefined}>
+            {shown}
             <small>/{LEAVES_PER_TREE}</small>
           </strong>
         </div>

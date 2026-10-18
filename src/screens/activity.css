@@ -233,6 +233,76 @@
   display: flex;
   align-items: baseline;
 }
+.cel-plus {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  font-family: var(--display);
+  font-size: 20px;
+  color: #fff;
+}
+.celebrate-count strong.tick {
+  animation: tick 0.45s var(--ease-spring);
+}
+@keyframes tick {
+  50% {
+    transform: scale(1.18);
+  }
+}
+/* soft light rays in the skill's colour, turning slowly behind the tree */
+.cel-rays {
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  width: 1100px;
+  height: 1100px;
+  margin: -550px 0 0 -550px;
+  z-index: 1;
+  background: repeating-conic-gradient(from 0deg, color-mix(in srgb, var(--cel) 14%, transparent) 0 8deg, transparent 8deg 18deg);
+  -webkit-mask: radial-gradient(circle, #000 10%, transparent 42%);
+  mask: radial-gradient(circle, #000 10%, transparent 42%);
+  animation: spin 60s linear infinite, fade-in 1.2s ease-out both;
+  pointer-events: none;
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+/* a light fall of leaves, once */
+.cel-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  overflow: hidden;
+  pointer-events: none;
+}
+.cel-confetti span {
+  position: absolute;
+  top: -24px;
+  animation: cel-fall 3s cubic-bezier(0.3, 0.1, 0.5, 1) both;
+}
+@keyframes cel-fall {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(105vh) rotate(var(--r));
+    opacity: 0.9;
+  }
+}
 .celebrate-count strong small {
   font-size: 16px;
 }

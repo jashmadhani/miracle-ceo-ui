@@ -50,6 +50,31 @@
 .earned-leaf.new .leaf-body {
   animation: leaf-in 0.9s var(--ease-spring) both;
 }
+.earned-leaf.new.fly .leaf-body {
+  animation: leaf-fly 1.1s cubic-bezier(0.4, 0, 0.3, 1) both;
+}
+@keyframes leaf-fly {
+  0% {
+    transform: translate(var(--fx), var(--fy)) scale(0.5) rotate(-90deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  55% {
+    transform: translate(calc(var(--fx) * 0.35), calc(var(--fy) * 0.25 - 40px)) scale(1.25) rotate(20deg);
+  }
+  80% {
+    transform: scale(0.92);
+  }
+}
+.leaf-bud path {
+  fill: rgba(255, 252, 238, 0.28);
+  stroke: #b9a46c;
+  stroke-width: 1;
+  stroke-dasharray: 2.2 2.2;
+  opacity: 0.6;
+}
 .earned-leaf .leaf-halo {
   animation: halo 2.4s ease-out infinite;
   transform-box: fill-box;

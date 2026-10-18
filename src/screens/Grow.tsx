@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { Sheet, TabBar } from '../components/Shell'
 import { useToday } from '../components/Cards'
 import { Icon } from '../components/Icon'
-import { ActivityArt, Leaf } from '../art/ActivityArt'
+import { ActivityArt } from '../art/ActivityArt'
+import { Pot } from '../art/Pot'
+import { LEAF_TONES } from '../art/leafColors'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
 import { useChild, useStore } from '../state/store'
 import './grow.css'
@@ -26,7 +28,8 @@ export function Grow() {
   const choose = (sk: Skill) => {
     const pick = ACTIVITIES.find((a) => a.skill === sk && a.id !== s.todayId && !s.done[a.id]) ?? ACTIVITIES.find((a) => a.skill === sk)!
     set({ todayId: pick.id })
-    toast({ title: `Today: ${pick.title}`, body: `Swapped in a ${SKILLS[sk].name.toLowerCase()} activity.` })
+    const kind = SKILLS[sk].name.toLowerCase()
+    toast({ title: `Today: ${pick.title}`, body: `Swapped in ${/^[aeiou]/.test(kind) ? 'an' : 'a'} ${kind} activity.` })
   }
 
   const surprise = () => {
@@ -42,7 +45,7 @@ export function Grow() {
           choose(final)
         }, 350)
       }
-    }, 140)
+    }, 230)
   }
 
   return (
@@ -89,21 +92,21 @@ export function Grow() {
           <div className="skills">
             {(['SQ', 'EQ', 'IQ'] as Skill[]).map((k) => {
               const sk = SKILLS[k]
-              const n = ACTIVITIES.filter((a) => a.skill === k && s.done[a.id]).length
+              const mine = ACTIVITIES.filter((a) => a.skill === k)
+              const n = mine.filter((a) => s.done[a.id]).length
+              const of = mine.length
               return (
                 <button key={k} className={`skill-tile sk-${k} ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} onClick={() => choose(k)}>
-                  <span className="skill-ic" style={{ background: sk.bg, color: sk.fg }}>
-                    <Icon name={sk.icon} size={22} />
-                  </span>
+                  <Pot done={n} total={of} tone={LEAF_TONES[k]} className="skill-pot" />
                   <span className="skill-name">{sk.name}</span>
                   <span className="skill-long">{sk.long}</span>
-                  <span className="skill-meta">{n ? `${n} done` : 'Ready to start'}</span>
+                  <span className="skill-meta">{n ? `${n} of ${of} done` : 'Ready to start'}</span>
                 </button>
               )
             })}
           </div>
           <button className="btn ghost block" style={{ marginTop: 12 }} onClick={surprise} disabled={!!spinning}>
-            <Icon name="shuffle" size={20} /> Not sure? Let it choose
+            <Icon name="shuffle" size={20} /> Not sure? Let Mira choose
           </button>
           <p className="muted" style={{ fontSize: 13, textAlign: 'center', marginTop: 8 }}>
             Picking one changes today’s activity.

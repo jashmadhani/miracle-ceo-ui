@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Scene, SKIES, type SceneMood } from '../art/Scene'
 import { useEdge } from '../components/edge'
 import { Tree } from '../art/Tree'
+import { Germinate } from '../art/Germinate'
 import { ActivityArt } from '../art/ActivityArt'
 import { MiraOrb } from '../art/MiraOrb'
 import { Icon } from '../components/Icon'
@@ -52,6 +53,14 @@ export function Onboarding() {
   const [tips, setTips] = useState(false)
   const [nudgeTerms, setNudgeTerms] = useState(false)
 
+  const sprout = useRef<number | undefined>(undefined)
+  const advanceFromSeed = () => {
+    if (sprout.current === undefined) return
+    clearTimeout(sprout.current)
+    sprout.current = undefined
+    next('It’s sprouting. Let’s get to know you.')
+  }
+
   const step = FLOW[i]
   useEdge(SKIES[step === 'planted' ? 'peach' : (MOOD[step] ?? 'dawn')][0])
   const progress = i / (FLOW.length - 1)
@@ -75,7 +84,17 @@ export function Onboarding() {
   let card: ReactNode
   switch (step) {
     case 'seed':
-      card = <SeedStep planted={planted} onPlant={() => { setPlanted(true); setTimeout(() => next('Planted. Let’s get to know you.'), 900) }} />
+      card = (
+        <SeedStep
+          planted={planted}
+          onPlant={() => {
+            setPlanted(true)
+            // let the seed sprout, unless motion is reduced; a tap anywhere moves on sooner
+            const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            sprout.current = window.setTimeout(advanceFromSeed, calm ? 700 : 3600)
+          }}
+        />
+      )
       break
     case 'you':
       card = (
@@ -268,7 +287,8 @@ export function Onboarding() {
             Let’s grow together.
           </h1>
           <div className="planted-tree">
-            <Tree growth={0.4} />
+            {/* the same tree Home shows next, with its first two leaves and the buds still to come */}
+            <Tree growth={0.35 + (2 / 50) * 0.65} blossoms={2} buds />
           </div>
           <button
             className="btn block rise rise-3"
@@ -306,10 +326,13 @@ export function Onboarding() {
 
       {step === 'seed' ? (
         <>
-          <div className={`ob-art seed ${!planted ? 'unplanted' : ''}`}>
-            <Tree growth={growth} className="ob-tree" />
+          {/* a slice through the soil: the seed goes in, roots go down, the first leaves come up */}
+          <div className="ob-soil" onClick={planted ? advanceFromSeed : undefined}>
+            <Germinate planted={planted} />
           </div>
-          <div className="ob-card clear">{card}</div>
+          <div className="ob-card clear" onClick={planted ? advanceFromSeed : undefined}>
+            {card}
+          </div>
         </>
       ) : (
         // the tree always stands on the top edge of the question card

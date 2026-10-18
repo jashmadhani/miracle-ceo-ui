@@ -151,6 +151,15 @@
   box-shadow: none;
 }
 
+/* seed step: the soil slice along the bottom */
+.ob-soil {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 30%;
+  z-index: 1;
+}
 /* seed step */
 .seed-step {
   display: flex;

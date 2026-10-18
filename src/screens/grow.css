@@ -105,8 +105,32 @@
   place-items: center;
   margin-bottom: auto;
 }
+.skill-pot {
+  width: 64px;
+  height: 77px;
+  margin: -4px 0 0 -6px;
+  overflow: visible;
+}
+.skill-pot .pot-plant {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transition: transform 0.35s var(--ease-spring);
+}
+/* "let it choose" hops from pot to pot */
+.skill-tile.lit .skill-pot {
+  animation: pot-hop 0.32s var(--ease-spring);
+}
+.skill-tile.lit .pot-plant,
+.skill-tile.current .pot-plant {
+  transform: scale(1.08);
+}
+@keyframes pot-hop {
+  45% {
+    transform: translateY(-10px) rotate(-4deg);
+  }
+}
 .skill-name {
-  margin-top: 14px;
+  margin-top: 6px;
   font-family: var(--display);
   font-weight: 700;
   font-size: 16px;
@@ -121,7 +145,7 @@
   margin-top: 6px;
   font-size: 12px;
   font-weight: 600;
-  color: var(--ink-3);
+  color: var(--ink-2);
 }
 
 .insight-tile {

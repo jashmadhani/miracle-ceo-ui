@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, type CSSProperties } from 'react'
 import { rng, scallop } from './shapes'
 import type { LeafTone } from './leafColors'
 import './art.css'
@@ -105,28 +105,33 @@ type Props = {
   /** a highlighted leaf (tapped) */
   selected?: number | null
   onLeaf?: (i: number) => void
+  /** show the leaf places not yet earned as soft buds, so you can see how full the tree is */
+  buds?: boolean
+  /** new leaves fly up from below the tree instead of dropping in */
+  fly?: boolean
   sway?: boolean
   ground?: boolean
   className?: string
   title?: string
 }
 
-export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, sway = true, ground = true, className, title }: Props) {
+export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, buds = false, fly = false, sway = true, ground = true, className, title }: Props) {
   const g = Math.max(0, Math.min(1, growth))
 
-  // golden spots are spread evenly through the anchor list; green leaves take the rest
-  const { gold, green } = useMemo(() => {
+  // the 50 leaf places are spread evenly through the anchor list; earned leaves take the first ones,
+  // buds mark the rest, and green leaves fill what's left
+  const { gold, budList, green } = useMemo(() => {
     const n = Math.min(50, blossoms)
-    const step = ANCHORS.length / Math.max(1, Math.min(50, ANCHORS.length))
-    const goldIdx = new Set<number>()
-    for (let i = 0; i < n; i++) goldIdx.add(Math.floor(i * step) % ANCHORS.length)
+    const step = ANCHORS.length / 50
+    const slots = Array.from({ length: 50 }, (_, i) => Math.floor(i * step) % ANCHORS.length)
+    const taken = new Set(buds ? slots : slots.slice(0, n))
     const greenCount = Math.round(10 + g * 70)
     const rand = rng(11)
-    const greenList = ANCHORS.filter((_, i) => !goldIdx.has(i))
+    const greenList = ANCHORS.filter((_, i) => !taken.has(i))
       .slice(0, greenCount)
       .map((a) => ({ ...a, c: GREENS[Math.floor(rand() * GREENS.length)], s: 0.95 + rand() * 0.35, d: rand() * 3 }))
-    return { gold: [...goldIdx].map((i) => ANCHORS[i]), green: greenList }
-  }, [blossoms, g])
+    return { gold: slots.slice(0, n).map((i) => ANCHORS[i]), budList: buds ? slots.slice(n).map((i) => ANCHORS[i]) : [], green: greenList }
+  }, [blossoms, g, buds])
 
   if (g < 0.12) return <Sprout g={g} className={className} ground={ground} title={title} />
 
@@ -176,6 +181,13 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
             </g>
           ))}
 
+          {/* leaf places still waiting: a soft bud each */}
+          {budList.map((a, i) => (
+            <g key={`u${i}`} className="leaf-bud" transform={`translate(${a.x.toFixed(1)} ${a.y.toFixed(1)}) rotate(${a.rot.toFixed(0)}) scale(1.15)`}>
+              <path d={LEAF_PATH} />
+            </g>
+          ))}
+
           {/* earned leaves, each in the colour of what grew it */}
           {gold.map((a, i) => {
             const isNew = newFrom != null && i >= newFrom
@@ -184,7 +196,7 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
             return (
               <g
                 key={`e${i}`}
-                className={`earned-leaf ${isNew ? 'new' : ''} ${isSel ? 'sel' : ''}`}
+                className={`earned-leaf ${isNew ? (fly ? 'new fly' : 'new') : ''} ${isSel ? 'sel' : ''}`}
                 transform={`translate(${a.x.toFixed(1)} ${a.y.toFixed(1)})`}
                 onClick={onLeaf ? () => onLeaf(i) : undefined}
                 role={onLeaf ? 'button' : undefined}
@@ -192,7 +204,19 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
               >
                 {onLeaf && <circle r="16" fill="transparent" />}
                 {(isNew || isSel) && <circle className="leaf-halo" r="15" fill="#fff6dc" />}
-                <g className="leaf-body" style={isNew ? { animationDelay: `${0.25 * (i - (newFrom ?? 0))}s` } : undefined}>
+                <g
+                  className="leaf-body"
+                  style={
+                    isNew
+                      ? ({
+                          animationDelay: `${(fly ? 0.9 : 0.25) * (i - (newFrom ?? 0)) + (fly ? 0.6 : 0)}s`,
+                          // flying leaves start below the tree's base
+                          '--fx': `${(200 - a.x).toFixed(0)}px`,
+                          '--fy': `${(560 - a.y).toFixed(0)}px`,
+                        } as CSSProperties)
+                      : undefined
+                  }
+                >
                   <g transform={`rotate(${a.rot.toFixed(0)}) scale(${isSel ? 2.3 : 1.8})`}>
                     <path d={LEAF_PATH} fill={tone.fill} stroke={tone.stroke} strokeWidth="1.8" />
                     <path d="M0 -8 L0 8" stroke={tone.stroke} strokeWidth="1.2" strokeLinecap="round" opacity="0.8" />

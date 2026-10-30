@@ -1960,3 +1960,35 @@
     -webkit-line-clamp: 3;
   }
 }
+
+/* reel + a fixed vertical position bar beside it */
+.hm-reelwrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 8px;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+.hm-reelwrap .hm-reel {
+  margin-top: 0;
+}
+.hm-reelslide {
+  grid-template-columns: 44% minmax(0, 1fr);
+}
+/* same look and motion as the Read dots, upright */
+.hm-vdots {
+  align-items: center;
+  gap: 4px;
+}
+.hm-vdots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.3;
+  transition: height 0.35s var(--hs-ease), opacity 0.35s var(--hs-ease);
+}
+.hm-vdots i.on {
+  height: 16px;
+  opacity: 0.9;
+}

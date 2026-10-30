@@ -77,6 +77,7 @@ export function WatchSegment({ childName, head }: { childName: string; head: Rea
           </button>
         </div>
       </div>
+      <div className="hm-reelwrap">
       <div
         ref={reel}
         className="hm-reel"
@@ -100,14 +101,15 @@ export function WatchSegment({ childName, head }: { childName: string; head: Rea
                 <Icon name="play" size={15} /> Play
               </button>
             </div>
-            {/* where you are in the stack of videos */}
-            <span className="hm-vdots" aria-hidden>
-              {VIDEOS.map((_, j) => (
-                <i key={j} className={j === k ? 'on' : ''} />
-              ))}
-            </span>
           </div>
         ))}
+      </div>
+      {/* the position bar stays put while only the slides move, like Read's dots turned upright */}
+      <span className="hm-vdots" aria-hidden>
+        {VIDEOS.map((_, j) => (
+          <i key={j} className={j === i ? 'on' : ''} />
+        ))}
+      </span>
       </div>
       {open && <VideoSheet v={open} onClose={() => setOpen(null)} />}
     </section>

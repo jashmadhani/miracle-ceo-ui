@@ -365,3 +365,27 @@
 .forest-cta {
   white-space: nowrap;
 }
+/* contrast: solid white on the teal forest card */
+.forest-card .eyebrow,
+.forest-card-count {
+  color: #fff;
+}
+/* contrast: weekday letters, days still to come and the day log label all pass AA */
+.week-day {
+  color: var(--ink-2);
+}
+.week-day.future {
+  opacity: 1;
+}
+.week-day.future b,
+.week-day.future {
+  color: var(--ink-2);
+  font-weight: 500;
+}
+.week-day.future i {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px rgba(28, 27, 34, 0.14);
+}
+.timeline .eyebrow {
+  color: var(--ink-2);
+}

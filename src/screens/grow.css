@@ -454,3 +454,8 @@
     font-size: 13px;
   }
 }
+/* contrast: solid white on the ocean-blue block */
+.grow-today .eyebrow,
+.grow-today .grow-today-meta {
+  color: #fff;
+}

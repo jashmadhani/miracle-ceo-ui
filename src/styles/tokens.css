@@ -2,7 +2,7 @@
  * Design tokens — the sky palette approved on Home, used across the app:
  *   sky page #d6e8f9 · white segments · ocean blue #1f72c4 for the one primary action
  *   lemon #fcffe9 + hill #dff5c3 (tree) · amber #f6b137 / #fed495 (reads)
- *   teal #3e8a80 / #55a094 (videos) · ink #1c1b22
+ *   teal #2f7368 / #3e8a80 (videos) · ink #1c1b22
  * Marigold #ffc519 is for rewards only. The tree greens and the EQ/SQ/IQ skill
  * colours are untouched on purpose.
  */
@@ -39,8 +39,8 @@
   --sec-cream: #fcffe9;
   --sec-amber: #f6b137;
   --sec-amber-tile: #fed495;
-  --sec-teal: #3e8a80;
-  --sec-teal-tile: #55a094;
+  --sec-teal: #2f7368; /* deep enough for white text (5.6:1) */
+  --sec-teal-tile: #3e8a80;
   --sec-sky: #1f72c4;
 
   /* selection: a soft tint and a blue outline, never a solid fill */
@@ -71,11 +71,11 @@
   --mint-2: var(--teal);
 
   /* skill markers: tint chips only (EQ coral, SQ teal, IQ marigold) */
-  --eq: #b8404f;
+  --eq: #a3343f; /* text on --eq-bg passes 4.5:1 */
   --eq-bg: #fde4e6;
-  --sq: #33796f;
+  --sq: #2a655c;
   --sq-bg: #d4ece7;
-  --iq: #9a6400;
+  --iq: #7d5200;
   --iq-bg: #fff3d9;
 
   /* type */

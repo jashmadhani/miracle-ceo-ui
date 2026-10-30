@@ -2,7 +2,7 @@
  * Home in the approved sky-blue palette. Scoped to .home.sky so the other
  * tabs keep their colours until they are redesigned.
  *   page #e6eef7 · sky #1f72c4 (today) · lemon cream #fcffe9 + hill #dff5c3 (tree)
- *   amber #f6b137 / #fed495 (reads) · teal #3e8a80 / #55a094 (videos) · ink #1c1b22
+ *   amber #f6b137 / #fed495 (reads) · teal #2f7368 / #3e8a80 (videos) · ink #1c1b22
  * Blocks form one segmented stack: 8px from the screen edge, 3px seams, large
  * corners only at the top and bottom of the stack, small ones where blocks meet.
  */
@@ -17,8 +17,8 @@
   --primary-soft: #dcebf8;
   --sec-amber: #f6b137;
   --sec-amber-tile: #fed495;
-  --sec-teal: #3e8a80;
-  --sec-teal-tile: #55a094;
+  --sec-teal: #2f7368;
+  --sec-teal-tile: #3e8a80;
   --hs-gap: 8px;
   --hs-seam: 3px;
   --hs-radius: 28px;
@@ -319,7 +319,7 @@
 
 /* videos on teal, merged into one list */
 .hs-teal {
-  background: #3e8a80;
+  background: #2f7368;
   color: #fff;
 }
 .hs-teal .video-list {
@@ -458,7 +458,7 @@
   color: var(--ink);
 }
 .hm-watch {
-  background: #3e8a80;
+  background: #2f7368;
   color: #fff;
 }
 .hm-card {
@@ -1022,7 +1022,7 @@
 }
 .hm-watch .hs-step {
   background: #fff;
-  color: #3e8a80;
+  color: #2f7368;
 }
 
 /* one button style for every segment's action */
@@ -1102,7 +1102,7 @@
   width: 64px;
   height: 64px;
   background: rgba(255, 255, 255, 0.95);
-  color: #3e8a80;
+  color: #2f7368;
   box-shadow: 0 8px 18px rgba(28, 27, 34, 0.25);
 }
 .hm-preview .hm-time {
@@ -1661,7 +1661,7 @@
   min-height: 40px;
   padding: 0 16px;
   background: #fff;
-  color: #3e8a80;
+  color: #2f7368;
   box-shadow: none;
 }
 
@@ -2015,4 +2015,26 @@
 .home.sky .hs-tree .tree-card-art {
   flex: none;
   height: 186px;
+}
+
+/* ---- contrast: every line of text on a coloured block passes WCAG AA ----
+ * white on ocean #1f72c4 = 4.9:1 and on teal #2f7368 = 5.6:1, so secondary lines
+ * use solid white instead of faded white; ink on amber stays at 9:1 */
+.hs-today .hs-label,
+.hs-today .hs-today-copy small,
+.hs-today .hs-meta,
+.hm-watch .hm-topic,
+.hm-watch .hm-title,
+.hm-watch .hm-body,
+.hm-watch .hm-meta,
+.hm-watch .hm-count,
+.hm-watch .hs-label {
+  color: #fff;
+  opacity: 1;
+}
+.hm-read .hm-meta {
+  opacity: 0.8;
+}
+.home.sky .child-pill .avatar {
+  color: #175a9c;
 }

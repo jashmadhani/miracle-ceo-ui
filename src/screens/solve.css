@@ -471,3 +471,41 @@
     height: 68px;
   }
 }
+
+/* ---- sky redesign: title floats on the sky, the conversation is one white segment ---- */
+.solve .solve-head.hsec {
+  background: transparent;
+  box-shadow: none;
+  padding: calc(14px + var(--safe-top)) 16px 14px;
+}
+.solve .solve-head .eyebrow {
+  color: var(--ink-2);
+}
+.solve .solve-head .display {
+  color: var(--ink);
+}
+.solve .solve-head .segmented {
+  background: rgba(255, 255, 255, 0.7);
+}
+.solve .solve-head .segmented button {
+  color: var(--ink-2);
+}
+.solve .solve-head .segmented button.on {
+  color: #fff;
+}
+.solve .solve-head .segmented .thumb {
+  background: #1f72c4;
+  box-shadow: 0 4px 10px rgba(31, 114, 196, 0.3);
+}
+.solve .solve-body {
+  margin: 0 8px;
+  border-radius: 28px;
+  background: #fff;
+  box-shadow: none;
+}
+/* suggestions sit inside the segment as soft tiles, not cards on a card */
+.solve .suggest-tile {
+  background: #eef5fc;
+  box-shadow: none;
+  border-radius: 18px;
+}

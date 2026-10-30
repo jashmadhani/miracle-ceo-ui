@@ -5,7 +5,7 @@ import { Tree } from '../art/Tree'
 import { useTreeLeafTones } from '../art/leafColors'
 import { Leaf } from '../art/ActivityArt'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
-import { NextStrand, RankCard } from './JourneyExtras'
+import { NextStrand } from './JourneyExtras'
 import { LEAVES_PER_TREE, useChild, useStore } from '../state/store'
 import './journey.css'
 
@@ -35,7 +35,7 @@ export function Journey() {
     <>
       <div className="screen with-tabbar journey">
         <header className="pad journey-head">
-          <p className="eyebrow" style={{ color: 'var(--coral-2)' }}>
+          <p className="eyebrow">
             Since {new Date(first).toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}
           </p>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12 }}>
@@ -65,13 +65,12 @@ export function Journey() {
               <span className="forest-card-count">
                 {inTree} / {LEAVES_PER_TREE} leaves
               </span>
-              <span className="btn small light" style={{ marginTop: 16, alignSelf: 'flex-start' }}>
+              <span className="hs-cta ghost forest-cta">
                 <Icon name="map" size={18} /> Walk your forest
               </span>
             </div>
           </button>
 
-          <RankCard />
 
           {/* the numbers as one slim strip under the forest */}
           <div className="stat-strip">

@@ -1,56 +1,56 @@
 /*
- * Design tokens — Midnight and sand (from Figma's colour combinations
- * 3 Blue eclipse, 53 Cobalt sky and 9 Golden taupe):
- *   sand #f4eee6 page · white cards · cobalt #1956ac action
- *   midnight #272657 ink and header blocks · caramel #c08143 warm accent
+ * Design tokens — the sky palette approved on Home, used across the app:
+ *   sky page #d6e8f9 · white segments · ocean blue #1f72c4 for the one primary action
+ *   lemon #fcffe9 + hill #dff5c3 (tree) · amber #f6b137 / #fed495 (reads)
+ *   teal #3e8a80 / #55a094 (videos) · ink #1c1b22
  * Marigold #ffc519 is for rewards only. The tree greens and the EQ/SQ/IQ skill
  * colours are untouched on purpose.
  */
 :root {
   /* base */
-  --paper: #f4eee6;
+  --paper: #d6e8f9;
   --card: #ffffff;
-  --sand: #eae1d4;
-  --sand-2: #dccfbd;
-  --line: rgba(39, 38, 87, 0.09);
+  --sand: #e9eff6;
+  --sand-2: #d5e0ec;
+  --line: rgba(28, 27, 34, 0.09);
 
-  /* cobalt — primary action */
-  --teal: #1956ac;
-  --teal-2: #12407f;
-  --primary-soft: #dce6f5;
+  /* ocean blue — primary action */
+  --teal: #1f72c4;
+  --teal-2: #175a9c;
+  --primary-soft: #dcebf8;
 
-  /* caramel — the one warm accent */
-  --accent: #c08143;
-  --accent-deep: #8a5528;
-  --accent-soft: #f3e3d2;
+  /* amber — the one warm accent */
+  --accent: #f6b137;
+  --accent-deep: #8a5a00;
+  --accent-soft: #fff0c2;
 
   /* marigold — reward only */
   --leaf: #ffc519;
   --reward-deep: #8a5a00;
   --reward-soft: #fff0c2;
 
-  /* Mira — cobalt */
-  --mira: #1956ac;
-  --mira-light: #8db0de;
-  --mira-soft: #dce6f5;
+  /* Mira — blue */
+  --mira: #1f72c4;
+  --mira-light: #76a9dd;
+  --mira-soft: #dcebf8;
 
-  /* colour-block sections: midnight on Home, cobalt on Ask Mira */
-  --sec-coral: #272657;
-  --sec-cream: #f4eee6;
-  --sec-amber: #eae1d4;
-  --sec-amber-tile: #f3ece2;
-  --sec-teal: #1956ac;
-  --sec-teal-tile: #3f73be;
-  --sec-sky: #1956ac;
+  /* colour-block sections */
+  --sec-coral: #1f72c4;
+  --sec-cream: #fcffe9;
+  --sec-amber: #f6b137;
+  --sec-amber-tile: #fed495;
+  --sec-teal: #3e8a80;
+  --sec-teal-tile: #55a094;
+  --sec-sky: #1f72c4;
 
-  --page-bg: linear-gradient(180deg, #f4eee6 0%, #f4eee6 100%);
-  --edge-top: #f4eee6;
-  --edge-bottom: #f4eee6;
+  --page-bg: linear-gradient(180deg, #d6e8f9 0%, #d6e8f9 100%);
+  --edge-top: #d6e8f9;
+  --edge-bottom: #d6e8f9;
 
   /* ink */
-  --ink: #272657;
-  --ink-2: #5a5878;
-  --ink-3: #8a88a6;
+  --ink: #1c1b22;
+  --ink-2: #55535f;
+  --ink-3: #8b8995;
   --on-dark: #ffffff;
 
   /* legacy names used across screens, mapped onto the six roles */
@@ -58,7 +58,7 @@
   --butter-2: var(--leaf);
   --blush: var(--accent-soft);
   --coral: var(--accent);
-  --coral-2: var(--accent-deep);
+  --coral-2: #c2414b; /* destructive only (delete) */
   --sky: var(--primary-soft);
   --sky-2: var(--teal);
   --lilac: var(--mira-soft);
@@ -75,11 +75,11 @@
   --iq-bg: #fff3d9;
 
   /* type */
-  --display: 'Hagrid', 'Bricolage Grotesque Variable', -apple-system, system-ui, sans-serif;
+  --display: -apple-system, 'SF Pro Display', 'SF Pro', system-ui, 'Helvetica Neue', sans-serif;
   --text: -apple-system, 'SF Pro Text', 'SF Pro', system-ui, 'Helvetica Neue', sans-serif;
 
   /* shape */
-  --r-xl: 32px;
+  --r-xl: 28px;
   --r-lg: 24px;
   --r-md: 18px;
   --r-sm: 12px;
@@ -87,8 +87,8 @@
   --shadow-lift: 0 2px 4px rgba(39, 38, 87, 0.06), 0 16px 36px rgba(39, 38, 87, 0.12);
 
   /* soft fades built from the palette tints */
-  --fade-dawn: linear-gradient(160deg, #f3e3d2 0%, #f4eee6 55%, #fff0c2 100%);
-  --fade-peach: linear-gradient(170deg, #fff0c2 0%, #f3e3d2 100%);
+  --fade-dawn: linear-gradient(160deg, #dcebf8 0%, #eef5fc 55%, #fcffe9 100%);
+  --fade-peach: linear-gradient(170deg, #fcffe9 0%, #dcebf8 100%);
   --fade-sky: linear-gradient(175deg, #dce6f5 0%, var(--paper) 100%);
 
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);

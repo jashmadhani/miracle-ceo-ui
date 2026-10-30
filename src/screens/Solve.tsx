@@ -24,7 +24,7 @@ export function Solve() {
   const [params, setParams] = useSearchParams()
   const tab = (params.get('tab') as Tab) || 'ask'
   const idx = TABS.findIndex(([k]) => k === tab)
-  useEdge('#3e8a80')
+  useEdge('#d6e8f9', false, '#d6e8f9')
   return (
     <>
       <div className="screen with-tabbar solve">

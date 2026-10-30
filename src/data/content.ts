@@ -72,7 +72,7 @@ const SAMPLE: Activity[] = [
     minutes: 5,
     summary: 'Three playground moments. Your child picks a way to say hello, and what they’d do next.',
     steps: [
-      { say: '“Let’s practise saying hello. I’ll set the scene.”', line: '“There’s no wrong way to start.”' },
+      { say: '“Let’s practice saying hello. I’ll set the scene.”', line: '“There’s no wrong way to start.”' },
       { say: 'Scene 1: a new kid is sitting alone at lunch.', line: '“What could you say first?”' },
       { say: 'Scene 2: two kids are building with blocks.', line: '“How could you join in?”' },
       { say: 'Scene 3: someone has the same backpack as you.', line: '“What’s a fun thing to ask?”' },
@@ -257,8 +257,8 @@ export const ONBOARDING = {
   ],
   time: [
     ['⏱️', '1–5 min', 'A quick moment'],
-    ['☕', '5–10 min', 'A cup of tea’s worth'],
-    ['🌿', '10–20 min', 'A proper play'],
+    ['☕', '5–10 min', 'About a coffee break'],
+    ['🌿', '10–20 min', 'A real playtime'],
     ['🔀', 'It varies', 'We’ll keep it flexible'],
   ],
 }

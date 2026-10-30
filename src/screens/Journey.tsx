@@ -21,8 +21,9 @@ export function Journey() {
 
   // week strip
   const now = new Date()
+  // US weeks start on Sunday
   const monday = new Date(now)
-  monday.setDate(now.getDate() - ((now.getDay() + 6) % 7))
+  monday.setDate(now.getDate() - now.getDay())
   const week = [...Array(7)].map((_, i) => {
     const d = new Date(monday)
     d.setDate(monday.getDate() + i)
@@ -36,7 +37,7 @@ export function Journey() {
       <div className="screen with-tabbar journey">
         <header className="pad journey-head">
           <p className="eyebrow">
-            Since {new Date(first).toLocaleDateString(undefined, { day: 'numeric', month: 'long' })}
+            Since {new Date(first).toLocaleDateString('en-US', { day: 'numeric', month: 'long' })}
           </p>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12 }}>
             <h1 className="display" style={{ fontSize: 40 }}>
@@ -125,7 +126,7 @@ export function Journey() {
             <div className="week-strip">
               {week.map(({ d, leaves, today: t, future }) => (
                 <div key={d.toISOString()} className={`week-day ${t ? 'today' : ''} ${future ? 'future' : ''}`}>
-                  <span>{d.toLocaleDateString(undefined, { weekday: 'narrow' })}</span>
+                  <span>{d.toLocaleDateString('en-US', { weekday: 'narrow' })}</span>
                   <b>{d.getDate()}</b>
                   <i className={leaves ? 'on' : ''}>{leaves ? <Leaf size={12} color="var(--leaf)" /> : null}</i>
                 </div>
@@ -142,7 +143,7 @@ export function Journey() {
                     <Icon name={e.kind === 'activity' ? 'play' : e.kind === 'mood' ? 'heart' : 'sparkle'} size={14} />
                   </span>
                   <span style={{ flex: 1 }}>
-                    <small className="muted">{new Date(e.at).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })}</small>
+                    <small className="muted">{new Date(e.at).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</small>
                     <b style={{ display: 'block', fontWeight: 620 }}>{e.label}</b>
                   </span>
                   <span className="pill" style={{ background: 'var(--reward-soft)', color: 'var(--reward-deep)' }}>
@@ -159,7 +160,7 @@ export function Journey() {
           <div className="card">
             {(
               [
-                ['/journey/bloom', 'sparkle', 'Your bloom', `${new Date().toLocaleDateString(undefined, { month: 'long' })}, wrapped`, 'var(--accent-soft)'],
+                ['/journey/bloom', 'sparkle', 'Your bloom', `${new Date().toLocaleDateString('en-US', { month: 'long' })}, wrapped`, 'var(--accent-soft)'],
                 ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--sec-amber-tile)'],
                 ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--accent-soft)'],
                 ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--primary-soft)'],

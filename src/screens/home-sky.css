@@ -10,7 +10,7 @@
   --paper: #d6e8f9;
   --ink: #1c1b22;
   --ink-2: #55535f;
-  --ink-3: #8b8995;
+  --ink-3: #6b6975;
   --sand: #e9eff6;
   --teal: #1f72c4;
   --teal-2: #1f72c4;
@@ -2084,4 +2084,10 @@
 .home.sky .x-task-btn:active {
   background: var(--sel-bg);
   box-shadow: inset 0 0 0 2px var(--sel-line);
+}
+
+/* the same Today card standing alone on Grow and Journey */
+.hs-today.today-solo {
+  border-radius: var(--r-xl);
+  margin: 4px 0 14px;
 }

@@ -232,7 +232,7 @@ const IQ: Entry[] = [
     summary: 'Sort a handful of anything by a rule they pick.',
     steps: [
       ['Pour out a handful of anything: buttons, spoons, blocks.', '“Let’s sort these.”'],
-      ['Let them choose the rule.', '“How shall we sort them? Colour? Size?”'],
+      ['Let them choose the rule.', '“How should we sort them? Color? Size?”'],
       ['Sort together, then ask about their rule.', '“Tell me how you decided.”'],
     ],
     practice: 'Sort one everyday thing together this week, their rule.',

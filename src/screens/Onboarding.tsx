@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Scene, SKIES, type SceneMood } from '../art/Scene'
 import { useEdge } from '../components/edge'
 import { Tree } from '../art/Tree'
+import { useTreeLeafTones } from '../art/leafColors'
 import { Germinate } from '../art/Germinate'
 import { ActivityArt } from '../art/ActivityArt'
 import { MiraOrb } from '../art/MiraOrb'
@@ -61,6 +62,8 @@ export function Onboarding() {
     next('It’s sprouting. Let’s get to know you.')
   }
 
+  // the welcome tree wears the same leaf colours as Home's tree
+  const tones = useTreeLeafTones()
   const step = FLOW[i]
   useEdge(SKIES[step === 'planted' ? 'peach' : (MOOD[step] ?? 'dawn')][0])
   const progress = i / (FLOW.length - 1)
@@ -105,7 +108,7 @@ export function Onboarding() {
           <div className="chips">
             {(['mom', 'dad', 'guardian'] as Role[]).map((r) => (
               <button key={r} className={`chip ${s.role === r ? 'on' : ''}`} onClick={() => set({ role: r })}>
-                {r === 'mom' ? 'Mum' : r === 'dad' ? 'Dad' : 'Guardian'}
+                {r === 'mom' ? 'Mom' : r === 'dad' ? 'Dad' : 'Guardian'}
               </button>
             ))}
           </div>
@@ -113,7 +116,7 @@ export function Onboarding() {
             I agree to the <b>Terms</b> and <b>Privacy Policy</b>. What I share about my child stays private.
           </Check>
           <Check on={tips} onClick={() => setTips((v) => !v)}>
-            Send me the odd parenting tip (optional)
+            Send me a parenting tip now and then (optional)
           </Check>
           <Cta
             disabled={!s.parentName.trim() || !agree}
@@ -208,7 +211,7 @@ export function Onboarding() {
       break
     case 'tried':
       card = (
-        <Q kicker="Right now" title="What have you already tried?" hint="No judgement. We have all Googled at midnight.">
+        <Q kicker="Right now" title="What have you already tried?" hint="No judgment. We have all Googled at midnight.">
           <PickGrid items={ONBOARDING.tried} selected={s.tried} onToggle={(t) => toggle('tried', t)} />
           <Cta label={s.tried.length ? 'Continue' : 'Skip'} quiet={!s.tried.length} onClick={() => next('Every question you’ve asked about them is love.')} />
         </Q>
@@ -251,7 +254,7 @@ export function Onboarding() {
           <div className="transform">
             <div>
               <BonsaiMini />
-              <p className="eyebrow">Bonsai moments</p>
+              <p className="eyebrow">Rushed moments</p>
               <span>In a rush</span>
               <span>Busy mind</span>
               <span>Doing it for them</span>
@@ -259,7 +262,7 @@ export function Onboarding() {
             <Icon name="arrow" size={26} style={{ color: 'var(--ink-3)', alignSelf: 'center' }} />
             <div className="ceo">
               <Tree growth={0.8} sway={false} ground={false} className="mini-tree" />
-              <p className="eyebrow">Miracle CEO moments</p>
+              <p className="eyebrow">Together moments</p>
               <span>Pause and connect</span>
               <span>Calm heart</span>
               <span>Doing it together</span>
@@ -279,7 +282,7 @@ export function Onboarding() {
       <div className="screen ob">
         <Scene mood="peach" />
         <div className="planted">
-          <p className="eyebrow rise" style={{ color: 'var(--accent)' }}>
+          <p className="eyebrow rise" style={{ color: 'var(--accent-deep)' }}>
             Your tree is planted
           </p>
           <h1 className="display rise rise-1">
@@ -289,7 +292,7 @@ export function Onboarding() {
           </h1>
           <div className="planted-tree">
             {/* the same tree Home shows next, with its first two leaves and the buds still to come */}
-            <Tree growth={1} blossoms={2} />
+            <Tree growth={1} blossoms={2} tones={tones} />
           </div>
           <button
             className="btn block rise rise-3"

@@ -180,7 +180,7 @@ export function TreeFull({ onClose }: { onClose: () => void }) {
               <Leaf size={22} tone={tones[sel!]} />
             </span>
             <span style={{ flex: 1 }}>
-              <span className="eyebrow">Leaf {sel! + 1} · {new Date(picked.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</span>
+              <span className="eyebrow">Leaf {sel! + 1} · {new Date(picked.at).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</span>
               <b style={{ display: 'block', fontSize: 18, marginTop: 2 }}>{picked.label}</b>
               <span className="muted" style={{ fontSize: 14 }}>
                 {picked.kind === 'activity' ? 'Something real you did together.' : picked.kind === 'mood' ? 'You checked in with yourself.' : 'You showed up.'}

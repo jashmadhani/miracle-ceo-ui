@@ -54,7 +54,7 @@
   /* ink */
   --ink: #1c1b22;
   --ink-2: #55535f;
-  --ink-3: #8b8995;
+  --ink-3: #6b6975; /* 4.9:1 on white, so small labels stay readable */
   --on-dark: #ffffff;
 
   /* legacy names used across screens, mapped onto the six roles */
@@ -62,7 +62,7 @@
   --butter-2: var(--leaf);
   --blush: var(--accent-soft);
   --coral: var(--accent);
-  --coral-2: #c2414b; /* destructive only (delete) */
+  --coral-2: #b0363f; /* destructive only (delete) */
   --sky: var(--primary-soft);
   --sky-2: var(--teal);
   --lilac: var(--mira-soft);

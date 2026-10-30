@@ -140,7 +140,7 @@ export function ActivityPlayer() {
             <h2 className="display act-say">Carry it into the rest of the week.</h2>
             <div className="say-card practice">
               <p className="eyebrow" style={{ color: 'var(--teal)' }}>
-                Practise it this week
+                Practice it this week
               </p>
               <p className="say-line">{act.practice}</p>
             </div>

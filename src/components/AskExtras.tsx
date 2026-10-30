@@ -93,7 +93,7 @@ export function ChatDrawer({ onClose, onOpen }: { onClose: () => void; onOpen: (
               s.chats.map((c) => (
                 <button key={c.at} className="x-drawer-row" onClick={() => onOpen(c.q)}>
                   <span>{c.q}</span>
-                  <small className="muted">{new Date(c.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</small>
+                  <small className="muted">{new Date(c.at).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</small>
                 </button>
               ))
             ))}

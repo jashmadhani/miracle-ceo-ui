@@ -5,11 +5,9 @@ import { ChildSwitcher, TabBar } from '../components/Shell'
 import { TreeCard, useToday } from '../components/Cards'
 import { ReadSegment, WatchSegment } from '../components/HomeMedia'
 import { OpenTaskCard } from '../components/HomeExtras'
+import { TodayCard } from '../components/TodayCard'
 import { Icon } from '../components/Icon'
 import { Leaf } from '../art/ActivityArt'
-import { ACTIVITIES, SKILLS } from '../data/content'
-import { Pot } from '../art/Pot'
-import { LEAF_TONES } from '../art/leafColors'
 import { today, useChild, useStore } from '../state/store'
 import './home.css'
 import './home-sky.css'
@@ -39,10 +37,7 @@ export function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const skillActs = ACTIVITIES.filter((a) => a.skill === act.skill)
-  const skillTotal = skillActs.length
-  const skillDone = skillActs.filter((a) => s.done[a.id]).length
-  const date = new Date().toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })
+  const date = new Date().toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
 
   return (
     <>
@@ -71,44 +66,8 @@ export function Home() {
 
         {/* four segments in one stack: today, the tree, Mira's follow-up, read and watch */}
         <div className="hs-stack">
-          {/* the whole segment opens today's activity; the Start button says so */}
-          <section className="hs-block hs-today" aria-label={`Today’s activity: ${act.title}, ${act.minutes} minutes`}>
-            <Head>
-              Today’s activity
-            </Head>
-            {/* what it is */}
-            <span className="hs-today-main">
-              {/* the skill's growing pot from Grow: it fills in as this skill's activities get done */}
-              <span className="hs-skill" aria-hidden>
-                <Pot done={skillDone} total={skillTotal} tone={LEAF_TONES[act.skill]} />
-              </span>
-              <span className="hs-today-copy">
-                <b>{act.title}</b>
-                <small>Builds {SKILLS[act.skill].name.toLowerCase()} skills</small>
-              </span>
-            </span>
-            {/* how long, what it earns, and the one action */}
-            <span className="hs-today-foot">
-              <span className="hs-meta">
-                <span>
-                  <Icon name="clock" size={14} /> {act.minutes} min
-                </span>
-                <span>
-                  <Leaf size={14} color="#fff" /> +3 leaves
-                </span>
-              </span>
-              {done ? (
-                // done today: a tick alone, no extra words
-                <button className="hs-tick" onClick={() => nav(`/activity/${act.id}`)} aria-label="Done today. Open the activity again">
-                  <Icon name="check" size={22} stroke={2.8} />
-                </button>
-              ) : (
-                <button className="hs-cta" onClick={() => nav(`/activity/${act.id}`)}>
-                  <span className="hs-cta-text">Start</span> <Icon name="arrow" size={16} stroke={2.4} />
-                </button>
-              )}
-            </span>
-          </section>
+          {/* today's activity: the same card as on Grow and Journey */}
+          <TodayCard />
 
           <section className="hs-block hs-tree">
             <TreeCard

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Sheet, TabBar } from '../components/Shell'
 import { useToday } from '../components/Cards'
 import { Icon } from '../components/Icon'
+import { TodayCard } from '../components/TodayCard'
 import { ActivityArt } from '../art/ActivityArt'
 import { Pot } from '../art/Pot'
 import { LEAF_TONES } from '../art/leafColors'
@@ -62,36 +63,14 @@ export function Grow() {
           <h1 className="display grow-title">Let’s grow together.</h1>
         </header>
 
-        {/* today's moment: one amber card, the scene breaking out of its top edge */}
+        {/* today's activity: the same card as on Home */}
         <div className="pad">
-          <button className={`grow-today sk-${act.skill}`} onClick={() => nav(`/activity/${act.id}`)} aria-label={`${act.title}, ${act.minutes} minutes. ${done ? 'Done today' : 'Start'}`}>
-            <span className="grow-today-art">
-              <ActivityArt skill={act.skill} id={act.id} />
-            </span>
-            <span className="eyebrow">Today’s activity</span>
-            <span className="display grow-today-title">{act.title}</span>
-            <span className="grow-today-row">
-              <span className="grow-today-meta">
-                <Icon name="clock" size={15} /> {act.minutes} min
-              </span>
-              <span className={`grow-today-go ${done ? 'done' : ''}`}>
-                {done ? (
-                  <>
-                    <Icon name="check" size={18} stroke={2.8} /> Done today
-                  </>
-                ) : (
-                  <>
-                    Start <Icon name="arrow" size={18} stroke={2.4} />
-                  </>
-                )}
-              </span>
-            </span>
-          </button>
+          <TodayCard className="today-solo" />
         </div>
 
         <div className="pad">
           <div className="section-head">
-            <h2>What shall we work on?</h2>
+            <h2>What should we work on?</h2>
           </div>
           <div className="skills">
             {(['SQ', 'EQ', 'IQ'] as Skill[]).map((k) => {

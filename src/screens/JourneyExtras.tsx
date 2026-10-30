@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { BackBar, Sheet, TabBar } from '../components/Shell'
 import { Icon } from '../components/Icon'
+import { TodayCard } from '../components/TodayCard'
 import { useChild, useStore } from '../state/store'
 import '../components/extras.css'
 
@@ -43,13 +44,9 @@ export function RankCard() {
 }
 
 /** The loop back to Home. */
+/** Journey's link to today: the same Today card as on Home and Grow. */
 export function NextStrand() {
-  const nav = useNavigate()
-  return (
-    <button className="x-strand" onClick={() => nav('/home')}>
-      Today is the next one <Icon name="arrow" size={18} stroke={2.4} />
-    </button>
-  )
+  return <TodayCard className="today-solo" />
 }
 
 /** Scrolling level map: done, now, locked. */
@@ -98,7 +95,7 @@ export function BloomReport() {
   const child = useChild()
   const [reel, setReel] = useState(false)
   const [i, setI] = useState(0)
-  const month = new Date().toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+  const month = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
   const days = new Set(s.log.map((e) => new Date(e.at).toDateString())).size
   return (
     <>

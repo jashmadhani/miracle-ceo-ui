@@ -197,7 +197,7 @@ export function Forest() {
                   <span className="r-title" style={{ display: 'block' }}>
                     {e.label}
                   </span>
-                  <span className="r-sub">{new Date(e.at).toLocaleDateString(undefined, { day: 'numeric', month: 'short' })}</span>
+                  <span className="r-sub">{new Date(e.at).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</span>
                 </span>
                 <b style={{ color: 'var(--teal)' }}>+{e.leaves}</b>
               </div>

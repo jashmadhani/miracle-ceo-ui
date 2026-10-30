@@ -22,7 +22,7 @@ export function Home() {
   const { s, set, earn, toast } = useStore()
   const child = useChild()
   const { act, done } = useToday()
-  useEdge(PAGE, false, PAGE)
+  useEdge(PAGE, false, '#f6b137')
 
   // A returning visit (not the first day) earns leaves.
   const counted = useRef(false) // StrictMode runs effects twice in dev

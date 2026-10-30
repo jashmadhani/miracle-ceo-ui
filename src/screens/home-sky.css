@@ -1795,3 +1795,20 @@
     display: none;
   }
 }
+
+/* the last segment (Read) runs down behind the tab bar to the bottom of the screen */
+.home.sky {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-bottom: 0;
+}
+.home.sky .hs-stack {
+  flex: 1;
+}
+.home.sky .hs-stack > :last-child {
+  flex: 1;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-bottom: calc(118px + var(--safe-bottom));
+}

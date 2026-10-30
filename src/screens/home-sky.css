@@ -1834,3 +1834,13 @@
 .home.sky .hs-tree .tree-card-art {
   flex: 1;
 }
+
+/* Read is a normal rounded segment again; the sky shows below it, above the tab bar */
+.home.sky {
+  padding-bottom: calc(112px + var(--safe-bottom));
+}
+.home.sky .hs-stack > :last-child {
+  padding-bottom: 16px;
+  border-bottom-left-radius: var(--hs-radius);
+  border-bottom-right-radius: var(--hs-radius);
+}

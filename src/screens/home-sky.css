@@ -1844,3 +1844,24 @@
   border-bottom-left-radius: var(--hs-radius);
   border-bottom-right-radius: var(--hs-radius);
 }
+
+/* Watch: one slide per video, swiped like Read; title and Play sit centred beside the video */
+.hm-watchslide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  display: grid;
+  grid-template-columns: 44% minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+.hm-watchslide .hm-preview.tall {
+  animation: none;
+}
+.hm-watchslide .hm-side {
+  justify-content: center;
+  gap: 2px;
+}
+.hm-watchslide .hm-side .hs-cta.ghost {
+  margin-top: 14px;
+}

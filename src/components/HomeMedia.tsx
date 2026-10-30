@@ -54,41 +54,29 @@ function Rail({ head, label, count, className, children }: { head: ReactNode; la
 
 export function WatchSegment({ childName, head }: { childName: string; head: ReactNode }) {
   const [open, setOpen] = useState<(typeof VIDEOS)[number] | null>(null)
-  const [cur, setCur] = useState(0)
-  const v = VIDEOS[cur]
-  const next = VIDEOS.map((x, k) => ({ x, k })).filter(({ k }) => k !== cur)
   return (
-    <section className="hs-block hm hm-watch" aria-label={`Watch: get to know ${childName}`}>
-      <div className="hm-headrow">{head}</div>
-      <div className="hm-watchgrid">
-        {/* the featured video stays upright, 9:16, exactly as it was filmed */}
-        <button key={v.id} className="hm-preview tall" onClick={() => setOpen(v)} aria-label={`Play ${v.title}, ${v.minutes} minutes`}>
-          {/* a still from the video; it carries its own play button, so we don't add a second one */}
-          <img src={POSTER} alt="" draggable={false} decoding="async" />
-          <span className="hm-time">{v.minutes} min</span>
-        </button>
-        <div className="hm-side">
-          <b className="hm-title">{v.title}</b>
-          <small className="hm-meta">{v.topic}</small>
-          <button className="hs-cta ghost" onClick={() => setOpen(v)}>
-            <Icon name="play" size={15} /> Play
-          </button>
-          {/* the rest of the videos fill the side, one tap to swap them in */}
-          <span className="hm-upnext">Up next</span>
-          <ul className="hm-nextlist">
-            {next.map(({ x, k }) => (
-              <li key={x.id}>
-                <button onClick={() => setCur(k)}>
-                  <span>{x.title}</span>
-                  <small>{x.minutes} min</small>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
+    <>
+      {/* one video per slide: swipe for the next, arrows as a fallback */}
+      <Rail head={head} label={`Watch: get to know ${childName}`} count={VIDEOS.length} className="hm-watch">
+        {VIDEOS.map((v) => (
+          <div key={v.id} className="hm-watchslide">
+            {/* a still from the video; it carries its own play button, so we don't add a second one */}
+            <button className="hm-preview tall" onClick={() => setOpen(v)} aria-label={`Play ${v.title}, ${v.minutes} minutes`}>
+              <img src={POSTER} alt="" draggable={false} decoding="async" />
+              <span className="hm-time">{v.minutes} min</span>
+            </button>
+            <div className="hm-side">
+              <b className="hm-title">{v.title}</b>
+              <small className="hm-meta">{v.topic}</small>
+              <button className="hs-cta ghost" onClick={() => setOpen(v)}>
+                <Icon name="play" size={15} /> Play
+              </button>
+            </div>
+          </div>
+        ))}
+      </Rail>
       {open && <VideoSheet v={open} onClose={() => setOpen(null)} />}
-    </section>
+    </>
   )
 }
 

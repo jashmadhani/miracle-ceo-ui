@@ -399,8 +399,9 @@
 }
 .grow .chip.on,
 .grow .x-bucket.on {
-  background: #1f72c4;
-  color: #fff;
+  background: var(--sel-bg);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--sel-line);
 }
 .grow .btn.ghost {
   color: var(--ink);
@@ -433,5 +434,23 @@
   .grow .btn.ghost.block {
     font-size: 15px;
     padding: 0 14px;
+  }
+}
+/* "Intelligence" fits on one line on every phone width; never a break without a hyphen */
+@media (max-width: 430px) {
+  .skill-tile {
+    padding: 14px 10px;
+  }
+  .skill-name {
+    font-size: 14.5px;
+    overflow-wrap: normal;
+    word-break: normal;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+  }
+}
+@media (max-width: 360px) {
+  .skill-name {
+    font-size: 13px;
   }
 }

@@ -31,7 +31,7 @@
 
   /* Mira — blue */
   --mira: #1f72c4;
-  --mira-light: #76a9dd;
+  --mira-light: #dcebf8;
   --mira-soft: #dcebf8;
 
   /* colour-block sections */
@@ -42,6 +42,10 @@
   --sec-teal: #3e8a80;
   --sec-teal-tile: #55a094;
   --sec-sky: #1f72c4;
+
+  /* selection: a soft tint and a blue outline, never a solid fill */
+  --sel-bg: #eaf3fc;
+  --sel-line: #1f72c4;
 
   --page-bg: linear-gradient(180deg, #d6e8f9 0%, #d6e8f9 100%);
   --edge-top: #d6e8f9;
@@ -96,4 +100,12 @@
 
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* one colour per skill, used for leaves, pots, Journey pills and Grow chips alike
+ * (same values as src/art/leafColors.ts) */
+:root {
+  --eq-fill: #ec6f7d;
+  --sq-fill: #3e8a80;
+  --iq-fill: #ffb937;
 }

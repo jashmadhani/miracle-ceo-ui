@@ -1,7 +1,7 @@
 /*
  * Home in the approved sky-blue palette. Scoped to .home.sky so the other
  * tabs keep their colours until they are redesigned.
- *   page #e6eef7 · sky #4f8fd1 (today) · lemon cream #fcffe9 + hill #dff5c3 (tree)
+ *   page #e6eef7 · sky #1f72c4 (today) · lemon cream #fcffe9 + hill #dff5c3 (tree)
  *   amber #f6b137 / #fed495 (reads) · teal #3e8a80 / #55a094 (videos) · ink #1c1b22
  * Blocks form one segmented stack: 8px from the screen edge, 3px seams, large
  * corners only at the top and bottom of the stack, small ones where blocks meet.
@@ -12,8 +12,8 @@
   --ink-2: #55535f;
   --ink-3: #8b8995;
   --sand: #e9eff6;
-  --teal: #3a78bd;
-  --teal-2: #2d619c;
+  --teal: #1f72c4;
+  --teal-2: #1f72c4;
   --primary-soft: #dcebf8;
   --sec-amber: #f6b137;
   --sec-amber-tile: #fed495;
@@ -51,7 +51,7 @@
   display: grid;
   place-items: center;
   flex: none;
-  background: #4f8fd1;
+  background: #1f72c4;
   color: #fff;
   font-family: var(--display);
   font-weight: 700;
@@ -78,7 +78,7 @@
   height: 46px;
   padding: 0 12px 0 5px;
   gap: 8px;
-  background: #4f8fd1;
+  background: #1f72c4;
   color: #fff;
   box-shadow: none;
 }
@@ -86,7 +86,7 @@
   width: 36px;
   height: 36px;
   background: rgba(255, 255, 255, 0.9);
-  color: #2d619c;
+  color: #1f72c4;
 }
 .home.sky .child-pill small {
   display: none;
@@ -126,7 +126,7 @@
   padding: 0 16px;
   border-radius: 999px;
   background: #fff;
-  border: 2px solid var(--chip, #4f8fd1);
+  border: 2px solid var(--chip, #1f72c4);
   font-weight: 650;
   font-size: 13px;
   color: var(--ink);
@@ -180,7 +180,7 @@
 }
 .hs-today .hs-tag {
   background: #e3effa;
-  color: #2d619c;
+  color: #1f72c4;
 }
 .hs-today-row {
   display: flex;
@@ -215,13 +215,13 @@
   flex: none;
   display: grid;
   place-items: center;
-  background: #4f8fd1;
+  background: #1f72c4;
   color: #fff;
   box-shadow: 0 6px 16px rgba(79, 143, 209, 0.35);
 }
 .hs-go.done {
   background: #e3effa;
-  color: #2d619c;
+  color: #1f72c4;
   box-shadow: none;
 }
 .hs-done {
@@ -229,7 +229,7 @@
   margin-top: 8px;
   font-size: 14px;
   font-weight: 650;
-  color: #2d619c;
+  color: #1f72c4;
 }
 /* plain facts with a thin divider, so they don't look tappable */
 .hs-meta {
@@ -668,13 +668,13 @@
   flex: none;
   display: grid;
   place-items: center;
-  background: #4f8fd1;
+  background: #1f72c4;
   color: #fff;
   box-shadow: 0 6px 14px rgba(79, 143, 209, 0.32);
 }
 .hs-go.done {
   background: #fff;
-  color: #2d619c;
+  color: #1f72c4;
   box-shadow: none;
 }
 .hs-land-zone {
@@ -1006,7 +1006,7 @@
   display: grid;
   place-items: center;
   flex: none;
-  background: #4f8fd1;
+  background: #1f72c4;
   color: #fff;
   font-family: var(--text);
   font-size: 13px;
@@ -1034,7 +1034,7 @@
   min-height: 44px;
   padding: 0 18px;
   border-radius: 999px;
-  background: #4f8fd1;
+  background: #1f72c4;
   color: #fff;
   font-size: 15px;
   font-weight: 700;
@@ -1048,7 +1048,7 @@
 .hs-cta.done {
   padding: 0 14px 0 6px;
   background: #e3effa;
-  color: #2d619c;
+  color: #1f72c4;
   box-shadow: none;
 }
 .hs-cta-ring {
@@ -1057,7 +1057,7 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  border: 2px solid #4f8fd1;
+  border: 2px solid #1f72c4;
   background: #fff;
 }
 .hs-today .hs-headline {
@@ -1175,8 +1175,8 @@
 }
 .home.sky .x-task-btn.good {
   background: transparent;
-  box-shadow: inset 0 0 0 2px #4f8fd1;
-  color: #2d619c;
+  box-shadow: inset 0 0 0 2px #1f72c4;
+  color: #1f72c4;
 }
 
 /* ---- iteration: SF Pro headings, structured Today, compact Watch and Read ---- */
@@ -1407,7 +1407,7 @@
 
 /* ---- iteration: vibrant blue Today, centred rails with no peek ---- */
 .hs-today {
-  background: #2e6bd1;
+  background: #1f72c4;
   color: #fff;
 }
 .hs-today .hs-label {
@@ -1437,7 +1437,7 @@
 }
 .hs-today .hs-cta {
   background: #fff;
-  color: #2e6bd1;
+  color: #1f72c4;
   box-shadow: 0 6px 14px rgba(13, 40, 90, 0.25);
 }
 .hs-today .hs-cta.done {
@@ -1447,7 +1447,7 @@
 }
 .hs-today .hs-cta-ring {
   border-color: #fff;
-  color: #2e6bd1;
+  color: #1f72c4;
 }
 
 /* one card at a time, centred in its segment */
@@ -1499,7 +1499,7 @@
   display: grid;
   place-items: center;
   background: #fff;
-  color: var(--today, #2e6bd1);
+  color: var(--today, #1f72c4);
   box-shadow: 0 4px 10px rgba(13, 40, 90, 0.28);
   transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1), background 0.35s, color 0.35s;
 }
@@ -1991,4 +1991,18 @@
 .hm-vdots i.on {
   height: 16px;
   opacity: 0.9;
+}
+
+/* one filled button on Home (Start): the child switcher is a white pill with a blue outline */
+.home.sky .child-pill {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--sel-line);
+}
+.home.sky .child-pill small {
+  color: var(--ink-2);
+}
+.home.sky .child-pill .avatar {
+  background: var(--sel-bg);
+  color: #1f72c4;
 }

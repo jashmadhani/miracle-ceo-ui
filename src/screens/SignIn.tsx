@@ -27,7 +27,7 @@ export function SignIn() {
   }, [i])
 
   const slide = SLIDES[i]
-  useEdge(SKIES[slide.mood][0], false, '#fbf7f1')
+  useEdge(SKIES[slide.mood][0], false, '#fcffe9')
   return (
     <div
       className="screen welcome"
@@ -69,7 +69,7 @@ export function SignIn() {
             Get started <Icon name="arrow" size={20} className="arrow" />
           </button>
           <button
-            className="btn light block"
+            className="btn ghost block"
             style={{ marginTop: 10 }}
             onClick={() => {
               set({ signedIn: true, email: 'you@gmail.com' })

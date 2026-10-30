@@ -23,7 +23,7 @@ export function ActivityPlayer() {
   const tones = useTreeLeafTones()
   const [phase, setPhase] = useState<Phase>('intro')
   // status bar follows the screen: the skill's tint while doing it, the calm cream sky after
-  useEdge(phase === 'celebrate' ? SKIES.peach[0] : { EQ: '#f9c9ce', SQ: '#c2e2db', IQ: '#fbdc9f' }[act.skill], false, '#fbf7f1')
+  useEdge(SKIES.day[0], false, '#d6e8f9')
   const [n, setN] = useState(0)
   const [tip, setTip] = useState<'magic' | 'support' | 'challenge' | null>(null)
   const [fb, setFb] = useState<{ how?: string; obs?: string; again?: string; note: string }>({ note: '' })

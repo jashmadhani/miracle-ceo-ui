@@ -88,7 +88,7 @@ export function ReadyList() {
 }
 
 const BANDS = [
-  { id: '3', label: 'Ages 3–4', blurb: 'Big feelings, first friends', tint: 'var(--accent-soft)', edge: '#4f8fd1', topics: ['Naming feelings', 'Taking turns', 'Settling at bedtime'] },
+  { id: '3', label: 'Ages 3–4', blurb: 'Big feelings, first friends', tint: 'var(--accent-soft)', edge: '#1f72c4', topics: ['Naming feelings', 'Taking turns', 'Settling at bedtime'] },
   { id: '5', label: 'Ages 5–6', blurb: 'School, rules, and why', tint: 'var(--reward-soft)', edge: '#f6b137', topics: ['Making friends', 'Listening and rules', 'Honest mistakes'] },
   { id: '7', label: 'Ages 7–8', blurb: 'Fairness, focus, confidence', tint: 'var(--primary-soft)', edge: '#3e8a80', topics: ['Handling losing', 'Homework without tears', 'Kind words'] },
 ]

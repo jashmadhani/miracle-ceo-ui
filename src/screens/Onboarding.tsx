@@ -210,7 +210,7 @@ export function Onboarding() {
       card = (
         <Q kicker="Right now" title="What have you already tried?" hint="No judgement. We have all Googled at midnight.">
           <PickGrid items={ONBOARDING.tried} selected={s.tried} onToggle={(t) => toggle('tried', t)} />
-          <Cta label={s.tried.length ? 'Continue' : 'Skip'} onClick={() => next('Every question you’ve asked about them is love.')} />
+          <Cta label={s.tried.length ? 'Continue' : 'Skip'} quiet={!s.tried.length} onClick={() => next('Every question you’ve asked about them is love.')} />
         </Q>
       )
       break
@@ -231,7 +231,7 @@ export function Onboarding() {
       card = (
         <Q kicker="Your child" title={`Anything else we should know about ${childName}?`} hint="Optional.">
           <PickGrid items={ONBOARDING.extra} selected={s.extra} onToggle={(t) => toggle('extra', t)} />
-          <Cta label={s.extra.length ? 'Continue' : 'Nothing in particular'} onClick={() => next('Thank you. Mira will go gently.')} />
+          <Cta label={s.extra.length ? 'Continue' : 'Nothing in particular'} quiet={!s.extra.length} onClick={() => next('Thank you. Mira will go gently.')} />
         </Q>
       )
       break
@@ -361,7 +361,7 @@ function SeedStep({ planted, onPlant }: { planted: boolean; onPlant: () => void 
   return (
     <div className="seed-step">
       <h1 className="display">
-        Every child starts as a <span style={{ color: 'var(--coral-2)' }}>seed</span>.
+        Every child starts as a <span style={{ color: 'var(--teal)' }}>seed</span>.
       </h1>
       <p className="muted" style={{ fontSize: 17, marginTop: 10 }}>
         You are the gardener. Drag the seed into the soil.
@@ -415,11 +415,12 @@ function Q({ kicker, title, hint, children }: { kicker: string; title: string; h
   )
 }
 
-function Cta({ label = 'Continue', disabled, onBlocked, onClick }: { label?: string; disabled?: boolean; onBlocked?: () => void; onClick: () => void }) {
+function Cta({ label = 'Continue', quiet, disabled, onBlocked, onClick }: { label?: string; quiet?: boolean; disabled?: boolean; onBlocked?: () => void; onClick: () => void }) {
   return (
     <div className="q-cta">
       {/* a blocked Continue with a reason to show stays tappable, and says why instead of doing nothing */}
-      <button className={`btn block ${disabled && onBlocked ? 'is-disabled' : ''}`} disabled={disabled && !onBlocked} aria-disabled={disabled || undefined} onClick={disabled ? onBlocked : onClick}>
+      {/* an opt-out ("Skip") is never the loudest button: it stays outlined until a choice is made */}
+      <button className={`btn block ${quiet ? 'ghost' : ''} ${disabled && onBlocked ? 'is-disabled' : ''}`} disabled={disabled && !onBlocked} aria-disabled={disabled || undefined} onClick={disabled ? onBlocked : onClick}>
         {label}
       </button>
     </div>

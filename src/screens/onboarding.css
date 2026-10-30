@@ -225,8 +225,8 @@
 }
 .bubble.me {
   align-self: flex-end;
-  background: var(--ink);
-  color: var(--on-dark);
+  background: var(--sel-bg);
+  color: var(--ink);
   border-bottom-right-radius: 6px;
 }
 .bubble.mira {

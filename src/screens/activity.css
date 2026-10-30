@@ -4,13 +4,13 @@
   overflow: hidden;
 }
 .act.sk-EQ {
-  background: linear-gradient(180deg, #f9c9ce 0%, #fde4e6 40%, var(--paper) 62%);
+  background: linear-gradient(180deg, #cfe4f8 0%, #e3effa 40%, var(--paper) 62%);
 }
 .act.sk-SQ {
-  background: linear-gradient(180deg, #c2e2db 0%, #d4ece7 40%, var(--paper) 62%);
+  background: linear-gradient(180deg, #cfe4f8 0%, #e3effa 40%, var(--paper) 62%);
 }
 .act.sk-IQ {
-  background: linear-gradient(180deg, #fbdc9f 0%, #fff0d0 40%, var(--paper) 62%);
+  background: linear-gradient(180deg, #cfe4f8 0%, #e3effa 40%, var(--paper) 62%);
 }
 .act-top {
   display: flex;

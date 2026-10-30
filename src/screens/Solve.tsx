@@ -445,7 +445,7 @@ function Share() {
 }
 
 function VoiceDiary({ onClose }: { onClose: (secs?: number) => void }) {
-  useEdge('#22303a', true, '#3e8a80')
+  useEdge('#1f5f9e', true, '#3e8a80')
   const [phase, setPhase] = useState<'ready' | 'listening' | 'thinking' | 'done'>('ready')
   const [secs, setSecs] = useState(0)
   useEffect(() => {

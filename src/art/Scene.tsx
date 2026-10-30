@@ -4,11 +4,13 @@ import './art.css'
 export type SceneMood = 'dawn' | 'day' | 'peach' | 'dusk' | 'night'
 
 export const SKIES: Record<SceneMood, [string, string, string]> = {
-  dawn: ['#f7ebe5', '#fbf6ee', '#fdfbe9'],
-  day: ['#e4efe9', '#f3f7f0', '#fdfbe9'],
-  peach: ['#f9eedb', '#fcf6ea', '#fdfbe9'],
-  dusk: ['#e9ebe4', '#f5f4ec', '#fdfbe9'],
-  night: ['#22303a', '#2b4d4b', '#3e8a80'],
+  // one sky everywhere, the same as Home: sky blue at the top, lemon at the ground
+  dawn: ['#cfe4f8', '#e3effa', '#fcffe9'],
+  day: ['#cfe4f8', '#e3effa', '#fcffe9'],
+  peach: ['#cfe4f8', '#e3effa', '#fcffe9'],
+  dusk: ['#cfe4f8', '#e3effa', '#fcffe9'],
+  // evening: deep ocean into teal, both from the palette
+  night: ['#1f5f9e', '#1f72c4', '#3e8a80'],
 }
 
 type Props = {
@@ -61,8 +63,8 @@ export function Scene({ mood = 'dawn', hills = true, stars, children, className 
         {/* one quiet ground line: no sun, clouds or flowers, so the scenes read as calm rather than storybook */}
         {hills && (
           <>
-            <path d="M-20 620 C80 596 190 600 260 612 C320 622 370 606 420 604 L420 844 L-20 844 Z" fill={night ? '#2f5753' : '#efe8d6'} />
-            <path d="M-20 690 C90 672 200 676 270 686 C330 694 380 680 420 680 L420 844 L-20 844 Z" fill={night ? '#356660' : '#e7dfca'} />
+            <path d="M-20 620 C80 596 190 600 260 612 C320 622 370 606 420 604 L420 844 L-20 844 Z" fill={night ? '#2f7368' : '#ecf8d6'} />
+            <path d="M-20 690 C90 672 200 676 270 686 C330 694 380 680 420 680 L420 844 L-20 844 Z" fill={night ? '#3e8a80' : '#dff5c3'} />
           </>
         )}
       </svg>

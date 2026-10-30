@@ -7,7 +7,7 @@ import { LEAVES_PER_TREE, leafEvents, useStore, type LogEvent } from '../state/s
  *   EQ (feelings)   coral, as on the Emotional tile
  *   SQ (social)     green, as on the Social tile
  *   IQ (curiosity)  gold, as on the Intelligence tile
- *   anything else   cream with a gold edge: showing up, checking in, planting
+ *   anything else   warm terracotta: showing up, checking in, planting
  */
 export type LeafTone = { fill: string; stroke: string }
 
@@ -15,7 +15,8 @@ export const LEAF_TONES: Record<Skill | 'other', LeafTone> = {
   EQ: { fill: '#ec6f7d', stroke: '#fff6f7' },
   SQ: { fill: '#3e8a80', stroke: '#f1faf8' },
   IQ: { fill: '#ffb937', stroke: '#fffaf0' },
-  other: { fill: '#fdf1d2', stroke: '#e0b157' },
+  // showing up: a warm terracotta, so every earned leaf stands out from the green
+  other: { fill: '#d9765a', stroke: '#fff4e8' },
 }
 
 export const LEAF_KEY: [Skill | 'other', string][] = [

@@ -189,10 +189,12 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
     const visible = (k: number) => BRANCHES[k][7] * (staged ? 0.85 : 0.5) <= g || used.has(k)
     const rand = rng(11)
     const pool = ANCHORS.slice(n).filter((a) => visible(a.k))
-    const count = Math.min(pool.length, Math.round(staged ? 6 + g * 100 : 50 + g * 60))
+    // how far this tree has filled in: airy at the first leaves, dense near a full tree
+    const dense = staged ? 1 : Math.max(0, Math.min(1, (g - 0.35) / 0.65))
+    const count = Math.min(pool.length, Math.round(staged ? 6 + g * 100 : 30 + dense * 80))
     const greens = pool.slice(0, count).map((a) => ({ ...a, c: leafGreen(a.y, rand), s: 0.95 + rand() * 0.4, d: rand() * 3 }))
     // staged: the leafy rim fills in with the crown, last of all
-    const rimShare = staged ? Math.max(0, Math.min(1, (g - 0.55) / 0.4)) : 1
+    const rimShare = staged ? Math.max(0, Math.min(1, (g - 0.55) / 0.4)) : 0.45 + 0.55 * dense
     const rim = RIM.slice(0, Math.round(RIM.length * rimShare)).map((r) => ({ ...r, c: leafGreen(r.y - 30, rand), s: 1.15 + rand() * 0.45, d: rand() * 3 }))
     return { earned: earnedList, green: [...rim, ...greens], shown: BRANCHES.map((_, k) => visible(k)) }
   }, [n, g, staged])
@@ -202,6 +204,11 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
   const scale = staged ? 0.5 + 0.5 * g : 0.64 + 0.36 * g
   // a full, leafy crown from the start; staged growth brings it in only once the boughs are there
   const crown = staged ? Math.max(0, Math.min(1, (g - 0.45) / 0.45)) : 1
+  // the crown deepens as leaves are earned: light and see-through early, deep green when full
+  const dense = staged ? 1 : Math.max(0, Math.min(1, (g - 0.35) / 0.65))
+  const deepOp = 0.25 + 0.75 * dense
+  const shadeOp = 0.45 + 0.55 * dense
+  const lowOp = 0.35 + 0.65 * dense
   // the highest point actually drawn (visible boughs, or the crown once it fills in), scaled, less some headroom
   // the crown sits LIFT higher than the boughs were drawn, on a longer trunk
   const peak = 16 - LIFT
@@ -244,13 +251,13 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
           {crown > 0 && (
             <g opacity={crown} style={{ transformOrigin: '205px 200px', transform: `scale(${0.55 + 0.45 * crown})`, transition: 'opacity 0.9s, transform 0.9s cubic-bezier(.34,1.4,.64,1)' }}>
               {CROWN.map(([x, y, rx, ry], i) => (
-                <path key={`d${i}`} d={mass(x + 7, y + 12, rx, ry, i + 3)} fill={DEEP} />
+                <path key={`d${i}`} d={mass(x + 7, y + 12, rx, ry, i + 3)} fill={DEEP} opacity={deepOp * (i > 8 ? lowOp : 1)} style={{ transition: 'opacity 0.9s' }} />
               ))}
               {CROWN.map(([x, y, rx, ry], i) => (
-                <path key={`s${i}`} d={mass(x + 1, y + 2, rx * 0.93, ry * 0.93, i + 13)} fill={SHADE} />
+                <path key={`s${i}`} d={mass(x + 1, y + 2, rx * 0.93, ry * 0.93, i + 13)} fill={SHADE} opacity={shadeOp * (i > 8 ? lowOp : 1)} style={{ transition: 'opacity 0.9s' }} />
               ))}
               {CROWN.map(([x, y, rx, ry], i) => (
-                <path key={`m${i}`} d={mass(x - rx * 0.1, y - ry * 0.16, rx * 0.68, ry * 0.66, i + 23)} fill={MID} />
+                <path key={`m${i}`} d={mass(x - rx * 0.1, y - ry * 0.16, rx * 0.68, ry * 0.66, i + 23)} fill={MID} opacity={i > 8 ? lowOp : 1} />
               ))}
               {CROWN.filter((c) => c[4]).map(([x, y, rx, ry], i) => (
                 <path key={`l${i}`} d={mass(x - rx * 0.22, y - ry * 0.3, rx * 0.4, ry * 0.36, i + 33)} fill={LIGHT} />

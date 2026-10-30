@@ -2006,3 +2006,13 @@
   background: var(--sel-bg);
   color: #1f72c4;
 }
+
+/* the tree block is capped so the leaf count and Grow leaves sit above the tab bar */
+.home.sky .hs-stack > .hs-tree {
+  flex: none;
+}
+.hs-tree .tree-card.bare .tree-card-art,
+.home.sky .hs-tree .tree-card-art {
+  flex: none;
+  height: 186px;
+}

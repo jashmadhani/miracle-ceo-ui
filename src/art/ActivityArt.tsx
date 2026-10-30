@@ -46,8 +46,10 @@ export function Leaf({ size = 18, color = 'var(--leaf)', tone, className }: { si
   const edge = tone && tone === LEAF_TONES.other ? tone.stroke : undefined
   return (
     <svg viewBox="0 0 24 24" width={size} height={size} className={className} aria-hidden>
-      <path d="M4 20 C4 10 10 4 20 4 C20 14 14 20 4 20 Z" fill={fill} stroke={edge} strokeWidth={edge ? 1.6 : undefined} />
-      <path d="M4 20 L14 10" stroke={edge ?? '#fff'} strokeWidth="1.6" strokeLinecap="round" opacity="0.7" />
+      {/* an upright leaf on a short stem, so it never reads as a tick */}
+      <path d="M12 22 L12 18.5" stroke={edge ?? fill} strokeWidth="2" strokeLinecap="round" />
+      <path d="M12 2.5 C18.5 6.5 19.5 13.5 12 19 C4.5 13.5 5.5 6.5 12 2.5 Z" fill={fill} stroke={edge} strokeWidth={edge ? 1.6 : undefined} />
+      <path d="M12 6.5 L12 16.5" stroke={edge ?? '#fff'} strokeWidth="1.4" strokeLinecap="round" opacity="0.7" />
     </svg>
   )
 }

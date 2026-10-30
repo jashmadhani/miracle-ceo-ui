@@ -21,9 +21,13 @@ export function Grow() {
   const [time, setTime] = useState<'any' | 5 | 15 | 30>('any')
   const [spinning, setSpinning] = useState<Skill | null>(null)
   const [insights, setInsights] = useState(false)
+  const [bucket, setBucket] = useState<'todo' | 'going' | 'done'>('todo')
 
   const doneCount = Object.keys(s.done).length
-  const list = ACTIVITIES.filter((a) => (kind === 'all' || a.skill === kind) && (time === 'any' || a.minutes <= time))
+  const inBucket = (a: (typeof ACTIVITIES)[number]) => (bucket === 'done' ? !!s.done[a.id] : bucket === 'going' ? !s.done[a.id] && s.started.includes(a.id) : !s.done[a.id] && !s.started.includes(a.id))
+  const counts = { todo: ACTIVITIES.filter((a) => !s.done[a.id] && !s.started.includes(a.id)).length, going: ACTIVITIES.filter((a) => !s.done[a.id] && s.started.includes(a.id)).length, done: doneCount }
+  const list = ACTIVITIES.filter((a) => inBucket(a) && (kind === 'all' || a.skill === kind) && (time === 'any' || a.minutes <= time))
+  const bySkill = (['SQ', 'EQ', 'IQ'] as Skill[]).map((k) => [k, ACTIVITIES.filter((a) => a.skill === k && s.done[a.id]).length] as const)
 
   const choose = (sk: Skill) => {
     const pick = ACTIVITIES.find((a) => a.skill === sk && a.id !== s.todayId && !s.done[a.id]) ?? ACTIVITIES.find((a) => a.skill === sk)!
@@ -126,7 +130,45 @@ export function Grow() {
           </button>
 
           <div className="section-head">
+            <h2>What {child.name} is showing you</h2>
+          </div>
+          <div className="card x-portrait">
+            {doneCount === 0 ? (
+              <p className="muted">Do a first activity together and Mira will start to notice what {child.name} is showing you.</p>
+            ) : (
+              <>
+                {bySkill.map(([k, n]) => (
+                  <div key={k} className="x-portrait-row">
+                    <span className="r-icon" style={{ background: SKILLS[k].bg, color: SKILLS[k].fg }}>
+                      <Icon name={SKILLS[k].icon} size={18} />
+                    </span>
+                    <span style={{ flex: 1 }}>
+                      <b>{SKILLS[k].name}</b>
+                      <small className="muted" style={{ display: 'block' }}>
+                        {n === 0 ? 'Not seen yet' : `${n} moment${n === 1 ? '' : 's'} together`}
+                      </small>
+                    </span>
+                  </div>
+                ))}
+              </>
+            )}
+          </div>
+
+          <div className="section-head">
             <h2>Something to try</h2>
+          </div>
+          <div className="x-buckets" role="tablist" aria-label="Activities">
+            {(
+              [
+                ['todo', 'To do'],
+                ['going', 'In progress'],
+                ['done', 'Done'],
+              ] as const
+            ).map(([k, l]) => (
+              <button key={k} role="tab" aria-selected={bucket === k} className={`x-bucket ${bucket === k ? 'on' : ''}`} onClick={() => setBucket(k)}>
+                {l} <b>{counts[k]}</b>
+              </button>
+            ))}
           </div>
           <div className="filters">
             {(
@@ -178,7 +220,7 @@ export function Grow() {
               </span>
             </button>
           ))}
-          {list.length === 0 && <div className="empty">Nothing fits those filters yet.</div>}
+          {list.length === 0 && <div className="empty">{bucket === 'done' ? 'Nothing finished yet. The first one is a good one.' : bucket === 'going' ? 'Nothing in progress right now.' : 'Nothing fits those filters yet.'}</div>}
         </div>
 
         <div className="pad">
@@ -214,6 +256,32 @@ export function Grow() {
       <TabBar />
       {insights && (
         <Sheet onClose={() => setInsights(false)} label="Insights by Mira">
+          {doneCount >= INSIGHT_AFTER ? (
+            <div className="x-read">
+              <p className="eyebrow">Mira’s read on the week</p>
+              <h2 className="display" style={{ fontSize: 26, margin: '4px 0 12px' }}>
+                What Mira noticed
+              </h2>
+              <ul>
+                <li>{child.name} warms up fastest when you name the feeling first.</li>
+                <li>Short rounds keep {child.he === 'they' ? 'them' : child.him} going for longer.</li>
+                <li>The best moments came when you did the activity together, not nearby.</li>
+              </ul>
+              <div className="x-challenge">
+                <p className="eyebrow">A challenge, if you want one</p>
+                <b className="display">Seven days of smoother bedtimes</b>
+                <button
+                  className="btn small"
+                  onClick={() => {
+                    setInsights(false)
+                    nav('/solve?tab=challenge')
+                  }}
+                >
+                  See the plan
+                </button>
+              </div>
+            </div>
+          ) : (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '8px 0 4px' }}>
             <Ring value={Math.min(doneCount, INSIGHT_AFTER)} max={INSIGHT_AFTER} big />
             <h2 className="display" style={{ fontSize: 28, margin: '16px 0 6px' }}>
@@ -233,6 +301,7 @@ export function Grow() {
               Do today’s activity
             </button>
           </div>
+          )}
         </Sheet>
       )}
     </>

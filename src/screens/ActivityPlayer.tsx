@@ -203,7 +203,13 @@ export function ActivityPlayer() {
 
       <div className="act-bar">
         {phase === 'intro' && (
-          <button className="btn block" onClick={() => setPhase('steps')}>
+          <button
+            className="btn block"
+            onClick={() => {
+              set((p) => ({ started: p.started.includes(act.id) ? p.started : [...p.started, act.id] }))
+              setPhase('steps')
+            }}
+          >
             <Icon name="play" size={18} /> Start together
           </button>
         )}

@@ -5,6 +5,7 @@ import { Tree } from '../art/Tree'
 import { useTreeLeafTones } from '../art/leafColors'
 import { Leaf } from '../art/ActivityArt'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
+import { NextStrand, RankCard } from './JourneyExtras'
 import { LEAVES_PER_TREE, useChild, useStore } from '../state/store'
 import './journey.css'
 
@@ -48,6 +49,7 @@ export function Journey() {
         </header>
 
         <div className="pad">
+          <NextStrand />
           <button className="forest-card" onClick={() => nav('/journey/forest')}>
             <div className="forest-card-tree">
               <Tree growth={0.35 + (inTree / LEAVES_PER_TREE) * 0.65} blossoms={inTree} tones={tones} />
@@ -68,6 +70,8 @@ export function Journey() {
               </span>
             </div>
           </button>
+
+          <RankCard />
 
           {/* the numbers as one slim strip under the forest */}
           <div className="stat-strip">
@@ -156,6 +160,7 @@ export function Journey() {
           <div className="card">
             {(
               [
+                ['/journey/bloom', 'sparkle', 'Your bloom', `${new Date().toLocaleDateString(undefined, { month: 'long' })}, wrapped`, 'var(--accent-soft)'],
                 ['/journey/library', 'book', 'Activity library', `${done} done · ${ACTIVITIES.length - done} to try`, 'var(--sec-amber-tile)'],
                 ['/journey/child', 'user', `${child.name}’s profile`, child.age.label, 'var(--accent-soft)'],
                 ['/journey/chats', 'chat', 'Your chats with Mira', `${s.chats.length} question${s.chats.length === 1 ? '' : 's'}`, 'var(--primary-soft)'],

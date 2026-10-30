@@ -1,0 +1,1797 @@
+/*
+ * Home in the approved sky-blue palette. Scoped to .home.sky so the other
+ * tabs keep their colours until they are redesigned.
+ *   page #e6eef7 · sky #4f8fd1 (today) · lemon cream #fcffe9 + hill #dff5c3 (tree)
+ *   amber #f6b137 / #fed495 (reads) · teal #3e8a80 / #55a094 (videos) · ink #1c1b22
+ * Blocks form one segmented stack: 8px from the screen edge, 3px seams, large
+ * corners only at the top and bottom of the stack, small ones where blocks meet.
+ */
+.home.sky {
+  --paper: #d6e8f9;
+  --ink: #1c1b22;
+  --ink-2: #55535f;
+  --ink-3: #8b8995;
+  --sand: #e9eff6;
+  --teal: #3a78bd;
+  --teal-2: #2d619c;
+  --primary-soft: #dcebf8;
+  --sec-amber: #f6b137;
+  --sec-amber-tile: #fed495;
+  --sec-teal: #3e8a80;
+  --sec-teal-tile: #55a094;
+  --hs-gap: 8px;
+  --hs-seam: 3px;
+  --hs-radius: 28px;
+  --hs-inner: 8px;
+  --hs-ease: cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: var(--paper);
+  color: var(--ink);
+  padding: calc(10px + var(--safe-top)) var(--hs-gap) calc(112px + var(--safe-bottom));
+}
+
+/* gentle feedback on every tap */
+.home.sky button {
+  transition: transform 0.35s var(--hs-ease), background-color 0.35s var(--hs-ease), box-shadow 0.35s var(--hs-ease), opacity 0.35s var(--hs-ease);
+}
+.home.sky button:active {
+  transform: scale(0.98);
+}
+
+/* header: who you are, which child; part of the page itself, not a block */
+.hs-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 8px 14px;
+}
+.hs-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: #4f8fd1;
+  color: #fff;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 20px;
+}
+.hs-hello {
+  flex: 1;
+  min-width: 0;
+}
+.hs-hello h1 {
+  font-family: var(--display);
+  font-size: 22px;
+  line-height: 1.1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hs-hello p {
+  font-size: 15px;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+.home.sky .child-pill {
+  height: 46px;
+  padding: 0 12px 0 5px;
+  gap: 8px;
+  background: #4f8fd1;
+  color: #fff;
+  box-shadow: none;
+}
+.home.sky .child-pill .avatar {
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #2d619c;
+}
+.home.sky .child-pill small {
+  display: none;
+}
+.home.sky .child-pill b {
+  max-width: 84px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* explore by age: a compact row at the top, coloured edges so it reads on any block */
+.hs-explore {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 2px 8px 12px;
+}
+.hs-explore > span {
+  flex: none;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink-2);
+}
+.x-chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.x-chips::-webkit-scrollbar {
+  display: none;
+}
+.x-age-chip {
+  flex: none;
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--chip, #4f8fd1);
+  font-weight: 650;
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+/* the segmented stack */
+.hs-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hs-seam);
+}
+.hs-stack > * {
+  border-radius: var(--hs-inner);
+}
+.hs-stack > :first-child {
+  border-top-left-radius: var(--hs-radius);
+  border-top-right-radius: var(--hs-radius);
+}
+.hs-stack > :last-child {
+  border-bottom-left-radius: var(--hs-radius);
+  border-bottom-right-radius: var(--hs-radius);
+}
+.hs-block {
+  display: block;
+  width: 100%;
+  padding: 20px;
+  text-align: left;
+  overflow: hidden;
+}
+.hs-h2 {
+  font-family: var(--display);
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.hs-eyebrow {
+  display: block;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.hs-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 11px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.hs-today .hs-tag {
+  background: #e3effa;
+  color: #2d619c;
+}
+.hs-today-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+.hs-today-copy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+}
+.hs-today-copy b {
+  font-family: var(--display);
+  font-size: 21px;
+  line-height: 1.12;
+}
+.hs-today-copy small {
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--ink-2);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hs-go {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: #4f8fd1;
+  color: #fff;
+  box-shadow: 0 6px 16px rgba(79, 143, 209, 0.35);
+}
+.hs-go.done {
+  background: #e3effa;
+  color: #2d619c;
+  box-shadow: none;
+}
+.hs-done {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 650;
+  color: #2d619c;
+}
+/* plain facts with a thin divider, so they don't look tappable */
+.hs-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.hs-meta > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.hs-meta > span + span::before {
+  content: '';
+  width: 1px;
+  height: 14px;
+  margin: 0 12px;
+  background: rgba(28, 27, 34, 0.15);
+}
+
+/* the open task card, as one segment of the stack */
+.home.sky .x-task {
+  margin: 0;
+  box-shadow: none;
+}
+
+.hs-world .tree-card.bare .tree-card-art {
+  height: 190px;
+  margin-top: 4px;
+}
+.hs-world .leaf-chip {
+  box-shadow: none;
+  background: rgba(255, 255, 255, 0.8);
+}
+.home.sky .x-grow-btn:active {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* reads on amber, merged into one list */
+.hs-amber {
+  background: #f6b137;
+}
+.hs-amber .know-row {
+  display: block;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+.hs-amber .know-tile {
+  width: 100%;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.hs-amber .know-tile + .know-tile {
+  border-top: 1px solid rgba(28, 27, 34, 0.12);
+}
+.hs-amber .know-tile .pill {
+  height: 26px;
+  padding: 0 9px;
+  font-size: 12px;
+}
+.hs-amber .know-title {
+  font-size: 16px;
+}
+.hs-amber .know-arrow {
+  margin: 0;
+}
+.hs-amber .know-continue {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(28, 27, 34, 0.12);
+}
+.hs-amber .know-continue .btn.ghost {
+  box-shadow: inset 0 0 0 2px rgba(28, 27, 34, 0.25);
+}
+
+/* videos on teal, merged into one list */
+.hs-teal {
+  background: #3e8a80;
+  color: #fff;
+}
+.hs-teal .video-list {
+  gap: 0;
+}
+.hs-teal .video-row {
+  background: transparent;
+  box-shadow: none;
+  color: #fff;
+  border-radius: 0;
+  padding: 10px 0;
+}
+.hs-teal .video-row + .video-row {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.hs-teal .video-thumb {
+  width: 72px;
+  height: 56px;
+  border-radius: 12px;
+}
+.hs-teal .video-row .muted,
+.hs-teal .video-row svg {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.hs-teal .video-thumb {
+  background: rgba(255, 255, 255, 0.75) !important;
+}
+.hs-teal .video-thumb .play-dot {
+  width: 30px;
+  height: 30px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home.sky button {
+    transition: none;
+  }
+}
+.hs-teal .video-time {
+  background: rgba(28, 27, 34, 0.62);
+  color: #fff;
+}
+
+/* small phones (SE, mini): the greeting keeps its room, the child pill shrinks to the avatar */
+@media (max-width: 360px) {
+  .hs-hello h1 {
+    font-size: 21px;
+  }
+  .home.sky .child-pill > span:not(.avatar) {
+    display: none;
+  }
+}
+/* small thumbs: play button left, duration bottom-right, no overlap */
+.hs-teal .video-thumb {
+  place-items: center start;
+  padding-left: 8px;
+}
+.hs-teal .video-thumb .play-dot {
+  width: 26px;
+  height: 26px;
+}
+.hs-teal .video-time {
+  right: 4px;
+  bottom: 4px;
+  font-size: 10px;
+}
+
+/* "See all" under a shortened list */
+.see-all {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-top: 2px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: inherit;
+}
+
+/* one type scale on Home: block titles 20, today 21, body 15-16, meta 13-14 */
+.home.sky .x-task h3 {
+  font-size: 20px;
+}
+.hs-amber .know-title {
+  font-size: 15px;
+}
+.hs-teal .video-row .r-title {
+  font-size: 15px;
+}
+
+/* tree progress: count, distance to a full tree, one green line */
+.tree-progress {
+  margin-top: 6px;
+}
+.tree-progress-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+.tree-progress-text > span:first-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.tree-progress .progress {
+  height: 6px;
+  background: rgba(91, 174, 123, 0.18);
+}
+
+/* Read and Watch side by side: the last row of the stack */
+.hm-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--hs-seam);
+  border-radius: 0 !important;
+}
+.hm-pair > .hm {
+  border-radius: var(--hs-inner);
+}
+.hs-stack > .hm-pair:last-child > .hm:first-child {
+  border-bottom-left-radius: var(--hs-radius);
+}
+.hs-stack > .hm-pair:last-child > .hm:last-child {
+  border-bottom-right-radius: var(--hs-radius);
+}
+.hm {
+  padding: 0;
+  overflow: hidden;
+}
+.hm-read {
+  background: #f6b137;
+  color: var(--ink);
+}
+.hm-watch {
+  background: #3e8a80;
+  color: #fff;
+}
+.hm-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.hm-track {
+  display: flex;
+  width: 100%;
+  transition: transform 0.45s var(--hs-ease);
+}
+.hm-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+.hm-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  color: inherit;
+}
+/* the picture runs edge to edge, so its corners are the card's corners */
+.hm-media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1 / 0.8;
+  overflow: hidden;
+}
+.hm-read .hm-media {
+  background: #fed495;
+}
+.hm-spot {
+  width: 64%;
+  margin-top: 14px;
+}
+.hm-media.poster {
+  background: #f4efdb;
+}
+.hm-media.poster img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 22%;
+}
+.hm-play {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(28, 27, 34, 0.7);
+  color: #fff;
+}
+.hm-time {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgba(28, 27, 34, 0.62);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 650;
+}
+.hm-title {
+  margin: 10px 12px 0;
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hm-meta {
+  margin: 3px 12px 0;
+  font-size: 12px;
+  font-weight: 600;
+  opacity: 0.75;
+}
+.hm-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto 4px 2px;
+  padding-top: 2px;
+}
+.hm-arrow {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: inherit;
+}
+.hm-dots {
+  display: flex;
+  gap: 4px;
+}
+.hm-dots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.3;
+  transition: width 0.35s var(--hs-ease), opacity 0.35s var(--hs-ease);
+}
+.hm-dots i.on {
+  width: 16px;
+  opacity: 0.9;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hm-track,
+  .hm-dots i {
+    transition: none;
+  }
+}
+
+.hs-head,
+.hs-stack {
+  position: relative;
+}
+
+/* one heading style for every segment: top-left, same size everywhere */
+.hs-label {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: inherit;
+}
+.home.sky .x-task .eyebrow {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.home.sky .x-task h3 {
+  font-family: var(--text);
+  font-size: 16px;
+  font-weight: 650;
+  margin: 6px 0 2px;
+}
+
+/* sky and land: one segment, a pale sky fading into lemon ground with a hill */
+.hs-world {
+  position: relative;
+  padding: 0;
+  background:
+    radial-gradient(ellipse 150% 22% at 18% 100%, #dff5c3 70%, transparent 71%),
+    linear-gradient(180deg, #d6e8fa 0, #e8f2fc 150px, #fcffe9 300px);
+}
+.hs-world .hs-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  pointer-events: none;
+}
+.hs-sky-zone {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 18px 20px 10px;
+  text-align: left;
+  color: var(--ink);
+}
+.hs-sky-zone .hs-label {
+  margin-bottom: 8px;
+}
+.hs-today-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.hs-today-copy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+.hs-today-copy b {
+  font-family: var(--text);
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+.hs-meta {
+  margin-top: 0;
+  font-size: 13px;
+}
+.hs-go {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex: none;
+  display: grid;
+  place-items: center;
+  background: #4f8fd1;
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(79, 143, 209, 0.32);
+}
+.hs-go.done {
+  background: #fff;
+  color: #2d619c;
+  box-shadow: none;
+}
+.hs-land-zone {
+  position: relative;
+  padding: 10px 20px 18px;
+}
+.hs-world .tree-card-head {
+  align-items: center;
+}
+.hs-world .tree-card-head .hs-label {
+  margin-right: auto;
+}
+.hs-world .x-grow-btn {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Read and Watch: heading on top, picture edge to edge below it */
+.hm-label {
+  padding: 14px 14px 10px;
+}
+.hm-read .hm-media {
+  background: #fed495;
+}
+.hm-watch .hm-media.poster {
+  background: #f4efdb;
+}
+
+/* small phones: keep the meta on one line and the tree heading on one line */
+.hs-meta {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+.hs-world .tree-card-head .hs-label {
+  white-space: nowrap;
+}
+@media (max-width: 360px) {
+  .hs-meta > span + span::before {
+    margin: 0 8px;
+  }
+  .hs-meta > span:nth-child(3) {
+    display: none;
+  }
+  /* the tree itself opens full screen, so the expand button can go */
+  .hs-world .tree-card-head .icon-btn {
+    display: none;
+  }
+}
+
+/* inside the one sky-and-land segment, today's activity is its own frosted panel in the sky */
+.hs-world {
+  background:
+    radial-gradient(ellipse 150% 22% at 18% 100%, #dff5c3 70%, transparent 71%),
+    linear-gradient(180deg, #cfe3f9 0, #e4f0fc 170px, #f6fae8 250px, #fcffe9 300px) !important;
+}
+.hs-sky-zone {
+  padding: 12px 12px 4px;
+}
+.hs-today-panel {
+  display: block;
+  width: 100%;
+  padding: 14px 14px 14px 16px;
+  border-radius: 20px;
+  text-align: left;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 20px -12px rgba(45, 97, 156, 0.45);
+}
+.hs-today-panel .hs-label {
+  margin-bottom: 6px;
+}
+/* the tree's heading row: label left, expand icon in the corner */
+.hs-land-zone {
+  padding: 14px 20px 18px;
+}
+.hs-world .tree-card-head .icon-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.7);
+}
+/* progress and the one action share the bottom row */
+.tree-progress-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+.tree-progress-row .tree-progress {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.tree-progress-row .x-grow-btn {
+  flex: none;
+}
+/* Read and Watch: the picture shares the card's colour, so the heading isn't a separate bar */
+.hm-read .hm-media {
+  background: transparent;
+}
+.hm-read .hm-spot {
+  margin-top: 0;
+}
+.hm-label {
+  padding-bottom: 4px;
+}
+.tree-progress-text > span {
+  white-space: nowrap;
+}
+@media (max-width: 360px) {
+  .tree-progress-text > span.muted {
+    display: none;
+  }
+}
+
+/* Today panel: picture on the left, title and facts, one arrow */
+.hs-today-art {
+  width: 60px;
+  height: 60px;
+  flex: none;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #f4efdb;
+}
+.hs-today-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
+}
+.hs-today-panel {
+  background: rgba(255, 255, 255, 0.82);
+  padding: 14px;
+}
+.hs-today-row {
+  gap: 12px;
+}
+.hs-go {
+  width: 44px;
+  height: 44px;
+}
+
+/* Watch: the heading sits on the poster over a soft teal scrim, so there's no bar */
+.hm-card.overlay .hm-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding: 14px 14px 26px;
+  background: linear-gradient(180deg, rgba(62, 138, 128, 0.95) 0%, rgba(62, 138, 128, 0.6) 55%, rgba(62, 138, 128, 0) 100%);
+  pointer-events: none;
+}
+.hm-card.overlay .hm-media {
+  aspect-ratio: 1 / 1.02;
+}
+.hm-card.overlay .hm-media.poster img {
+  object-position: 50% 0%;
+}
+/* Read: same picture size as Watch, heading on an amber scrim, book a little below it */
+.hm-read .hm-card.overlay .hm-label {
+  background: linear-gradient(180deg, rgba(246, 177, 55, 0.95) 0%, rgba(246, 177, 55, 0) 100%);
+}
+.hm-read .hm-media {
+  background: #fed495;
+}
+.hm-read .hm-spot {
+  width: 62%;
+  margin-top: 26px;
+}
+
+/* ---- iteration: whole screen is sky, four segments float on it ---- */
+.hs-sky {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hs-sky .hs-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.hs-sky .cloud {
+  animation: drift 50s ease-in-out infinite alternate;
+}
+@keyframes drift {
+  from {
+    translate: -12px 0;
+  }
+  to {
+    translate: 18px 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-sky .cloud {
+    animation: none;
+  }
+}
+.hs-head {
+  padding: 8px 8px 16px;
+}
+.hs-hello p {
+  color: #2b4a6b;
+}
+
+/* big, clear segment titles, on the same scale as Ask Mira's "What's on your mind?" */
+.hs-label {
+  font-family: var(--display);
+  font-size: clamp(26px, 8.4vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+.home.sky .x-task .eyebrow {
+  font-size: clamp(26px, 8.4vw, 32px);
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+}
+.hm-label {
+  font-size: clamp(22px, 7vw, 28px);
+  padding: 14px 14px 10px;
+}
+
+/* today: a plain white segment */
+.hs-today {
+  display: block;
+  width: 100%;
+  padding: 18px 20px;
+  background: #fff;
+  color: var(--ink);
+  text-align: left;
+}
+.hs-today .hs-label {
+  margin-bottom: 10px;
+}
+
+/* tree: lemon ground with a soft hill */
+.hs-tree {
+  padding: 18px 20px;
+  background: radial-gradient(ellipse 150% 26% at 18% 100%, #dff5c3 70%, transparent 71%), #fcffe9;
+}
+.hs-tree .tree-card-head {
+  align-items: center;
+}
+.hs-tree .tree-card-head .hs-label {
+  margin-right: auto;
+  white-space: nowrap;
+}
+.hs-tree .tree-card-head .icon-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.8);
+}
+.hs-tree .tree-card.bare .tree-card-art {
+  height: 190px;
+  margin-top: 4px;
+}
+.hs-tree .x-grow-btn {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.75);
+}
+@media (max-width: 360px) {
+  .hs-tree .tree-card-head .icon-btn {
+    display: none;
+  }
+}
+
+/* Read and Watch: heading above, picture edge to edge, no overlap, no dead space */
+.hm-card.overlay .hm-label {
+  position: static;
+  background: none;
+}
+.hm-read .hm-media {
+  background: #fed495;
+  aspect-ratio: 1 / 0.8;
+}
+.hm-read .hm-spot {
+  width: 60%;
+  margin-top: 0;
+}
+.hm-watch .hm-media.poster {
+  aspect-ratio: 1 / 0.8;
+}
+.hm-watch .hm-media.poster img {
+  object-position: 50% 18%;
+}
+.hm-title {
+  margin: 10px 12px 0;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.hm-meta {
+  margin: 2px 12px 0;
+}
+.hm-nav {
+  margin: 4px 4px 4px;
+}
+
+/* ---- iteration: serif headings, labelled CTAs, full-width Watch, Read row ---- */
+.hs-headline {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hs-label,
+.home.sky .x-task .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-serif, 'New York', 'Iowan Old Style', Georgia, serif;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+/* first visit only: a step number and one line of help */
+.hs-step {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  flex: none;
+  background: #4f8fd1;
+  color: #fff;
+  font-family: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+}
+.hs-hint {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.hm-watch .hs-hint {
+  color: rgba(255, 255, 255, 0.85);
+}
+.hm-watch .hs-step {
+  background: #fff;
+  color: #3e8a80;
+}
+
+/* one button style for every segment's action */
+.hs-cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: #4f8fd1;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: 0 6px 14px rgba(79, 143, 209, 0.3);
+}
+.hs-cta.amber {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: none;
+}
+.hs-cta.done {
+  padding: 0 14px 0 6px;
+  background: #e3effa;
+  color: #2d619c;
+  box-shadow: none;
+}
+.hs-cta-ring {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid #4f8fd1;
+  background: #fff;
+}
+.hs-today .hs-headline {
+  margin-bottom: 10px;
+}
+.hs-today-row {
+  gap: 12px;
+}
+
+/* Watch and Read: whole-width segments, pictures with rounded corners inside */
+.hm {
+  padding: 18px 16px 6px;
+  overflow: hidden;
+}
+.hm-window {
+  overflow: hidden;
+  margin-top: 12px;
+}
+.hm-video {
+  display: flex;
+  flex-direction: column;
+}
+.hm-preview {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f4efdb;
+}
+.hm-preview img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+.hm-preview .hm-play {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #3e8a80;
+  box-shadow: 0 8px 18px rgba(28, 27, 34, 0.25);
+}
+.hm-preview .hm-time {
+  right: 10px;
+  bottom: 10px;
+}
+.hm-video .hm-title {
+  margin: 10px 2px 0;
+  font-size: 17px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.hm-video .hm-meta {
+  margin: 2px 2px 0;
+}
+.hm-readrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hm-thumb {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: #fed495;
+}
+.hm-thumb .hm-spot {
+  width: 80%;
+  margin: 0;
+}
+.hm-readcopy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.hm-readrow .hm-title {
+  margin: 0;
+  font-size: 16px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.hm-readrow .hm-meta {
+  margin: 0;
+}
+.hm-nav {
+  margin: 6px -6px 0;
+}
+
+/* ---- iteration: shorter video, quiet outlined buttons (only Start is filled) ---- */
+.hm-preview {
+  aspect-ratio: 2.1 / 1;
+}
+.hs-cta.amber {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px rgba(28, 27, 34, 0.55);
+}
+.hs-tree .x-grow-btn {
+  background: transparent;
+  border: 2px solid #5bae7b;
+}
+.home.sky .x-task-btn {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px rgba(28, 27, 34, 0.18);
+  color: var(--ink);
+}
+.home.sky .x-task-btn.good {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px #4f8fd1;
+  color: #2d619c;
+}
+
+/* ---- iteration: SF Pro headings, structured Today, compact Watch and Read ---- */
+.hs-label,
+.home.sky .x-task .eyebrow {
+  font-family: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+/* today: skill tile, title and facts, Start */
+.hs-skill {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+}
+.hs-skill.sk-EQ {
+  background: #fde4e6;
+  color: #b8404f;
+}
+.hs-skill.sk-SQ {
+  background: #d4ece7;
+  color: #33796f;
+}
+.hs-skill.sk-IQ {
+  background: #fff3d9;
+  color: #9a6400;
+}
+.hs-today-copy b {
+  font-size: 17px;
+}
+.hs-meta > span:nth-child(3) {
+  display: inline-flex;
+}
+@media (max-width: 400px) {
+  .hs-meta > span:nth-child(3) {
+    display: none;
+  }
+}
+/* heading row carries the arrows and dots, so the content gets the height */
+.hm-headrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.hm-headrow .hm-nav {
+  margin: 0 -8px 0 0;
+  gap: 2px;
+  width: auto;
+}
+.hm {
+  padding: 14px 16px 16px;
+}
+.hm-window {
+  margin-top: 10px;
+}
+/* Watch: a row like Read, with a small rounded preview and a play button on it */
+.hm-vrow {
+  width: 100%;
+  text-align: left;
+  color: inherit;
+}
+.hm-vrow .hm-preview {
+  width: 112px;
+  height: 72px;
+  aspect-ratio: auto;
+  flex: none;
+  border-radius: 14px;
+}
+.hm-vrow .hm-play {
+  width: 36px;
+  height: 36px;
+}
+.hm-watch .hm-meta {
+  opacity: 0.85;
+}
+/* small phones: Start shrinks to its arrow circle so the title keeps its room */
+@media (max-width: 360px) {
+  .hs-today .hs-cta:not(.done) {
+    width: 46px;
+    height: 46px;
+    padding: 0;
+    justify-content: center;
+  }
+  .hs-today .hs-cta-text {
+    display: none;
+  }
+  .hs-skill {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ---- iteration: organised Today, taller tree, thumb-scroll rails ---- */
+.hs-today {
+  padding: 18px 18px 16px;
+}
+.hs-today-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hs-today-main .hs-today-copy b {
+  font-size: 18px;
+  line-height: 1.2;
+}
+.hs-today-main .hs-today-copy small {
+  font-size: 14px;
+  color: var(--ink-2);
+}
+.hs-today-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(28, 27, 34, 0.08);
+}
+.hs-today-foot .hs-meta > span:nth-child(3) {
+  display: none;
+}
+@media (max-width: 360px) {
+  .hs-today .hs-cta:not(.done) {
+    width: auto;
+    height: auto;
+    padding: 0 16px;
+  }
+  .hs-today .hs-cta-text {
+    display: inline;
+  }
+}
+
+/* the tree gets more height and clear air between its top and the heading */
+.hs-tree .tree-card.bare .tree-card-art {
+  height: 250px;
+  margin-top: 8px;
+}
+
+/* rails: native thumb scrolling with snap; the next card peeks in */
+.hm-rail {
+  display: flex;
+  gap: 10px;
+  margin: 12px -16px 0;
+  padding: 0 16px 4px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 16px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.hm-rail::-webkit-scrollbar {
+  display: none;
+}
+.hm-card-v,
+.hm-card-r {
+  flex: 0 0 80%;
+  scroll-snap-align: start;
+  text-align: left;
+  color: inherit;
+}
+.hm-card-v {
+  display: flex;
+  flex-direction: column;
+}
+.hm-card-v .hm-preview {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 16px;
+}
+.hm-card-v .hm-play {
+  width: 48px;
+  height: 48px;
+}
+.hm-card-v .hm-title {
+  margin: 8px 2px 0;
+  font-size: 16px;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.hm-card-v .hm-meta {
+  margin: 2px 2px 0;
+}
+.hm-card-r {
+  flex-basis: 86%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.35);
+}
+.hm-card-r .hm-title {
+  margin: 0;
+  font-size: 15px;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.hm-card-r .hm-meta {
+  margin: 0;
+}
+.hm-card-r .hs-cta {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+.hm-arrow:disabled {
+  opacity: 0.35;
+}
+.hm-card-r {
+  flex-basis: 80%;
+  align-items: flex-start;
+}
+.hm-card-r .hm-thumb {
+  width: 72px;
+  height: 72px;
+}
+.hm-card-r .hs-cta {
+  justify-self: start;
+  margin-top: 6px;
+  min-height: 36px;
+}
+
+/* ---- iteration: vibrant blue Today, centred rails with no peek ---- */
+.hs-today {
+  background: #2e6bd1;
+  color: #fff;
+}
+.hs-today .hs-label {
+  color: #fff;
+}
+.hs-today-main .hs-today-copy small {
+  color: rgba(255, 255, 255, 0.85);
+}
+.hs-skill {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.95) !important;
+  overflow: hidden;
+}
+.hs-skill svg {
+  width: 100%;
+  height: 100%;
+}
+.hs-today-foot {
+  border-top-color: rgba(255, 255, 255, 0.22);
+}
+.hs-today .hs-meta {
+  color: rgba(255, 255, 255, 0.9);
+}
+.hs-today .hs-meta > span + span::before {
+  background: rgba(255, 255, 255, 0.35);
+}
+.hs-today .hs-cta {
+  background: #fff;
+  color: #2e6bd1;
+  box-shadow: 0 6px 14px rgba(13, 40, 90, 0.25);
+}
+.hs-today .hs-cta.done {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: none;
+}
+.hs-today .hs-cta-ring {
+  border-color: #fff;
+  color: #2e6bd1;
+}
+
+/* one card at a time, centred in its segment */
+.hm-rail {
+  margin: 12px 0 0;
+  padding: 0;
+  scroll-padding-inline: 0;
+  gap: 16px;
+}
+.hm-card-v,
+.hm-card-r {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+/* ---- slide-to-start switch ---- */
+.hs-switch {
+  --w: 136px;
+  --k: 44px;
+  position: relative;
+  flex: none;
+  width: var(--w);
+  height: 52px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.45);
+  transition: background 0.4s var(--hs-ease);
+}
+.hs-switch-label {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  transition: right 0.45s var(--hs-ease), opacity 0.3s;
+}
+.hs-switch-knob {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: var(--k);
+  height: var(--k);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--today, #2e6bd1);
+  box-shadow: 0 4px 10px rgba(13, 40, 90, 0.28);
+  transition: transform 0.45s cubic-bezier(0.34, 1.4, 0.64, 1), background 0.35s, color 0.35s;
+}
+.hs-switch-knob > span {
+  grid-area: 1 / 1;
+  display: grid;
+  transition: opacity 0.25s, transform 0.35s var(--hs-ease);
+}
+.hs-switch .ic-check {
+  opacity: 0;
+  transform: scale(0.4) rotate(-30deg);
+}
+/* on: knob slides right over the label, turns gold, arrow becomes a tick */
+.hs-switch.on {
+  background: rgba(255, 255, 255, 0.32);
+}
+.hs-switch.on .hs-switch-knob {
+  transform: translateX(calc(var(--w) - var(--k) - 8px));
+  background: #ffc519;
+  color: #4a3200;
+}
+.hs-switch.on .ic-arrow {
+  opacity: 0;
+  transform: translateX(10px);
+}
+.hs-switch.on .ic-check {
+  opacity: 1;
+  transform: none;
+}
+.hs-switch.on .hs-switch-label {
+  right: calc(var(--k) + 18px);
+}
+/* the reward: gold sparks burst from the knob, a leaf note floats up */
+.hs-sparks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.hs-sparks i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px;
+  border-radius: 50%;
+  background: #ffc519;
+  box-shadow: 0 0 6px rgba(255, 197, 25, 0.9);
+  opacity: 0;
+  animation: spark 0.7s 0.35s ease-out forwards;
+}
+.hs-sparks i:nth-child(even) {
+  width: 5px;
+  height: 5px;
+  background: #fff3c4;
+}
+@keyframes spark {
+  0% {
+    opacity: 1;
+    transform: rotate(var(--a)) translateY(0) scale(0.6);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: rotate(var(--a)) translateY(-34px) scale(1);
+  }
+}
+.hs-leaf-pop {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  margin-bottom: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #ffc519;
+  color: #4a3200;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  animation: leafpop 0.8s 0.45s var(--hs-ease) forwards;
+}
+@keyframes leafpop {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-switch-knob,
+  .hs-switch-label,
+  .hs-switch-knob > span {
+    transition: none;
+  }
+  .hs-sparks i,
+  .hs-leaf-pop {
+    animation: none;
+    opacity: 1;
+  }
+  .hs-sparks {
+    display: none;
+  }
+}
+.hs-today-foot {
+  overflow: visible;
+}
+.hs-today {
+  overflow: visible;
+}
+
+/* ---- Ocean blue Today; Watch as one tall 9:16 video with its title beside it ---- */
+.hs-today {
+  background: #1f72c4;
+  --today: #1f72c4;
+}
+.hs-today .hs-switch-knob {
+  color: #1f72c4;
+}
+.hm-card-v.tall {
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+}
+.hm-card-v.tall .hm-preview {
+  flex: 0 0 46%;
+  width: 46%;
+  aspect-ratio: 9 / 16;
+  border-radius: 18px;
+}
+.hm-card-v.tall .hm-preview img {
+  object-position: 50% 30%;
+}
+.hm-vcopy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 4px;
+  align-content: center;
+}
+.hm-card-v.tall .hm-title {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+.hm-card-v.tall .hm-meta {
+  margin: 0;
+}
+.hs-cta.watch {
+  justify-self: start;
+  margin-top: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  background: #fff;
+  color: #3e8a80;
+  box-shadow: none;
+}
+
+/* ---- done = a tick alone; Watch: tall video plus an Up next list ---- */
+.hs-tick {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: #1f72c4;
+  box-shadow: 0 6px 14px rgba(13, 40, 90, 0.25);
+}
+.hm-watchgrid {
+  display: grid;
+  grid-template-columns: 44% minmax(0, 1fr);
+  gap: 14px;
+  margin-top: 12px;
+  align-items: stretch;
+}
+.hm-preview.tall {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  border-radius: 18px;
+  animation: fadein 0.4s var(--hs-ease);
+}
+.hm-preview.tall .hm-play {
+  width: 48px;
+  height: 48px;
+}
+@keyframes fadein {
+  from {
+    opacity: 0.4;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.hm-side {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.hm-side .hm-title {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+.hm-side .hm-meta {
+  margin: 3px 0 0;
+}
+.hm-side .hs-cta.watch {
+  align-self: flex-start;
+}
+.hm-upnext {
+  margin-top: auto;
+  padding-top: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.hm-nextlist {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+}
+.hm-nextlist li + li {
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+.hm-nextlist button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+}
+.hm-nextlist button span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hm-nextlist small {
+  flex: none;
+  font-size: 12px;
+  opacity: 0.8;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hm-preview.tall {
+    animation: none;
+  }
+}
+
+/* ---- one secondary button style: outlined pill, icon + verb, in the segment's text colour ----
+ * Primary (filled) is used once per screen: Today's Start. Everything else uses this. */
+.hs-cta.ghost,
+.hm-side .hs-cta.ghost,
+.hm-card-r .hs-cta.ghost {
+  align-self: flex-start;
+  justify-self: start;
+  min-height: 40px;
+  margin-top: 8px;
+  padding: 0 16px;
+  gap: 6px;
+  background: transparent;
+  color: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+.tree-progress-row .hs-cta.ghost {
+  margin-top: 0;
+  color: var(--ink);
+}
+.hs-cta.ghost:active {
+  background: rgba(255, 255, 255, 0.18);
+}
+/* make room for the Grow leaves button next to the count */
+@media (max-width: 400px) {
+  .tree-progress-text > span.muted {
+    display: none;
+  }
+}

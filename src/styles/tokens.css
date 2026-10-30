@@ -1,64 +1,57 @@
 /*
- * Design tokens — the Home palette, used across the whole app:
- *   coral #ec6f7d · cream #fdfbe9 · amber #f4b23f · teal #3e8a80
- * plus night-plum ink and white cards. Each tab opens with one colour block
- * (Home coral, Ask Mira teal, Grow amber, Journey coral) over a cream page.
- *
- * Earlier palette A "Lagoon and coral" notes, still true for the roles:
- * See references/PALETTE-PROPOSAL.txt for the reasoning and rules:
- *   Teal         = primary action        (one job: "tap to move forward")
- *   Sunset coral = the one featured thing per screen
- *   Marigold     = earned / reward only
- *   Teal + amber = Mira (no lavender any more)
- *   Night plum   = text and dark surfaces
- *   Cream        = base, with white cards
+ * Design tokens — Midnight and sand (from Figma's colour combinations
+ * 3 Blue eclipse, 53 Cobalt sky and 9 Golden taupe):
+ *   sand #f4eee6 page · white cards · cobalt #1956ac action
+ *   midnight #272657 ink and header blocks · caramel #c08143 warm accent
+ * Marigold #ffc519 is for rewards only. The tree greens and the EQ/SQ/IQ skill
+ * colours are untouched on purpose.
  */
 :root {
-  /* 6 · base */
-  --paper: #fdfbe9;
+  /* base */
+  --paper: #f4eee6;
   --card: #ffffff;
-  --sand: #f4efdb;
-  --sand-2: #e8e1c8;
-  --line: rgba(42, 35, 64, 0.08);
+  --sand: #eae1d4;
+  --sand-2: #dccfbd;
+  --line: rgba(39, 38, 87, 0.09);
 
-  /* 1 · teal (a deeper shade of Home's teal) — primary action */
-  --teal: #33796f;
-  --teal-2: #285f57;
-  --primary-soft: #d4ece7;
+  /* cobalt — primary action */
+  --teal: #1956ac;
+  --teal-2: #12407f;
+  --primary-soft: #dce6f5;
 
-  /* 2 · coral — featured (pink-coral, as in the designer's Home) */
-  --accent: #ec6f7d;
-  --accent-deep: #b8404f;
-  --accent-soft: #fde4e6;
+  /* caramel — the one warm accent */
+  --accent: #c08143;
+  --accent-deep: #8a5528;
+  --accent-soft: #f3e3d2;
 
-  /* 3 · marigold — reward */
-  --leaf: #ffb937;
-  --reward-deep: #9a6400;
-  --reward-soft: #fff3d9;
+  /* marigold — reward only */
+  --leaf: #ffc519;
+  --reward-deep: #8a5a00;
+  --reward-soft: #fff0c2;
 
-  /* 4 · Mira — teal, from Home (her mic is amber) */
-  --mira: #33796f;
-  --mira-light: #9cc9c0;
-  --mira-soft: #d4ece7;
+  /* Mira — cobalt */
+  --mira: #1956ac;
+  --mira-light: #8db0de;
+  --mira-soft: #dce6f5;
 
-  /* colour-block sections, taken from the designer's Home (reference 07b) */
-  --sec-coral: #ec6f7d;
-  --sec-cream: #fdfbe9;
-  --sec-amber: #f4b23f;
-  --sec-amber-tile: #fcd893;
-  --sec-teal: #3e8a80;
-  --sec-teal-tile: #64aa9e;
+  /* colour-block sections: midnight on Home, cobalt on Ask Mira */
+  --sec-coral: #272657;
+  --sec-cream: #f4eee6;
+  --sec-amber: #eae1d4;
+  --sec-amber-tile: #f3ece2;
+  --sec-teal: #1956ac;
+  --sec-teal-tile: #3f73be;
+  --sec-sky: #1956ac;
 
-  /* page background: Home's cream, so colour blocks and white cards both read */
-  --page-bg: linear-gradient(180deg, #fdfbe9 0%, #fdfbe9 100%);
-  --edge-top: #fdfbe9;
-  --edge-bottom: #fdfbe9;
+  --page-bg: linear-gradient(180deg, #f4eee6 0%, #f4eee6 100%);
+  --edge-top: #f4eee6;
+  --edge-bottom: #f4eee6;
 
-  /* 5 · night plum — ink */
-  --ink: #2a2340;
-  --ink-2: #5e5872;
-  --ink-3: #9a95a8;
-  --on-dark: #fffaf4;
+  /* ink */
+  --ink: #272657;
+  --ink-2: #5a5878;
+  --ink-3: #8a88a6;
+  --on-dark: #ffffff;
 
   /* legacy names used across screens, mapped onto the six roles */
   --butter: var(--reward-soft);
@@ -74,12 +67,12 @@
   --mint-2: var(--teal);
 
   /* skill markers: tint chips only (EQ coral, SQ teal, IQ marigold) */
-  --eq: var(--accent-deep);
-  --eq-bg: var(--accent-soft);
-  --sq: var(--teal);
-  --sq-bg: var(--primary-soft);
-  --iq: var(--reward-deep);
-  --iq-bg: var(--reward-soft);
+  --eq: #b8404f;
+  --eq-bg: #fde4e6;
+  --sq: #33796f;
+  --sq-bg: #d4ece7;
+  --iq: #9a6400;
+  --iq-bg: #fff3d9;
 
   /* type */
   --display: 'Hagrid', 'Bricolage Grotesque Variable', -apple-system, system-ui, sans-serif;
@@ -90,13 +83,13 @@
   --r-lg: 24px;
   --r-md: 18px;
   --r-sm: 12px;
-  --shadow: 0 0 0 1px rgba(42, 35, 64, 0.05), 0 2px 4px rgba(42, 35, 64, 0.05), 0 10px 24px rgba(90, 70, 20, 0.08);
-  --shadow-lift: 0 2px 4px rgba(42, 35, 64, 0.06), 0 16px 36px rgba(42, 35, 64, 0.12);
+  --shadow: 0 0 0 1px rgba(39, 38, 87, 0.05), 0 2px 4px rgba(39, 38, 87, 0.05), 0 10px 24px rgba(90, 70, 20, 0.08);
+  --shadow-lift: 0 2px 4px rgba(39, 38, 87, 0.06), 0 16px 36px rgba(39, 38, 87, 0.12);
 
   /* soft fades built from the palette tints */
-  --fade-dawn: linear-gradient(160deg, #fde4e6 0%, #fdfbe9 55%, #fff3d9 100%);
-  --fade-peach: linear-gradient(170deg, #fff3d9 0%, #fde4e6 100%);
-  --fade-sky: linear-gradient(175deg, #d4ece7 0%, var(--paper) 100%);
+  --fade-dawn: linear-gradient(160deg, #f3e3d2 0%, #f4eee6 55%, #fff0c2 100%);
+  --fade-peach: linear-gradient(170deg, #fff0c2 0%, #f3e3d2 100%);
+  --fade-sky: linear-gradient(175deg, #dce6f5 0%, var(--paper) 100%);
 
   --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);

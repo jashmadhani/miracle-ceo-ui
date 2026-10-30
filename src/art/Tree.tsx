@@ -1,65 +1,68 @@
 import { useMemo, type CSSProperties } from 'react'
-import { rng, scallop } from './shapes'
+import { rng } from './shapes'
 import type { LeafTone } from './leafColors'
 import './art.css'
 
 /*
- * The tree has real branches, and every leaf grows ON a branch.
- * - Green leaves fill in as the tree grows (growth 0 → 1).
- * - Earned leaves sit on their own branch spots, so a new one reads as "one
- *   more leaf on the tree", not a dot floating in a blob. Each takes the colour
- *   of what grew it (see leafColors.ts); gold when no colours are given.
- * - Only a nearly full-grown tree fills out into the bushy canopy (reference 08).
+ * A hand-drawn, slightly crooked tree with visible roots.
+ * - Branches grow in one by one as `growth` rises (each has an `at` threshold),
+ *   so a young tree is a trunk with a few boughs and an older one is full.
+ * - Every leaf sits on a branch and turns with it. Leaves near the top of the
+ *   crown are light, those low down are deep, so the canopy has depth.
+ * - Earned leaves keep the colour of what grew it (see leafColors.ts); nothing
+ *   is drawn for leaves not yet earned.
  */
 
-// Quadratic branch segments: [x0, y0, cx, cy, x1, y1, width]
-const BRANCHES: [number, number, number, number, number, number, number][] = [
-  [200, 300, 160, 262, 112, 214, 13], // left main
-  [200, 300, 244, 258, 292, 210, 13], // right main
-  [200, 296, 196, 220, 204, 132, 12], // centre up
-  [146, 248, 124, 204, 98, 166, 7],
-  [258, 246, 288, 204, 318, 176, 7],
-  [202, 214, 170, 170, 146, 122, 7],
-  [204, 190, 236, 154, 262, 108, 7],
-  [200, 336, 152, 326, 96, 302, 8], // low left
-  [200, 328, 252, 320, 306, 294, 8], // low right
-  [120, 222, 94, 222, 66, 238, 5],
-  [286, 218, 312, 222, 338, 240, 5],
-  [204, 146, 200, 112, 202, 86, 5],
-  [96, 300, 78, 286, 64, 268, 4],
-  [304, 294, 322, 282, 336, 262, 4],
+// Quadratic segments: [x0, y0, cx, cy, x1, y1, width, at]. Deliberately lopsided.
+type Branch = [number, number, number, number, number, number, number, number]
+const BRANCHES: Branch[] = [
+  [198, 304, 160, 284, 126, 246, 12, 0.14], // left bough
+  [126, 246, 104, 226, 96, 190, 8, 0.3],
+  [140, 270, 112, 278, 78, 262, 6, 0.42],
+  [210, 300, 252, 272, 276, 226, 11, 0.18], // right bough
+  [276, 226, 298, 204, 322, 198, 7, 0.36],
+  [262, 246, 300, 254, 332, 240, 5, 0.5],
+  [204, 292, 196, 240, 214, 184, 11, 0.22], // leaning leader
+  [214, 184, 222, 150, 196, 112, 7, 0.4],
+  [206, 214, 176, 188, 168, 148, 6, 0.52],
+  [212, 170, 246, 150, 262, 114, 6, 0.6],
+  [196, 112, 188, 92, 200, 74, 4, 0.72],
+  [96, 190, 88, 170, 98, 148, 4, 0.66],
+  [322, 198, 336, 184, 334, 160, 4, 0.7],
+  [194, 320, 150, 322, 112, 306, 7, 0.3], // low boughs
+  [212, 324, 256, 326, 292, 308, 7, 0.34],
+  [200, 392, 170, 372, 138, 348, 6, 0.26], // side shoots on the tall trunk
+  [208, 372, 238, 352, 258, 322, 5, 0.45],
 ]
 
-const CLUMPS: [number, number, number][] = [
-  [200, 92, 50],
-  [148, 122, 52],
-  [254, 122, 52],
-  [98, 162, 46],
-  [302, 162, 46],
-  [200, 150, 62],
-  [132, 196, 56],
-  [268, 196, 56],
-  [76, 228, 40],
-  [324, 228, 40],
-  [200, 214, 58],
-  [140, 256, 44],
-  [262, 256, 44],
+// crown masses, [cx, cy, rx, ry, upper?]
+const CROWN: [number, number, number, number, boolean][] = [
+  [205, 118, 70, 52, true],
+  [128, 164, 60, 46, true],
+  [286, 166, 62, 46, true],
+  [98, 218, 44, 36, false],
+  [320, 214, 44, 34, false],
+  [205, 186, 82, 60, false],
+  [158, 252, 52, 34, false],
+  [256, 252, 52, 34, false],
+  [204, 68, 40, 28, true],
 ]
 
-const SHADE = '#3f7a1e'
-const MID = '#62a32a'
-const LIGHT = '#8fc93f'
-const SHINE = '#bde06a'
-const GREENS = [MID, LIGHT, '#4f8f23', '#a6d65a']
-const GOLD = '#ffb937'
-const BARK = '#5a3418'
-const BARK_LIGHT = '#7a4a22'
+const BARK = '#4a2f22'
+const BARK_MID = '#6b4632'
+const BARK_LIGHT = '#8a5f45'
+const DEEP = '#1f5a3e'
+const SHADE = '#3f7a3a'
+const MID = '#6db33f'
+const LIGHT = '#8fd14f'
+const SHINE = '#c8f56b'
+const GOLD = '#ffc519'
 
-const LEAF_PATH = 'M0 -11 C7 -6 7 5 0 11 C-7 5 -7 -6 0 -11Z'
+const LEAF_PATH = 'M0 -12 C8 -7 8 4 1 12 C-6 6 -8 -5 0 -12Z'
 
 type Anchor = { x: number; y: number; rot: number; k: number }
 
-function bezier(b: (typeof BRANCHES)[number], t: number) {
+function bezier(b: Branch, t: number) {
   const [x0, y0, cx, cy, x1, y1] = b
   const u = 1 - t
   const x = u * u * x0 + 2 * u * t * cx + t * t * x1
@@ -69,18 +72,19 @@ function bezier(b: (typeof BRANCHES)[number], t: number) {
   return { x, y, a: (Math.atan2(dy, dx) * 180) / Math.PI }
 }
 
-/** Leaf spots along every branch, ordered tip-first and round-robin across branches. */
+/** Leaf spots along every branch, tip first, round-robin across branches in the order they grow. */
 function buildAnchors(): Anchor[] {
-  const perBranch: Anchor[][] = BRANCHES.map((b, bi) => {
+  const order = BRANCHES.map((b, k) => ({ b, k })).sort((p, q) => p.b[7] - q.b[7])
+  const perBranch = order.map(({ b, k }) => {
     const out: Anchor[] = []
     const tip = bezier(b, 1)
-    out.push({ x: tip.x, y: tip.y, rot: tip.a + 90, k: bi })
+    out.push({ x: tip.x, y: tip.y, rot: tip.a + 90, k })
     let side = 1
     for (let t = 0.92; t > 0.3; t -= 0.1) {
       const p = bezier(b, t)
       const n = ((p.a + 90 * side) * Math.PI) / 180
       const off = 7 + b[6] * 0.4
-      out.push({ x: p.x + Math.cos(n) * off, y: p.y + Math.sin(n) * off, rot: p.a + 90 + side * 50, k: bi })
+      out.push({ x: p.x + Math.cos(n) * off, y: p.y + Math.sin(n) * off, rot: p.a + 90 + side * 48, k })
       side = -side
     }
     return out
@@ -92,6 +96,38 @@ function buildAnchors(): Anchor[] {
 }
 
 const ANCHORS = buildAnchors()
+
+/** A smooth, uneven mass (closed Catmull-Rom through jittered points on an ellipse). */
+function mass(cx: number, cy: number, rx: number, ry: number, seed: number) {
+  const rand = rng(seed)
+  const n = 9
+  const pts: [number, number][] = []
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + rand() * 0.25
+    const k = 0.82 + rand() * 0.3
+    pts.push([cx + Math.cos(a) * rx * k, cy + Math.sin(a) * ry * k])
+  }
+  let d = `M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`
+  for (let i = 0; i < n; i++) {
+    const p0 = pts[(i - 1 + n) % n]
+    const p1 = pts[i]
+    const p2 = pts[(i + 1) % n]
+    const p3 = pts[(i + 2) % n]
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6]
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6]
+    d += ` C${c1[0].toFixed(1)} ${c1[1].toFixed(1)} ${c2[0].toFixed(1)} ${c2[1].toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`
+  }
+  return d + 'Z'
+}
+
+function leafGreen(y: number, rand: () => number) {
+  // light at the top of the crown, deep near the trunk
+  const t = Math.min(1, Math.max(0, (y - 70) / 240)) + (rand() - 0.5) * 0.35
+  if (t < 0.22) return SHINE
+  if (t < 0.5) return LIGHT
+  if (t < 0.78) return MID
+  return SHADE
+}
 
 type Props = {
   /** 0 = seed, 1 = fully grown */
@@ -105,8 +141,10 @@ type Props = {
   /** a highlighted leaf (tapped) */
   selected?: number | null
   onLeaf?: (i: number) => void
-  /** show the leaf places not yet earned as soft buds, so you can see how full the tree is */
+  /** kept so older call sites compile; empty leaf places are no longer drawn */
   buds?: boolean
+  /** crop the empty sky above a young tree so it fills its frame */
+  fit?: boolean
   /** new leaves fly up from below the tree instead of dropping in */
   fly?: boolean
   sway?: boolean
@@ -115,81 +153,106 @@ type Props = {
   title?: string
 }
 
-export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, buds = false, fly = false, sway = true, ground = true, className, title }: Props) {
+export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, fly = false, sway = true, ground = true, fit = false, className, title }: Props) {
   const g = Math.max(0, Math.min(1, growth))
+  const n = Math.min(50, blossoms)
 
-  // the 50 leaf places are spread evenly through the anchor list; earned leaves take the first ones,
-  // buds mark the rest, and green leaves fill what's left
-  const { gold, budList, green } = useMemo(() => {
-    const n = Math.min(50, blossoms)
-    const step = ANCHORS.length / 50
-    const slots = Array.from({ length: 50 }, (_, i) => Math.floor(i * step) % ANCHORS.length)
-    const taken = new Set(buds ? slots : slots.slice(0, n))
-    const greenCount = Math.round(10 + g * 70)
+  const { earned, green, shown } = useMemo(() => {
+    const earnedList = ANCHORS.slice(0, n)
+    const used = new Set(earnedList.map((a) => a.k))
+    const visible = (k: number) => BRANCHES[k][7] <= g || used.has(k)
     const rand = rng(11)
-    const greenList = ANCHORS.filter((_, i) => !taken.has(i))
-      .slice(0, greenCount)
-      .map((a) => ({ ...a, c: GREENS[Math.floor(rand() * GREENS.length)], s: 0.95 + rand() * 0.35, d: rand() * 3 }))
-    return { gold: slots.slice(0, n).map((i) => ANCHORS[i]), budList: buds ? slots.slice(n).map((i) => ANCHORS[i]) : [], green: greenList }
-  }, [blossoms, g, buds])
+    const pool = ANCHORS.slice(n).filter((a) => visible(a.k))
+    const count = Math.min(pool.length, Math.round(8 + g * 90))
+    const greens = pool.slice(0, count).map((a) => ({ ...a, c: leafGreen(a.y, rand), s: 0.95 + rand() * 0.4, d: rand() * 3 }))
+    return { earned: earnedList, green: greens, shown: BRANCHES.map((_, k) => visible(k)) }
+  }, [n, g])
 
   if (g < 0.12) return <Sprout g={g} className={className} ground={ground} title={title} />
 
-  const scale = 0.62 + 0.38 * g
-  const bushy = Math.max(0, (g - 0.78) / 0.22)
+  const scale = 0.56 + 0.44 * g
+  const crown = Math.max(0, (g - 0.5) / 0.4)
+  // the highest point actually drawn (visible boughs, or the crown once it fills in), scaled, less some headroom
+  const peak = crown > 0 ? 16 : Math.min(246, ...BRANCHES.filter((_, k) => shown[k]).map((b) => Math.min(b[1], b[3], b[5])))
+  const top = fit ? Math.max(0, Math.round(512 - (512 - peak) * scale - 70)) : 0
 
   return (
-    <svg viewBox="0 0 400 440" className={className} role="img" aria-label={title ?? 'A growing tree'}>
-      {ground && <ellipse cx="200" cy="420" rx={140 * scale} ry="14" fill="#c3df8a" opacity="0.6" />}
+    <svg viewBox={`0 ${top} 400 ${520 - top}`} className={className} role="img" aria-label={title ?? 'A growing tree'}>
+      {ground && <ellipse cx="200" cy="512" rx={150 * scale} ry="9" fill="#272657" opacity="0.08" />}
 
-      <g style={{ transformOrigin: '200px 424px', transform: `scale(${scale})`, transition: 'transform 0.9s cubic-bezier(.34,1.56,.64,1)' }}>
-        {/* trunk */}
-        <path d="M184 424 C190 380 191 340 190 300 L210 300 C209 340 210 380 216 424 Z" fill={BARK} />
-        <path d="M198 420 C200 380 200 340 199 304" stroke={BARK_LIGHT} strokeWidth="6" strokeLinecap="round" fill="none" />
-        <path d="M184 424 C170 428 160 426 150 430 M216 424 C230 428 240 426 252 430" stroke={BARK} strokeWidth="7" strokeLinecap="round" fill="none" />
+      <g style={{ transformOrigin: '200px 512px', transform: `scale(${scale})`, transition: 'transform 0.9s cubic-bezier(.34,1.56,.64,1)' }}>
+        {/* roots, left open to the air */}
+        <g fill="none" stroke={BARK} strokeLinecap="round">
+          <path d="M188 490 C174 504 156 508 132 514" strokeWidth="10" />
+          <path d="M214 492 C230 504 252 508 274 514" strokeWidth="10" />
+          <path d="M196 500 C190 510 180 516 164 518" strokeWidth="5" />
+          <path d="M208 500 C214 510 226 516 242 518" strokeWidth="5" />
+          <path d="M132 514 C122 516 114 516 106 514" strokeWidth="3" />
+          <path d="M274 514 C284 516 294 516 302 514" strokeWidth="3" />
+        </g>
+
+        {/* trunk, leaning a little */}
+        {/* a tall trunk that tapers up into the leader, no flat top */}
+        <path d="M180 508 C188 468 178 430 188 396 C195 366 189 332 197 302 C201 284 203 266 208 246 C213 266 213 286 216 302 C221 332 212 366 216 396 C223 430 214 468 224 508 Z" fill={BARK} />
+        <path d="M200 500 C205 466 195 432 203 400 C208 370 202 338 206 306 C207 290 208 274 208 262" stroke={BARK_MID} strokeWidth="6" strokeLinecap="round" fill="none" />
+        <path d="M205 486 C208 460 201 436 206 414" stroke={BARK_LIGHT} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.7" />
+        <path d="M191 470 C189 456 192 446 190 432 M213 452 C215 440 211 430 213 418 M196 372 C195 362 197 354 196 344" stroke="#2f1c14" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5" />
 
         <g className={sway ? 'tree-sway' : undefined} style={{ transformOrigin: '200px 310px' }}>
-          {/* full-grown trees fill out into the bushy canopy */}
-          {bushy > 0 && (
-            <g opacity={bushy} style={{ transition: 'opacity 0.8s' }}>
-              {CLUMPS.map(([x, y, r], i) => (
-                <path key={`s${i}`} d={scallop(x + 5, y + 8, r, 9, i + 1)} fill={SHADE} />
+          {/* the crown: layered masses from deep to bright, light from the upper left */}
+          {crown > 0 && (
+            <g opacity={crown} style={{ transition: 'opacity 0.9s' }}>
+              {CROWN.map(([x, y, rx, ry], i) => (
+                <path key={`d${i}`} d={mass(x + 7, y + 12, rx, ry, i + 3)} fill={DEEP} />
               ))}
-              {CLUMPS.map(([x, y, r], i) => (
-                <path key={`m${i}`} d={scallop(x, y, r * 0.92, 9, i + 11)} fill={MID} />
+              {CROWN.map(([x, y, rx, ry], i) => (
+                <path key={`s${i}`} d={mass(x + 1, y + 2, rx * 0.93, ry * 0.93, i + 13)} fill={SHADE} />
               ))}
-              {CLUMPS.map(([x, y, r], i) => (
-                <path key={`l${i}`} d={scallop(x - r * 0.14, y - r * 0.16, r * 0.6, 8, i + 21)} fill={LIGHT} />
+              {CROWN.map(([x, y, rx, ry], i) => (
+                <path key={`m${i}`} d={mass(x - rx * 0.1, y - ry * 0.16, rx * 0.68, ry * 0.66, i + 23)} fill={MID} />
               ))}
-              {CLUMPS.map(([x, y, r], i) => (
-                <path key={`h${i}`} d={scallop(x - r * 0.22, y - r * 0.26, r * 0.3, 7, i + 31)} fill={SHINE} />
+              {CROWN.filter((c) => c[4]).map(([x, y, rx, ry], i) => (
+                <path key={`l${i}`} d={mass(x - rx * 0.22, y - ry * 0.3, rx * 0.4, ry * 0.36, i + 33)} fill={LIGHT} />
+              ))}
+              {CROWN.filter((c) => c[4]).map(([x, y, rx, ry], i) => (
+                <path key={`h${i}`} d={mass(x - rx * 0.3, y - ry * 0.42, rx * 0.18, ry * 0.16, i + 43)} fill={SHINE} />
               ))}
             </g>
           )}
 
-          {/* branches */}
+          {/* boughs: each draws itself in when the tree is old enough */}
           {BRANCHES.map(([x0, y0, cx, cy, x1, y1, w], i) => (
-            <path key={`b${i}`} d={`M${x0} ${y0} Q${cx} ${cy} ${x1} ${y1}`} stroke={BARK} strokeWidth={w} strokeLinecap="round" fill="none" />
+            <path
+              key={`b${i}`}
+              d={`M${x0} ${y0} Q${cx} ${cy} ${x1} ${y1}`}
+              pathLength={1}
+              stroke={BARK}
+              strokeWidth={w}
+              strokeLinecap="round"
+              fill="none"
+              style={{
+                strokeDasharray: 1,
+                strokeDashoffset: shown[i] ? 0 : 1,
+                opacity: shown[i] ? 1 : 0,
+                transition: 'stroke-dashoffset 0.9s ease-out, opacity 0.3s',
+              }}
+            />
           ))}
 
-          {/* green leaves on the branches */}
+          {/* green leaves, turned along their branch */}
           {green.map((a, i) => (
             <g key={`g${i}`} transform={`translate(${a.x.toFixed(1)} ${a.y.toFixed(1)})`}>
               <g className="leaf-flutter" style={{ animationDelay: `${a.d.toFixed(2)}s` }}>
-                <path d={LEAF_PATH} fill={a.c} transform={`rotate(${a.rot.toFixed(0)}) scale(${a.s.toFixed(2)})`} />
+                <g transform={`rotate(${a.rot.toFixed(0)}) scale(${a.s.toFixed(2)})`}>
+                  <path d={LEAF_PATH} fill={a.c} />
+                  <path d="M0 -8 L0 8" stroke="#ffffff" strokeWidth="0.9" strokeLinecap="round" opacity="0.22" />
+                </g>
               </g>
             </g>
           ))}
 
-          {/* leaf places still waiting: a soft bud each */}
-          {budList.map((a, i) => (
-            <g key={`u${i}`} className="leaf-bud" transform={`translate(${a.x.toFixed(1)} ${a.y.toFixed(1)}) rotate(${a.rot.toFixed(0)}) scale(1.15)`}>
-              <path d={LEAF_PATH} />
-            </g>
-          ))}
-
           {/* earned leaves, each in the colour of what grew it */}
-          {gold.map((a, i) => {
+          {earned.map((a, i) => {
             const isNew = newFrom != null && i >= newFrom
             const isSel = selected === i
             const tone = tones?.[i] ?? { fill: GOLD, stroke: '#fffaf0' }
@@ -212,7 +275,7 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
                           animationDelay: `${(fly ? 0.9 : 0.25) * (i - (newFrom ?? 0)) + (fly ? 0.6 : 0)}s`,
                           // flying leaves start below the tree's base
                           '--fx': `${(200 - a.x).toFixed(0)}px`,
-                          '--fy': `${(560 - a.y).toFixed(0)}px`,
+                          '--fy': `${(640 - a.y).toFixed(0)}px`,
                         } as CSSProperties)
                       : undefined
                   }
@@ -235,21 +298,23 @@ function Sprout({ g, className, ground, title }: { g: number; className?: string
   // 0 → seed in soil, 0.12 → two-leaf sprout
   const t = g / 0.12
   return (
-    <svg viewBox="0 0 400 440" className={className} role="img" aria-label={title ?? 'A seed'}>
-      {ground && <ellipse cx="200" cy="420" rx="70" ry="10" fill="#c3df8a" opacity="0.6" />}
+    <svg viewBox="0 0 400 520" className={className} role="img" aria-label={title ?? 'A seed'}>
+      <g transform="translate(0 80)">
+      {ground && <ellipse cx="200" cy="432" rx="70" ry="7" fill="#272657" opacity="0.08" />}
       {t < 0.25 ? (
         <g className="seed-bob">
-          <ellipse cx="200" cy="404" rx="16" ry="20" fill="#8a5222" />
-          <path d="M200 388 C196 398 196 410 200 422" stroke="#5e3514" strokeWidth="3" fill="none" />
-          <ellipse cx="194" cy="398" rx="4" ry="6" fill="#c08446" />
+          <ellipse cx="200" cy="410" rx="16" ry="20" fill="#8a5f45" />
+          <path d="M200 394 C196 404 196 416 200 428" stroke="#4a2f22" strokeWidth="3" fill="none" />
+          <ellipse cx="194" cy="404" rx="4" ry="6" fill="#b88a6a" />
         </g>
       ) : (
-        <g className="tree-sway" style={{ transformOrigin: '200px 420px' }}>
-          <path d={`M200 420 C200 ${410 - 60 * t} 202 ${400 - 80 * t} 200 ${420 - 110 * t}`} stroke="#5f9b16" strokeWidth="7" strokeLinecap="round" fill="none" />
-          <path d={`M200 ${420 - 100 * t} C176 ${400 - 120 * t} 150 ${414 - 110 * t} 150 ${420 - 100 * t} C170 ${430 - 92 * t} 190 ${426 - 96 * t} 200 ${420 - 100 * t}Z`} fill={MID} />
-          <path d={`M200 ${420 - 106 * t} C224 ${400 - 128 * t} 252 ${412 - 118 * t} 254 ${420 - 110 * t} C232 ${432 - 100 * t} 212 ${428 - 104 * t} 200 ${420 - 106 * t}Z`} fill={LIGHT} />
+        <g className="tree-sway" style={{ transformOrigin: '200px 426px' }}>
+          <path d={`M200 426 C200 ${416 - 60 * t} 202 ${406 - 80 * t} 200 ${426 - 110 * t}`} stroke={SHADE} strokeWidth="7" strokeLinecap="round" fill="none" />
+          <path d={`M200 ${426 - 100 * t} C176 ${406 - 120 * t} 150 ${420 - 110 * t} 150 ${426 - 100 * t} C170 ${436 - 92 * t} 190 ${432 - 96 * t} 200 ${426 - 100 * t}Z`} fill={MID} />
+          <path d={`M200 ${426 - 106 * t} C224 ${406 - 128 * t} 252 ${418 - 118 * t} 254 ${426 - 110 * t} C232 ${438 - 100 * t} 212 ${434 - 104 * t} 200 ${426 - 106 * t}Z`} fill={LIGHT} />
         </g>
       )}
+      </g>
     </svg>
   )
 }

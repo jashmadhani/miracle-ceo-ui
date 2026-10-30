@@ -9,7 +9,8 @@ import { Scene } from '../art/Scene'
 import { Tree } from '../art/Tree'
 import { Leaf } from '../art/ActivityArt'
 import { ANSWER, BEDTIME_PLAN, CHALLENGES, SUGGESTIONS } from '../data/content'
-import { useChild, useStore } from '../state/store'
+import { today, useChild, useStore } from '../state/store'
+import { ChatDrawer, Escalation, Refusal, NoMatch, QuotaNote, classify, type Kind, DAILY_CAP } from '../components/AskExtras'
 import './solve.css'
 
 const TABS = [
@@ -27,7 +28,7 @@ export function Solve() {
   return (
     <>
       <div className="screen with-tabbar solve">
-        <header className="hsec hsec-top hsec-teal solve-head">
+        <header className="hsec hsec-top hsec-sky solve-head">
           <p className="eyebrow">
             <Icon name="lock" size={12} style={{ display: 'inline', verticalAlign: '-1px' }} /> Just between us
           </p>
@@ -63,12 +64,16 @@ const CH_TINTS = [
 
 /* ------------------------------------------------------------------ Ask */
 
-type Msg = { id: number; q: string; state: 'thinking' | 'done' }
+type Msg = { id: number; q: string; state: 'thinking' | 'done'; kind: Kind }
 
 function Ask() {
   const child = useChild()
-  const { set } = useStore()
+  const { s, set } = useStore()
   const [msgs, setMsgs] = useState<Msg[]>([])
+  const [drawer, setDrawer] = useState(false)
+  const timers = useRef<Record<number, ReturnType<typeof setTimeout>>>({})
+  const used = s.askedDay === today() ? s.asked : 0
+  const left = DAILY_CAP - used
   const [text, setText] = useState('')
   const [voice, setVoice] = useState(false)
   const [focused, setFocused] = useState(false)
@@ -76,12 +81,23 @@ function Ask() {
   const last = useRef<HTMLDivElement>(null)
 
   const send = (q: string) => {
-    if (!q.trim()) return
+    if (!q.trim() || left <= 0 || msgs.some((m) => m.state === 'thinking')) return
     const id = Date.now()
-    setMsgs((m) => [...m, { id, q: q.trim(), state: 'thinking' }])
-    set((p) => ({ chats: [{ at: id, q: q.trim() }, ...p.chats] }))
+    setMsgs((m) => [...m, { id, q: q.trim(), state: 'thinking', kind: classify(q) }])
+    set((p) => ({ chats: [{ at: id, q: q.trim() }, ...p.chats], asked: (p.askedDay === today() ? p.asked : 0) + 1, askedDay: today() }))
     setText('')
-    setTimeout(() => setMsgs((m) => m.map((x) => (x.id === id ? { ...x, state: 'done' } : x))), 2600)
+    timers.current[id] = setTimeout(() => setMsgs((m) => m.map((x) => (x.id === id ? { ...x, state: 'done' } : x))), 2600)
+  }
+
+  /** Cancel the answer that is still being written. */
+  const stop = () => {
+    Object.values(timers.current).forEach(clearTimeout)
+    setMsgs((m) => m.filter((x) => x.state !== 'thinking'))
+  }
+  const fresh = () => {
+    stop()
+    setMsgs([])
+    setText('')
   }
 
   // bring the newest question to the top so the answer reads from its start
@@ -91,6 +107,29 @@ function Ask() {
 
   return (
     <div className="pad ask">
+      <div className="ask-bar">
+        <button className="icon-btn" onClick={() => setDrawer(true)} aria-label="Past conversations">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden>
+            <path d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+        {msgs.length > 0 && (
+          <button className="chip" onClick={fresh} style={{ minHeight: 40 }}>
+            <Icon name="plus" size={16} /> New
+          </button>
+        )}
+      </div>
+      {left === 1 && <QuotaNote>One more question today.</QuotaNote>}
+      {left <= 0 && <QuotaNote full>That is all the questions for today. They come back at midnight.</QuotaNote>}
+      {drawer && (
+        <ChatDrawer
+          onClose={() => setDrawer(false)}
+          onOpen={(q) => {
+            setMsgs([{ id: Date.now(), q, state: 'done', kind: classify(q) }])
+            setDrawer(false)
+          }}
+        />
+      )}
       {msgs.length === 0 ? (
         <div className="ask-empty">
           <div style={{ marginBottom: 14 }}>
@@ -126,6 +165,12 @@ function Ask() {
                     Thinking about this for you…
                   </span>
                 </div>
+              ) : m.kind === 'escalate' ? (
+                <Escalation />
+              ) : m.kind === 'refuse' ? (
+                <Refusal />
+              ) : m.kind === 'nomatch' ? (
+                <NoMatch onNew={fresh} />
               ) : (
                 <Answer />
               )}
@@ -157,8 +202,13 @@ function Ask() {
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               aria-label="Your question"
+              disabled={left <= 0}
             />
-            {text ? (
+            {msgs.some((m) => m.state === 'thinking') ? (
+              <button className="composer-btn send" onClick={stop} aria-label="Stop">
+                <Icon name="stop" size={18} />
+              </button>
+            ) : text ? (
               <button className="composer-btn send" onClick={() => send(text)} aria-label="Send">
                 <Icon name="send" size={20} stroke={2.4} />
               </button>
@@ -265,9 +315,36 @@ function Answer() {
           One small thing to try
         </p>
         <p style={{ fontWeight: 600, fontSize: 17, margin: '6px 0 14px' }}>{a.practice}</p>
-        <button className="btn small" onClick={() => toast({ title: 'On the tree', body: 'We’ll check in on it tomorrow.' })}>
+        <button
+          className="btn small"
+          onClick={() => {
+            set({ openTask: { title: a.practice, from: 'Ask Mira' } })
+            toast({ title: 'On the tree', body: 'We’ll ask how this went.' })
+          }}
+        >
           <Leaf size={16} color="#fce3a0" /> Put it on the tree
         </button>
+        <p className="muted" style={{ fontSize: 13, marginTop: 8 }}>
+          We’ll ask how this went.
+        </p>
+        <p className="eyebrow" style={{ marginTop: 14 }}>
+          Or, if that does not fit this week
+        </p>
+        <div className="chips" style={{ marginTop: 8 }}>
+          {['Name one feeling out loud', 'Offer two small choices'].map((t) => (
+            <button
+              key={t}
+              className="chip"
+              style={{ minHeight: 40, fontSize: 14 }}
+              onClick={() => {
+                set({ openTask: { title: t, from: 'Ask Mira' } })
+                toast({ title: 'On the tree', body: 'We’ll ask how this went.' })
+              }}
+            >
+              {t}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="ans-check">

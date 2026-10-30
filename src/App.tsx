@@ -13,6 +13,7 @@ import { Journey } from './screens/Journey'
 import { Forest } from './screens/Forest'
 import { ChildProfile, ChildEdit } from './screens/ChildProfile'
 import { Settings } from './screens/Settings'
+import { BloomReport, Climb } from './screens/JourneyExtras'
 import { Chats, Solutions, Library } from './screens/JourneyLists'
 
 function Gate({ children }: { children: ReactNode }) {
@@ -41,6 +42,8 @@ export function App() {
         <Route path="/journey/forest" element={<Gate><Forest /></Gate>} />
         <Route path="/journey/child" element={<Gate><ChildProfile /></Gate>} />
         <Route path="/journey/child/edit" element={<Gate><ChildEdit /></Gate>} />
+        <Route path="/journey/climb" element={<Gate><Climb /></Gate>} />
+        <Route path="/journey/bloom" element={<Gate><BloomReport /></Gate>} />
         <Route path="/journey/settings" element={<Gate><Settings /></Gate>} />
         <Route path="/journey/chats" element={<Gate><Chats /></Gate>} />
         <Route path="/journey/solutions" element={<Gate><Solutions /></Gate>} />

@@ -11,6 +11,7 @@ export function Settings() {
   const child = useChild()
   const [adding, setAdding] = useState(false)
   const [confirm, setConfirm] = useState(false)
+  const [typed, setTyped] = useState('')
   const [notif, setNotif] = useState(true)
 
   return (
@@ -78,6 +79,25 @@ export function Settings() {
               </span>
               <span className={`switch ${notif ? 'on' : ''}`} />
             </button>
+            {(
+              [
+                ['replies', 'When Mira replies', 'A note when an answer is ready'],
+                ['weekly', 'Weekly wins', 'A short look back, once a week'],
+              ] as const
+            ).map(([k, t, sub]) => (
+              <button key={k} className="row" onClick={() => set((p) => ({ notify: { ...p.notify, [k]: !p.notify[k] } }))} role="switch" aria-checked={s.notify[k]}>
+                <span className="r-icon" style={{ background: 'var(--sand)' }}>
+                  <Icon name="chat" size={20} />
+                </span>
+                <span>
+                  <span className="r-title" style={{ display: 'block' }}>
+                    {t}
+                  </span>
+                  <span className="r-sub">{sub}</span>
+                </span>
+                <span className={`switch ${s.notify[k] ? 'on' : ''}`} />
+              </button>
+            ))}
             <div className="row">
               <span className="r-icon" style={{ background: 'var(--sand)' }}>
                 <Icon name="lock" size={20} />
@@ -127,8 +147,13 @@ export function Settings() {
           <p className="muted" style={{ margin: '8px 0 20px' }}>
             {child.name}’s forest and all {s.leaves} leaves will be gone for good.
           </p>
+          <label htmlFor="del" className="muted" style={{ fontSize: 14 }}>
+            Type DELETE to confirm
+          </label>
+          <input id="del" className="x-confirm" value={typed} onChange={(e) => setTyped(e.target.value)} autoCapitalize="characters" autoComplete="off" />
           <button
             className="btn block"
+            disabled={typed.trim() !== 'DELETE'}
             style={{ background: 'var(--coral-2)', boxShadow: 'none' }}
             onClick={() => {
               reset()
@@ -137,7 +162,7 @@ export function Settings() {
           >
             Yes, delete my account
           </button>
-          <button className="btn ghost block" style={{ marginTop: 10 }} onClick={() => setConfirm(false)}>
+          <button className="btn ghost block" style={{ marginTop: 10 }} onClick={() => { setTyped(''); setConfirm(false) }}>
             Keep it
           </button>
         </Sheet>

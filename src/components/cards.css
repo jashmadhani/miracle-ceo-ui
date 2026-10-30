@@ -55,7 +55,7 @@
   place-items: center;
   background: var(--teal);
   color: var(--on-dark);
-  box-shadow: 0 8px 20px rgba(11, 122, 116, 0.35);
+  box-shadow: 0 8px 20px rgba(25, 86, 172, 0.35);
   flex: none;
   animation: none; /* no pulsing: calm, not game-like */
 }
@@ -352,32 +352,37 @@
   color: #fff;
 }
 .hsec-coral .home-date {
-  color: rgba(42, 35, 64, 0.72);
+  color: rgba(255, 255, 255, 0.72);
 }
 .hsec-cream {
   background: linear-gradient(180deg, var(--sec-cream) 60%, #e6f3cf 100%);
-  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.08);
+  box-shadow: 0 -8px 24px rgba(39, 38, 87, 0.08);
 }
 .hsec-amber {
   background: var(--sec-amber);
-  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.08);
+  box-shadow: 0 -8px 24px rgba(39, 38, 87, 0.08);
+}
+.hsec-sky {
+  background: var(--sec-sky);
 }
 .hsec-teal {
   background: var(--sec-teal);
-  box-shadow: 0 -8px 24px rgba(42, 35, 64, 0.1);
+  box-shadow: 0 -8px 24px rgba(39, 38, 87, 0.1);
 }
 /* type on the strong blocks */
-.hsec-coral .display,
 .hsec-teal .display,
-.hsec-teal .section-head h2 {
+.hsec-teal .section-head h2,
+.hsec-coral .display,
+.hsec-sky .display {
   color: #fff;
 }
+.hsec-teal .eyebrow,
 .hsec-coral .eyebrow,
-.hsec-teal .eyebrow {
+.hsec-sky .eyebrow {
   color: rgba(255, 255, 255, 0.78);
 }
 .hsec-amber .eyebrow {
-  color: rgba(42, 35, 64, 0.62);
+  color: rgba(39, 38, 87, 0.62);
 }
 /* glass controls sitting on a colour block */
 .hsec-top .segmented {
@@ -393,6 +398,12 @@
   background: rgba(255, 255, 255, 0.92);
 }
 /* today's activity inside the amber block reads in ink */
+.hsec-coral .today-block-eyebrow {
+  color: rgba(255, 255, 255, 0.78);
+}
+.hsec-coral .today-block-title {
+  color: #fff;
+}
 .hsec-amber .today-block-title,
 .hsec-amber .today-block-done {
   color: var(--ink);
@@ -486,6 +497,8 @@
   margin: 0 -20px;
   padding: 2px 20px 6px;
   scroll-snap-type: x mandatory;
+  /* snapping respects the side padding, so the first tile never touches the edge */
+  scroll-padding-inline: 20px;
   scrollbar-width: none;
 }
 .know-row::-webkit-scrollbar {
@@ -518,7 +531,7 @@
 }
 .know-meta {
   font-size: 13px;
-  color: rgba(42, 35, 64, 0.65);
+  color: rgba(39, 38, 87, 0.65);
 }
 .know-arrow {
   margin-top: auto;
@@ -533,12 +546,12 @@
   font-weight: 620;
 }
 .know-continue .btn.ghost {
-  box-shadow: inset 0 0 0 1.5px rgba(42, 35, 64, 0.35);
+  box-shadow: inset 0 0 0 1.5px rgba(39, 38, 87, 0.35);
   flex: none;
 }
 
 .hsec-teal .video-row {
-  background: #d4ece7;
+  background: #dce6f5;
   box-shadow: none;
 }
 .hsec-teal .video-thumb {

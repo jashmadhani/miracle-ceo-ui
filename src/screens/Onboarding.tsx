@@ -64,7 +64,7 @@ export function Onboarding() {
   const step = FLOW[i]
   useEdge(SKIES[step === 'planted' ? 'peach' : (MOOD[step] ?? 'dawn')][0])
   const progress = i / (FLOW.length - 1)
-  const growth = step === 'seed' ? 0.1 : Math.min(1, 0.12 + progress * 0.3)
+  const growth = step === 'seed' ? 0.06 : Math.min(0.95, 0.07 + progress * 0.85)
   const childName = s.child.name || 'your child'
 
   const next = (say?: string) => {
@@ -288,7 +288,7 @@ export function Onboarding() {
           </h1>
           <div className="planted-tree">
             {/* the same tree Home shows next, with its first two leaves and the buds still to come */}
-            <Tree growth={0.35 + (2 / 50) * 0.65} blossoms={2} buds />
+            <Tree growth={0.35 + (2 / 50) * 0.65} blossoms={2} />
           </div>
           <button
             className="btn block rise rise-3"

@@ -33,6 +33,14 @@ export type State = {
   challenge: { id: string; moves: number } | null
   chats: { at: number; q: string }[]
   saved: string[]
+  /** a task Mira suggested that the parent has not yet reported back on */
+  openTask: { title: string; from: string } | null
+  /** questions asked to Mira today (design demo of the daily cap) */
+  asked: number
+  /** activities opened but not finished */
+  started: string[]
+  askedDay: string | null
+  notify: { daily: boolean; replies: boolean; weekly: boolean }
 }
 
 const INITIAL: State = {
@@ -60,6 +68,11 @@ const INITIAL: State = {
   challenge: null,
   chats: [],
   saved: [],
+  openTask: { title: 'Say “Next is teeth, then bed” tonight', from: 'Ask Mira' },
+  asked: 0,
+  started: [],
+  askedDay: null,
+  notify: { daily: true, replies: true, weekly: false },
 }
 
 const KEY = 'mceo-redesign-v1'

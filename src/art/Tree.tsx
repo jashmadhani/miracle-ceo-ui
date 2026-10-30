@@ -58,6 +58,8 @@ const LIGHT = '#8fd14f'
 const SHINE = '#c8f56b'
 const GOLD = '#ffc519'
 
+const LIFT = 60
+
 const LEAF_PATH = 'M0 -12 C8 -7 8 4 1 12 C-6 6 -8 -5 0 -12Z'
 
 type Anchor = { x: number; y: number; rot: number; k: number }
@@ -96,6 +98,19 @@ function buildAnchors(): Anchor[] {
 }
 
 const ANCHORS = buildAnchors()
+
+/** Leaves along the upper rim of each crown mass, so the canopy reads as leaves, not a blob. */
+const RIM: Anchor[] = (() => {
+  const out: Anchor[] = []
+  CROWN.forEach(([cx, cy, rx, ry], k) => {
+    const n = rx > 60 ? 9 : 6
+    for (let i = 0; i < n; i++) {
+      const a = Math.PI * (1.05 + (0.9 * i) / (n - 1))
+      out.push({ x: cx + Math.cos(a) * rx * 0.96, y: cy + Math.sin(a) * ry * 0.96, rot: (a * 180) / Math.PI + 90, k: -1 - k })
+    }
+  })
+  return out
+})()
 
 /** A smooth, uneven mass (closed Catmull-Rom through jittered points on an ellipse). */
 function mass(cx: number, cy: number, rx: number, ry: number, seed: number) {
@@ -160,21 +175,25 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
   const { earned, green, shown } = useMemo(() => {
     const earnedList = ANCHORS.slice(0, n)
     const used = new Set(earnedList.map((a) => a.k))
-    const visible = (k: number) => BRANCHES[k][7] <= g || used.has(k)
+    // boughs come in early (half their threshold) so even a young tree looks full
+    const visible = (k: number) => BRANCHES[k][7] * 0.5 <= g || used.has(k)
     const rand = rng(11)
     const pool = ANCHORS.slice(n).filter((a) => visible(a.k))
-    const count = Math.min(pool.length, Math.round(8 + g * 90))
+    const count = Math.min(pool.length, Math.round(50 + g * 60))
     const greens = pool.slice(0, count).map((a) => ({ ...a, c: leafGreen(a.y, rand), s: 0.95 + rand() * 0.4, d: rand() * 3 }))
-    return { earned: earnedList, green: greens, shown: BRANCHES.map((_, k) => visible(k)) }
+    const rim = RIM.map((r) => ({ ...r, c: leafGreen(r.y - 30, rand), s: 1.15 + rand() * 0.45, d: rand() * 3 }))
+    return { earned: earnedList, green: [...rim, ...greens], shown: BRANCHES.map((_, k) => visible(k)) }
   }, [n, g])
 
   if (g < 0.12) return <Sprout g={g} className={className} ground={ground} title={title} />
 
-  const scale = 0.56 + 0.44 * g
-  const crown = Math.max(0, (g - 0.5) / 0.4)
+  const scale = 0.64 + 0.36 * g
+  // a full, leafy crown from the start; the tree grows in size and leaves, never looks bare
+  const crown = 1
   // the highest point actually drawn (visible boughs, or the crown once it fills in), scaled, less some headroom
-  const peak = crown > 0 ? 16 : Math.min(246, ...BRANCHES.filter((_, k) => shown[k]).map((b) => Math.min(b[1], b[3], b[5])))
-  const top = fit ? Math.max(0, Math.round(512 - (512 - peak) * scale - 70)) : 0
+  // the crown sits LIFT higher than the boughs were drawn, on a longer trunk
+  const peak = 16 - LIFT
+  const top = fit ? Math.max(-LIFT - 10, Math.round(512 - (512 - peak) * scale - 30)) : -LIFT - 10
 
   return (
     <svg viewBox={`0 ${top} 400 ${520 - top}`} className={className} role="img" aria-label={title ?? 'A growing tree'}>
@@ -193,11 +212,12 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
 
         {/* trunk, leaning a little */}
         {/* a tall trunk that tapers up into the leader, no flat top */}
-        <path d="M180 508 C188 468 178 430 188 396 C195 366 189 332 197 302 C201 284 203 266 208 246 C213 266 213 286 216 302 C221 332 212 366 216 396 C223 430 214 468 224 508 Z" fill={BARK} />
-        <path d="M200 500 C205 466 195 432 203 400 C208 370 202 338 206 306 C207 290 208 274 208 262" stroke={BARK_MID} strokeWidth="6" strokeLinecap="round" fill="none" />
+        <path d="M178 508 C188 468 177 430 187 396 C194 362 189 326 195 290 C199 256 202 214 206 180 C211 214 214 256 217 290 C222 326 213 362 217 396 C224 430 214 468 226 508 Z" fill={BARK} />
+        <path d="M200 500 C205 466 195 432 203 400 C208 366 201 330 205 294 C207 262 207 230 207 200" stroke={BARK_MID} strokeWidth="6" strokeLinecap="round" fill="none" />
         <path d="M205 486 C208 460 201 436 206 414" stroke={BARK_LIGHT} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.7" />
         <path d="M191 470 C189 456 192 446 190 432 M213 452 C215 440 211 430 213 418 M196 372 C195 362 197 354 196 344" stroke="#2f1c14" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5" />
 
+        <g transform={`translate(0 ${-LIFT})`}>
         <g className={sway ? 'tree-sway' : undefined} style={{ transformOrigin: '200px 310px' }}>
           {/* the crown: layered masses from deep to bright, light from the upper left */}
           {crown > 0 && (
@@ -288,6 +308,7 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
               </g>
             )
           })}
+        </g>
         </g>
       </g>
     </svg>

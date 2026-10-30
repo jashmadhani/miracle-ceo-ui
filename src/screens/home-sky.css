@@ -1812,3 +1812,25 @@
   border-bottom-right-radius: 0;
   padding-bottom: calc(118px + var(--safe-bottom));
 }
+
+/* the tree takes the spare height: a bigger tree, and the page never ends in empty space */
+.hs-tree .tree-card.bare .tree-card-art {
+  height: clamp(300px, 42vh, 380px);
+}
+.home.sky .hs-stack > :last-child {
+  flex: none;
+  padding-bottom: calc(104px + var(--safe-bottom));
+}
+.home.sky .hs-stack > .hs-tree {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.home.sky .hs-tree .tree-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.home.sky .hs-tree .tree-card-art {
+  flex: 1;
+}

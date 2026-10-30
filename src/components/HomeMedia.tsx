@@ -1,8 +1,9 @@
 import { useRef, useState, type ReactNode } from 'react'
-import { ActivityArt, SpotBook, SpotHeadphones } from '../art/ActivityArt'
+import { SpotBook, SpotHeadphones } from '../art/ActivityArt'
+import POSTER from '../art/illustrations/videos/poster-1.webp'
 import { Icon } from './Icon'
 import { ReadSheet, VideoSheet } from './Cards'
-import { ACTIVITIES, READS, VIDEOS } from '../data/content'
+import { READS, VIDEOS } from '../data/content'
 
 /*
  * Home's Watch and Read segments. Each is a rail you scroll with your thumb:
@@ -55,7 +56,6 @@ export function WatchSegment({ childName, head }: { childName: string; head: Rea
   const [open, setOpen] = useState<(typeof VIDEOS)[number] | null>(null)
   const [cur, setCur] = useState(0)
   const v = VIDEOS[cur]
-  const poster = ACTIVITIES[(cur * 5) % ACTIVITIES.length]
   const next = VIDEOS.map((x, k) => ({ x, k })).filter(({ k }) => k !== cur)
   return (
     <section className="hs-block hm hm-watch" aria-label={`Watch: get to know ${childName}`}>
@@ -63,10 +63,8 @@ export function WatchSegment({ childName, head }: { childName: string; head: Rea
       <div className="hm-watchgrid">
         {/* the featured video stays upright, 9:16, exactly as it was filmed */}
         <button key={v.id} className="hm-preview tall" onClick={() => setOpen(v)} aria-label={`Play ${v.title}, ${v.minutes} minutes`}>
-          <ActivityArt skill={poster.skill} id={poster.id} />
-          <span className="hm-play">
-            <Icon name="play" size={20} />
-          </span>
+          {/* a still from the video; it carries its own play button, so we don't add a second one */}
+          <img src={POSTER} alt="" draggable={false} decoding="async" />
           <span className="hm-time">{v.minutes} min</span>
         </button>
         <div className="hm-side">

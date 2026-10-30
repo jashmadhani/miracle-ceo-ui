@@ -46,6 +46,12 @@ const CROWN: [number, number, number, number, boolean][] = [
   [158, 252, 52, 34, false],
   [256, 252, 52, 34, false],
   [204, 68, 40, 28, true],
+  // lower masses, so leaves reach down the tree instead of sitting only on top
+  [132, 292, 50, 34, false],
+  [270, 290, 50, 34, false],
+  [96, 316, 36, 26, false],
+  [306, 312, 36, 26, false],
+  [204, 288, 60, 38, false],
 ]
 
 const BARK = '#4a2f22'
@@ -58,7 +64,7 @@ const LIGHT = '#8fd14f'
 const SHINE = '#c8f56b'
 const GOLD = '#ffc519'
 
-const LIFT = 60
+const LIFT = 34
 
 const LEAF_PATH = 'M0 -12 C8 -7 8 4 1 12 C-6 6 -8 -5 0 -12Z'
 
@@ -212,8 +218,8 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
 
         {/* trunk, leaning a little */}
         {/* a tall trunk that tapers up into the leader, no flat top */}
-        <path d="M178 508 C188 468 177 430 187 396 C194 362 189 326 195 290 C199 256 202 214 206 180 C211 214 214 256 217 290 C222 326 213 362 217 396 C224 430 214 468 226 508 Z" fill={BARK} />
-        <path d="M200 500 C205 466 195 432 203 400 C208 366 201 330 205 294 C207 262 207 230 207 200" stroke={BARK_MID} strokeWidth="6" strokeLinecap="round" fill="none" />
+        <path d="M178 508 C188 468 177 430 187 396 C194 362 189 326 195 290 C199 262 202 232 206 206 C211 232 214 262 217 290 C222 326 213 362 217 396 C224 430 214 468 226 508 Z" fill={BARK} />
+        <path d="M200 500 C205 466 195 432 203 400 C208 366 201 330 205 294 C207 268 207 244 207 222" stroke={BARK_MID} strokeWidth="6" strokeLinecap="round" fill="none" />
         <path d="M205 486 C208 460 201 436 206 414" stroke={BARK_LIGHT} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.7" />
         <path d="M191 470 C189 456 192 446 190 432 M213 452 C215 440 211 430 213 418 M196 372 C195 362 197 354 196 344" stroke="#2f1c14" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5" />
 

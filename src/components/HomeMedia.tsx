@@ -94,7 +94,8 @@ export function WatchSegment({ childName, head }: { childName: string; head: Rea
               <span className="hm-time">{v.minutes} min</span>
             </button>
             <div className="hm-reelcopy">
-              <span className="hm-topic">{v.topic}</span>
+              {/* the topic only when it adds something the title doesn't already say */}
+              {!v.title.toLowerCase().includes(v.topic.toLowerCase()) && <span className="hm-topic">{v.topic}</span>}
               <b className="hm-title">{v.title}</b>
               <p className="hm-body">{v.body}</p>
               <button className="hs-cta ghost" onClick={() => setOpen(v)}>

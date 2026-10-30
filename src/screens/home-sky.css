@@ -2038,3 +2038,50 @@
 .home.sky .child-pill .avatar {
   color: #175a9c;
 }
+
+/* ---- polish: the Ask Mira follow-up ---- */
+.home.sky .x-task h3.x-task-q {
+  font-family: var(--text);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0;
+}
+.home.sky .x-task-title {
+  margin-top: 6px;
+  font-size: 16px;
+  color: var(--ink);
+}
+.home.sky .x-task-from {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.home.sky .x-task-btns {
+  gap: 8px;
+}
+.home.sky .x-task-btn,
+.home.sky .x-task-btn.good {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 60px;
+  padding: 8px 6px;
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px rgba(28, 27, 34, 0.18);
+  font-size: 14px;
+  line-height: 1.15;
+}
+.home.sky .x-task-btn svg {
+  color: #1f72c4;
+}
+.home.sky .x-task-btn:active {
+  background: var(--sel-bg);
+  box-shadow: inset 0 0 0 2px var(--sel-line);
+}

@@ -21,18 +21,20 @@ export function OpenTaskCard() {
   }
   return (
     <div className="x-task card" role="group" aria-label="Did you get to try it?">
-      <p className="eyebrow">From {s.openTask.from}</p>
-      <h3 className="display">Did you get to try it?</h3>
+      {/* the question leads; what Mira suggested and where it came from follow */}
+      <h3 className="x-task-q">Did you get to try it?</h3>
       <p className="x-task-title">{s.openTask.title}</p>
+      <p className="x-task-from">From {s.openTask.from}</p>
+      {/* three equal answers: none is pre-selected */}
       <div className="x-task-btns">
-        <button className="x-task-btn good" onClick={() => answer('worked')}>
-          It worked
+        <button className="x-task-btn" onClick={() => answer('worked')}>
+          <Icon name="check" size={16} stroke={2.4} /> It worked
         </button>
         <button className="x-task-btn" onClick={() => answer('no')}>
-          Tried it, no
+          <Icon name="close" size={16} stroke={2.4} /> Tried it, no
         </button>
         <button className="x-task-btn" onClick={() => answer('skip')}>
-          Not this week
+          <Icon name="clock" size={16} /> Not this week
         </button>
       </div>
     </div>

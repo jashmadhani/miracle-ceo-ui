@@ -1865,3 +1865,98 @@
 .hm-watchslide .hm-side .hs-cta.ghost {
   margin-top: 14px;
 }
+
+/* ---- Watch, reels-style: one video per screen of the box, scrolled up and down ---- */
+.hm-count {
+  min-width: 40px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0.9;
+}
+/* the box is exactly one slide tall: the 9:16 video at 44% width sets the height */
+.hm-reel {
+  margin-top: 12px;
+  aspect-ratio: 1 / 0.782;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+  border-radius: 18px;
+}
+.hm-reel::-webkit-scrollbar {
+  display: none;
+}
+.hm-reelslide {
+  position: relative;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: grid;
+  grid-template-columns: 44% minmax(0, 1fr) 6px;
+  gap: 14px;
+  align-items: stretch;
+}
+.hm-reelslide .hm-preview.tall {
+  height: 100%;
+  width: 100%;
+  aspect-ratio: auto;
+  animation: none;
+}
+/* the right side carries the whole story: topic, title, a short summary, then Play at the bottom */
+.hm-reelcopy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 4px 0 2px;
+}
+.hm-topic {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.hm-reelcopy .hm-title {
+  margin: 4px 0 0;
+  font-size: 18px;
+  line-height: 1.2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+.hm-body {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.88;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hm-reelcopy .hs-cta.ghost {
+  margin-top: auto;
+}
+/* a slim vertical indicator on the far right */
+.hm-vdots {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.hm-vdots i {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+  background: #fff;
+  opacity: 0.35;
+}
+.hm-vdots i.on {
+  height: 18px;
+  opacity: 0.95;
+}
+@media (max-width: 360px) {
+  .hm-body {
+    -webkit-line-clamp: 3;
+  }
+}

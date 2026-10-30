@@ -166,6 +166,9 @@ type Props = {
   buds?: boolean
   /** crop the empty sky above a young tree so it fills its frame */
   fit?: boolean
+  /** onboarding: grow in visible stages (sapling, then boughs, then the crown) and
+   *  show nutrients rising from the roots, instead of a full tree from the start */
+  staged?: boolean
   /** new leaves fly up from below the tree instead of dropping in */
   fly?: boolean
   sway?: boolean
@@ -174,28 +177,31 @@ type Props = {
   title?: string
 }
 
-export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, fly = false, sway = true, ground = true, fit = false, className, title }: Props) {
+export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null, onLeaf, fly = false, sway = true, ground = true, fit = false, staged = false, className, title }: Props) {
   const g = Math.max(0, Math.min(1, growth))
   const n = Math.min(50, blossoms)
 
   const { earned, green, shown } = useMemo(() => {
     const earnedList = ANCHORS.slice(0, n)
     const used = new Set(earnedList.map((a) => a.k))
-    // boughs come in early (half their threshold) so even a young tree looks full
-    const visible = (k: number) => BRANCHES[k][7] * 0.5 <= g || used.has(k)
+    // boughs come in early (half their threshold) so even a young tree looks full;
+    // staged growth uses the real thresholds so you can watch each bough arrive
+    const visible = (k: number) => BRANCHES[k][7] * (staged ? 0.85 : 0.5) <= g || used.has(k)
     const rand = rng(11)
     const pool = ANCHORS.slice(n).filter((a) => visible(a.k))
-    const count = Math.min(pool.length, Math.round(50 + g * 60))
+    const count = Math.min(pool.length, Math.round(staged ? 6 + g * 100 : 50 + g * 60))
     const greens = pool.slice(0, count).map((a) => ({ ...a, c: leafGreen(a.y, rand), s: 0.95 + rand() * 0.4, d: rand() * 3 }))
-    const rim = RIM.map((r) => ({ ...r, c: leafGreen(r.y - 30, rand), s: 1.15 + rand() * 0.45, d: rand() * 3 }))
+    // staged: the leafy rim fills in with the crown, last of all
+    const rimShare = staged ? Math.max(0, Math.min(1, (g - 0.55) / 0.4)) : 1
+    const rim = RIM.slice(0, Math.round(RIM.length * rimShare)).map((r) => ({ ...r, c: leafGreen(r.y - 30, rand), s: 1.15 + rand() * 0.45, d: rand() * 3 }))
     return { earned: earnedList, green: [...rim, ...greens], shown: BRANCHES.map((_, k) => visible(k)) }
-  }, [n, g])
+  }, [n, g, staged])
 
   if (g < 0.12) return <Sprout g={g} className={className} ground={ground} title={title} />
 
-  const scale = 0.64 + 0.36 * g
-  // a full, leafy crown from the start; the tree grows in size and leaves, never looks bare
-  const crown = 1
+  const scale = staged ? 0.5 + 0.5 * g : 0.64 + 0.36 * g
+  // a full, leafy crown from the start; staged growth brings it in only once the boughs are there
+  const crown = staged ? Math.max(0, Math.min(1, (g - 0.45) / 0.45)) : 1
   // the highest point actually drawn (visible boughs, or the crown once it fills in), scaled, less some headroom
   // the crown sits LIFT higher than the boughs were drawn, on a longer trunk
   const peak = 16 - LIFT
@@ -223,11 +229,20 @@ export function Tree({ growth = 1, blossoms = 0, tones, newFrom, selected = null
         <path d="M205 486 C208 460 201 436 206 414" stroke={BARK_LIGHT} strokeWidth="2.5" strokeLinecap="round" fill="none" opacity="0.7" />
         <path d="M191 470 C189 456 192 446 190 432 M213 452 C215 440 211 430 213 418 M196 372 C195 362 197 354 196 344" stroke="#2f1c14" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.5" />
 
+        {/* staged growth: nutrients drawn up from the roots, through the trunk */}
+        {staged && (
+          <g className="nutrients" aria-hidden>
+            {[0, 1, 2, 3, 4, 5].map((k) => (
+              <circle key={k} className={`nutrient n${k % 3}`} r={k % 2 ? 3.2 : 4.2} style={{ animationDelay: `${k * 0.45}s` }} />
+            ))}
+          </g>
+        )}
+
         <g transform={`translate(0 ${-LIFT})`}>
         <g className={sway ? 'tree-sway' : undefined} style={{ transformOrigin: '200px 310px' }}>
           {/* the crown: layered masses from deep to bright, light from the upper left */}
           {crown > 0 && (
-            <g opacity={crown} style={{ transition: 'opacity 0.9s' }}>
+            <g opacity={crown} style={{ transformOrigin: '205px 200px', transform: `scale(${0.55 + 0.45 * crown})`, transition: 'opacity 0.9s, transform 0.9s cubic-bezier(.34,1.4,.64,1)' }}>
               {CROWN.map(([x, y, rx, ry], i) => (
                 <path key={`d${i}`} d={mass(x + 7, y + 12, rx, ry, i + 3)} fill={DEEP} />
               ))}

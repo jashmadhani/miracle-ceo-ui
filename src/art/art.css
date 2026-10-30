@@ -267,3 +267,42 @@
   -webkit-user-drag: none;
   pointer-events: none;
 }
+
+/* nutrients rising: little glowing beads travel from the root tips up the trunk */
+.nutrient {
+  fill: #e4ff9a;
+  filter: drop-shadow(0 0 3px rgba(200, 245, 107, 0.9));
+  opacity: 0;
+  offset-rotate: 0deg;
+  animation: nutrient 2.7s ease-in infinite;
+}
+.nutrient.n0 {
+  offset-path: path('M132 514 C156 508 174 504 188 490 C192 452 194 390 200 330 C203 290 205 250 206 210');
+}
+.nutrient.n1 {
+  offset-path: path('M274 514 C252 508 230 504 214 492 C212 452 210 390 207 330 C206 290 206 250 206 210');
+}
+.nutrient.n2 {
+  offset-path: path('M164 518 C180 516 190 510 196 500 C199 452 201 390 203 330 C204 290 205 250 206 210');
+}
+@keyframes nutrient {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nutrient {
+    display: none;
+  }
+}

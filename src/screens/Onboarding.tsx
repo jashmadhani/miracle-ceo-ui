@@ -64,7 +64,8 @@ export function Onboarding() {
   const step = FLOW[i]
   useEdge(SKIES[step === 'planted' ? 'peach' : (MOOD[step] ?? 'dawn')][0])
   const progress = i / (FLOW.length - 1)
-  const growth = step === 'seed' ? 0.06 : Math.min(0.95, 0.07 + progress * 0.85)
+  // seed → sprout on the first question → sapling → boughs → a full crown on the last question
+  const growth = step === 'seed' ? 0.06 : i <= 1 ? 0.1 : Math.min(1, 0.16 + ((i - 2) / (FLOW.length - 4)) * 0.84)
   const childName = s.child.name || 'your child'
 
   const next = (say?: string) => {
@@ -288,7 +289,7 @@ export function Onboarding() {
           </h1>
           <div className="planted-tree">
             {/* the same tree Home shows next, with its first two leaves and the buds still to come */}
-            <Tree growth={0.35 + (2 / 50) * 0.65} blossoms={2} />
+            <Tree growth={1} blossoms={2} />
           </div>
           <button
             className="btn block rise rise-3"
@@ -343,7 +344,7 @@ export function Onboarding() {
                 <MiraOrb size={22} state="attentive" /> {bubble}
               </div>
             )}
-            <Tree growth={growth} className="ob-tree" />
+            <Tree growth={growth} staged className="ob-tree" />
           </div>
           <div key={step} className="ob-card">
             {card}

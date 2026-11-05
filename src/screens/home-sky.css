@@ -2091,3 +2091,83 @@
   border-radius: var(--r-xl);
   margin: 4px 0 14px;
 }
+
+/* ---- softer segments: closer to the sky page, so the blocks read as one surface ----
+ * Today: cornflower #7eb2ec, brighter than the sky so it stands apart, navy text (6.1:1)
+ * Watch: mint a shade deeper than #a0d6c3 = #86c4b0, deep teal text (6.2:1)
+ * Read: lighter yellow #ffcc4c, ink text (11:1) */
+.hs-today {
+  background: #7eb2ec;
+  --today: #7eb2ec;
+  color: #0f2f55;
+}
+.hs-today .hs-label,
+.hs-today .hs-today-copy small,
+.hs-today-main .hs-today-copy small,
+.hs-today .hs-meta {
+  color: #0f2f55;
+}
+.hs-today-foot {
+  border-top-color: rgba(15, 47, 85, 0.16);
+}
+.hs-today .hs-meta > span + span::before {
+  background: rgba(15, 47, 85, 0.3);
+}
+.hs-today .hs-cta {
+  background: #fff;
+  color: #175a9c;
+  box-shadow: 0 6px 14px rgba(15, 47, 85, 0.16);
+}
+.hs-today .hs-cta.done {
+  background: rgba(255, 255, 255, 0.55);
+  color: #0f2f55;
+}
+.hs-today .hs-cta-ring,
+.hs-today .hs-switch-knob,
+.hs-tick {
+  color: #175a9c;
+}
+.hs-tick {
+  box-shadow: 0 6px 14px rgba(15, 47, 85, 0.16);
+}
+
+.hm-watch {
+  background: #86c4b0;
+  color: #0e3b35;
+}
+.hm-watch .hm-topic,
+.hm-watch .hm-title,
+.hm-watch .hm-body,
+.hm-watch .hm-meta,
+.hm-watch .hm-count,
+.hm-watch .hs-label,
+.hm-watch .hm-nextlist button {
+  color: #0e3b35;
+}
+.hm-watch .hm-nextlist li + li {
+  border-top-color: rgba(14, 59, 53, 0.18);
+}
+.hm-watch .hs-cta.ghost:active {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.hm-read {
+  background: #ffcc4c;
+}
+.hm-read .hm-media {
+  background: #ffe29b;
+}
+
+/* ---- Today shows the activity's painted scene, in a larger tile so the people read ---- */
+.hs-today .hs-skill {
+  width: 84px;
+  height: 76px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92) !important;
+  padding: 4px;
+}
+.hs-today .hs-skill .illus {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}

@@ -5,6 +5,7 @@ import '@fontsource-variable/bricolage-grotesque'
 import './styles/tokens.css'
 import './styles/base.css'
 import './styles/components.css'
+import './styles/palette.css'
 import { App } from './App'
 import { StoreProvider } from './state/store'
 

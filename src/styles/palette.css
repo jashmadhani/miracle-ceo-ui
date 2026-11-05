@@ -1,0 +1,50 @@
+/* Home's palette across Ask Mira, Grow and Journey (see design-iterations/ask-mira-now-vs-proposed.png).
+ * Social = mint, Emotional = cornflower, Intelligence = yellow, as in Home's segments. */
+
+/* 1. One skill palette, from Home's segments: Social = mint, Emotional = cornflower, Intelligence = yellow */
+:root {
+  --sq-bg: #dcefe8 !important; --sq: #0e3b35 !important;
+  --eq-bg: #dde9fa !important; --eq: #0f2f55 !important;
+  --iq-bg: #fff1c9 !important; --iq: #5c4208 !important;
+}
+.topic.sk-SQ { background: #86c4b0 !important; color: #0e3b35 !important; }
+.topic.sk-EQ { background: #7eb2ec !important; color: #0f2f55 !important; }
+.topic.sk-IQ { background: #ffcc4c !important; color: #1c1b22 !important; }
+.topic .topic-dot { background: rgba(255, 255, 255, 0.85) !important; color: inherit !important; }
+
+/* 2. Ask: the composer fades into the white sheet it sits on, not into the sky */
+.composer { background: linear-gradient(180deg, rgba(255, 255, 255, 0), #fff 40%) !important; margin-left: 0 !important; margin-right: 0 !important; padding-left: 0 !important; padding-right: 0 !important; }
+.solve .suggest-tile.t0 { background: #dde9fa !important; color: #0f2f55 !important; }
+.solve .suggest-tile.t1 { background: #dcefe8 !important; color: #0e3b35 !important; }
+.solve .suggest-tile.t2 { background: #fff1c9 !important; color: #3d2c05 !important; }
+.solve .suggest-tile.t3 { background: #fcffe9 !important; color: #1c1b22 !important; box-shadow: inset 0 0 0 1.5px #e7ecc9 !important; }
+.solve .suggest-tile svg { color: inherit !important; }
+
+/* 3. Talk it out: a flat cornflower block like Today, no ocean-to-teal gradient */
+.night-card { background: #7eb2ec !important; box-shadow: none !important; }
+.night-card > :not(.night-copy) { display: none !important; }
+.night-card .eyebrow, .night-card h2, .night-card p { color: #0f2f55 !important; }
+.night-card .night-line * { fill: #0f2f55 !important; stroke: #0f2f55 !important; opacity: 0.55; }
+.night-card .btn.light { background: #fff !important; color: #175a9c !important; }
+.solve .empty { background: #fcffe9 !important; box-shadow: none !important; color: #55535f; }
+
+/* 4. 7-day plans: each moment a soft Home-coloured tile, even rows */
+.solve .bento { grid-auto-rows: 132px !important; gap: 10px !important; }
+.ch-tile { min-height: 0 !important; box-shadow: none !important; padding: 14px !important; }
+.ch-tile:nth-child(3n + 1) { background: #dde9fa !important; color: #0f2f55 !important; }
+.ch-tile:nth-child(3n + 2) { background: #dcefe8 !important; color: #0e3b35 !important; }
+.ch-tile:nth-child(3n + 3) { background: #fff1c9 !important; color: #3d2c05 !important; }
+.ch-tile .ch-ic { background: rgba(255, 255, 255, 0.9) !important; color: inherit !important; }
+.ch-tile .tile-title { color: inherit !important; }
+
+/* 5. Journey: the forest card is mint like Home's Watch, not deep teal */
+.forest-card { background: #86c4b0 !important; color: #0e3b35 !important; box-shadow: none !important; }
+.forest-card::after { background: #a8d6c6 !important; }
+.forest-card::before { background: rgba(255, 255, 255, 0.18) !important; }
+.forest-card .eyebrow, .forest-card-count, .forest-card h2 { color: #0e3b35 !important; }
+.forest-card .progress { background: rgba(14, 59, 53, 0.16) !important; }
+.forest-card .hs-cta.ghost { color: #0e3b35 !important; }
+
+/* 6. Journey: the More list icons use Home's softer tints */
+.journey .card .row:nth-child(odd) .r-icon { background: #fff1c9 !important; }
+.journey .card .row:nth-child(even) .r-icon { background: #dde9fa !important; }

@@ -1,23 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { Icon } from './Icon'
-import { Leaf } from '../art/ActivityArt'
-import { Pot } from '../art/Pot'
-import { LEAF_TONES } from '../art/leafColors'
+import { ActivityArt, Leaf } from '../art/ActivityArt'
 import { useToday } from './Cards'
-import { ACTIVITIES, SKILLS } from '../data/content'
-import { useStore } from '../state/store'
+import { SKILLS } from '../data/content'
 
 /**
  * Today's activity, drawn the same way wherever it appears (Home, Grow, Journey):
- * the ocean-blue block with the skill's growing pot, the title, time and leaves,
+ * the colour block with the activity's own painted scene, the title, time and leaves,
  * and the one filled Start (a tick alone once it's done today).
  */
 export function TodayCard({ className = '' }: { className?: string }) {
   const nav = useNavigate()
-  const { s } = useStore()
   const { act, done } = useToday()
-  const skillActs = ACTIVITIES.filter((a) => a.skill === act.skill)
-  const skillDone = skillActs.filter((a) => s.done[a.id]).length
   const open = () => nav(`/activity/${act.id}`)
   return (
     <section className={`hs-block hs-today ${className}`} aria-label={`Today’s activity: ${act.title}, ${act.minutes} minutes`}>
@@ -26,9 +20,9 @@ export function TodayCard({ className = '' }: { className?: string }) {
       </span>
       {/* what it is */}
       <span className="hs-today-main">
-        {/* the skill's growing pot from Grow: it fills in as this skill's activities get done */}
+        {/* the activity's own painted scene, the same one its card shows in Grow */}
         <span className="hs-skill" aria-hidden>
-          <Pot done={skillDone} total={skillActs.length} tone={LEAF_TONES[act.skill]} />
+          <ActivityArt skill={act.skill} id={act.id} />
         </span>
         <span className="hs-today-copy">
           <b>{act.title}</b>

@@ -5,11 +5,13 @@ import { useToday } from '../components/Cards'
 import { Icon } from '../components/Icon'
 import { TodayCard } from '../components/TodayCard'
 import { ActivityArt } from '../art/ActivityArt'
-import { Pot } from '../art/Pot'
-import { LEAF_TONES } from '../art/leafColors'
+import { Illustration } from '../art/Illustration'
 import { ACTIVITIES, SKILLS, type Skill } from '../data/content'
 import { useChild, useStore } from '../state/store'
 import './grow.css'
+
+/* one painted scene per skill, each different from the others and from Today's card */
+const SKILL_ART: Record<Skill, string> = { SQ: 'sq-1', EQ: 'eq-4', IQ: 'iq-5' }
 
 const INSIGHT_AFTER = 8
 
@@ -80,7 +82,9 @@ export function Grow() {
               const of = mine.length
               return (
                 <button key={k} className={`skill-tile sk-${k} ${spinning === k ? 'lit' : ''} ${act.skill === k && !spinning ? 'current' : ''}`} onClick={() => choose(k)}>
-                  <Pot done={n} total={of} tone={LEAF_TONES[k]} className="skill-pot" />
+                  <span className="skill-art" aria-hidden>
+                    <Illustration name={SKILL_ART[k]} />
+                  </span>
                   <span className="skill-name">{sk.name}</span>
                   <span className="skill-long">{sk.long}</span>
                   <span className="skill-meta">{n ? `${n} of ${of} done` : 'Ready to start'}</span>
